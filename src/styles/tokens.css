@@ -1,0 +1,92 @@
+/*
+ * Design tokens. One cool accent, two neutral surfaces and three status
+ * colours — the palette is deliberately narrow so that colour always carries
+ * meaning (state, series identity) rather than decoration.
+ */
+:root {
+  color-scheme: light dark;
+
+  --bg: #f5f7f9;
+  --surface: #ffffff;
+  --surface-2: #eef1f5;
+  --border: #dfe4ea;
+  --border-strong: #c4ccd6;
+  --text: #131a22;
+  --text-muted: #5a6673;
+  --text-faint: #8a949f;
+
+  --accent: #1a5fb4;
+  --accent-hover: #164e94;
+  --accent-soft: #e7eefa;
+  --accent-border: #b7cdec;
+
+  --correct: #12734f;
+  --correct-soft: #e4f4ec;
+  --partial: #8a5a09;
+  --partial-soft: #fbf1de;
+  --incorrect: #a52a25;
+  --incorrect-soft: #fbeae9;
+
+  --chart-1: #1a5fb4;
+  --chart-2: #b3541e;
+  --chart-3: #2c7a5c;
+  --chart-4: #6a4c9c;
+  --chart-5: #8a6d1f;
+  --grid: #e2e7ec;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --shadow-lg: 0 4px 12px rgba(16, 24, 40, 0.08);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  --max-width: 1080px;
+  --reading-width: 68ch;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --surface: #151b23;
+    --surface-2: #1c232c;
+    --border: #262d38;
+    --border-strong: #3a4452;
+    --text: #e6edf3;
+    --text-muted: #9aa5b1;
+    --text-faint: #6e7a87;
+
+    --accent: #5b9dff;
+    --accent-hover: #7db0ff;
+    --accent-soft: #16243a;
+    --accent-border: #2c4570;
+
+    --correct: #4fce9b;
+    --correct-soft: #12261e;
+    --partial: #e0b256;
+    --partial-soft: #2a2213;
+    --incorrect: #ff8a80;
+    --incorrect-soft: #2b1917;
+
+    --chart-1: #5b9dff;
+    --chart-2: #f0956a;
+    --chart-3: #59c9a0;
+    --chart-4: #b39ae0;
+    --chart-5: #ddc06a;
+    --grid: #262d38;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 4px 14px rgba(0, 0, 0, 0.45);
+  }
+}

@@ -48,11 +48,11 @@ nulla UI-kód. Ez az architektúra legfontosabb, nem alkudható követelménye.
 |---|---|---|
 | Build | **Vite** | Gyors, statikus buildet ad; nincs szükség SSR-re. |
 | UI | **React 18 + TypeScript (strict)** | Kérés szerint; a diszkriminált unió típusok itt fizetnek ki igazán. |
-| Routing | **react-router-dom** | 5 route, deep-link a hetekre. |
+| Routing | **react-router-dom** (HashRouter) | 4 route, deep-link a hetekre; a hash-routing szerveroldali rewrite nélkül működik statikus hostingon. |
 | Állapot | **React Context + useReducer** | A session-állapot lokális és determinisztikus; Redux/Zustand felesleges. |
 | Stílus | **CSS Modules + CSS custom property design tokenek** | Kis felület, zéró runtime, könnyű sötét/világos téma és tudományos, visszafogott arculat. |
 | Grafikonok | **saját, vékony SVG chart réteg** | 5 egyszerű charttípus kell; egy chart-könyvtár (Recharts/Chart.js) többet hoz be, mint amennyit ad, és nehezebb egységes tudományos stílust tartani. |
-| Tartalomvalidáció | **Zod** | A heti adatfájlok futásidőben (dev) és tesztben validálódnak — a tartalomíró azonnal hibát kap, nem néma törött oldalt. |
+| Tartalomvalidáció | **saját referenciális validátor** (`content/schema.ts`) | A heti adatfájlok dev módban és tesztben validálódnak. Zod helyett: a shape-et már a TypeScript garantálja, a valódi kockázat a *hivatkozási* hiba (`correctOptionId`, amely nem létező opcióra mutat) — azt egy séma-könyvtár sem fogja meg. |
 | Teszt | **Vitest** | A pontozási logika és a tartalom-invariánsok tesztelése kötelező (determinisztikus scoring). |
 | Perzisztencia | **localStorage egy `ProgressStore` interfész mögött** | MVP-ben nincs backend; a csere később egy implementáció kicserélése. |
 | i18n | **saját, minimális megoldás** (`LocalizedText` + UI-szótár) | A tartalom többnyelvűsége adatmodell-kérdés, nem könyvtárkérdés; i18next később behúzható. |
@@ -622,8 +622,12 @@ backend nélkül futó statikus appban.**
 | 7 | `TherapyBuilder` (6 lépés) + `EvidenceLadder` | MVP |
 | 8 | Scoring + `FeedbackPanel` + `ScoreSummary` + `WeekSummary` + `TranslationalPathway` | MVP |
 | 9 | `ProgressDashboard` + localStorage perzisztencia | MVP |
-| 10 | Instructor dashboard prototípus (aggregált statisztika lokális adatokból) | MVP után |
-| 11 | Magyar fordítás, Week 1–2 és 4–7 tartalom | Későbbi |
+| 10 | Instructor dashboard prototípus (aggregált statisztika) | MVP után |
+| 11 | Tartalom magyar fordítása, Week 1–2 és 4–7 tartalom | Későbbi |
+
+Az 1–9. fázis **elkészült**. A `docs/`-on kívüli forrás a `src/` alatt található;
+`npm run dev` fejlesztéshez, `npm test` a pontozási és tartalmi invariánsokra,
+`npm run build` statikus buildhez.
 
 Az 1–9. fázis lefedi a kérés 22. pontjában felsorolt mind a 15 MVP-elemet.
 

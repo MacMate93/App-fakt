@@ -1,0 +1,168 @@
+.caseHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.caseTitle {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  margin-bottom: var(--space-4);
+}
+
+.intro {
+  font-size: 16px;
+  line-height: 1.65;
+  max-width: var(--reading-width);
+  color: var(--text);
+}
+
+.findings {
+  margin-top: var(--space-5);
+}
+
+.findingsTitle {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: var(--space-3);
+}
+
+.findingList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-2);
+}
+
+.finding {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+
+.findingLabel {
+  flex: 1;
+  font-size: 14px;
+}
+
+.findingValue {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.arrow {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.arrowUp {
+  color: var(--chart-2);
+  background: color-mix(in srgb, var(--chart-2) 14%, transparent);
+}
+
+.arrowDown {
+  color: var(--chart-1);
+  background: color-mix(in srgb, var(--chart-1) 14%, transparent);
+}
+
+.arrowFlat {
+  color: var(--text-muted);
+  background: var(--surface-2);
+}
+
+/* -------------------------------- stage ---------------------------------- */
+
+.stageHeader {
+  margin-bottom: var(--space-5);
+}
+
+.stageEyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: var(--space-2);
+}
+
+.stageTitle {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.stageGoal {
+  margin-top: var(--space-2);
+  font-size: 15px;
+  color: var(--text-muted);
+  max-width: var(--reading-width);
+}
+
+.brief {
+  margin-bottom: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: var(--reading-width);
+}
+
+.briefLabel {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-1);
+}
+
+.questionMeta {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-bottom: var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------- player ---------------------------------- */
+
+.playerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.playerBar {
+  margin-bottom: var(--space-6);
+}
+
+.actions {
+  margin-top: var(--space-5);
+}
