@@ -56,8 +56,10 @@
   --reading-width: 68ch;
 }
 
+/* Dark palette: applied for the OS preference unless light is pinned, and
+   for an explicitly selected dark theme (e.g. an embedding host). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --bg: #0d1117;
     --surface: #151b23;
     --surface-2: #1c232c;
@@ -89,4 +91,37 @@
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 4px 14px rgba(0, 0, 0, 0.45);
   }
+}
+
+:root[data-theme='dark'] {
+  --bg: #0d1117;
+  --surface: #151b23;
+  --surface-2: #1c232c;
+  --border: #262d38;
+  --border-strong: #3a4452;
+  --text: #e6edf3;
+  --text-muted: #9aa5b1;
+  --text-faint: #6e7a87;
+
+  --accent: #5b9dff;
+  --accent-hover: #7db0ff;
+  --accent-soft: #16243a;
+  --accent-border: #2c4570;
+
+  --correct: #4fce9b;
+  --correct-soft: #12261e;
+  --partial: #e0b256;
+  --partial-soft: #2a2213;
+  --incorrect: #ff8a80;
+  --incorrect-soft: #2b1917;
+
+  --chart-1: #5b9dff;
+  --chart-2: #f0956a;
+  --chart-3: #59c9a0;
+  --chart-4: #b39ae0;
+  --chart-5: #ddc06a;
+  --grid: #262d38;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 14px rgba(0, 0, 0, 0.45);
 }

@@ -16,8 +16,13 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
 const STORAGE_KEY = 'fptt.locale';
 
 function initialLocale(): Locale {
-  const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
-  if (stored && (LOCALES as string[]).includes(stored)) return stored as Locale;
+  // Reading storage throws in a sandboxed iframe, so the app must survive it.
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored && (LOCALES as string[]).includes(stored)) return stored as Locale;
+  } catch {
+    // Fall through to the browser language.
+  }
   const browser = typeof navigator !== 'undefined' ? navigator.language.slice(0, 2) : 'en';
   return (LOCALES as string[]).includes(browser) ? (browser as Locale) : 'en';
 }

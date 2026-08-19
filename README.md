@@ -23,7 +23,12 @@ npm run dev        # fejlesztői szerver
 npm test           # pontozási logika és tartalmi invariánsok
 npm run typecheck  # TypeScript ellenőrzés
 npm run build      # statikus build a dist/ könyvtárba
+npm run build:single  # egyetlen, önálló HTML-fájl (dist/from-pathway-to-therapy.html)
 ```
+
+A `build:single` egy ~275 kB-os, külső kérés nélküli HTML-fájlt állít elő. Ez
+megnyitható közvetlenül a fájlrendszerről, feltölthető bárhová, vagy beágyazható
+egy LMS-be — szerver nélkül is fut.
 
 A build relatív `base`-szel készül, így alkönyvtárból (pl. GitHub Pages
 project site) is működik; a routing hash-alapú, ezért nincs szükség
