@@ -1,8 +1,9 @@
-# Biokémia keresztrejtvény
+# Sejtmembrán keresztrejtvény
 
-Háromnyelvű (magyar · angol · német), böngészőben futó keresztrejtvény-játék
-biokémiai fogalmakból. Minden indításnál új rácsot generál: a szótár 111
-fogalmából választ, és keresztezésekre épülő elrendezést épít belőlük.
+Háromnyelvű (magyar · angol · német), böngészőben futó keresztrejtvény-játék a
+*Cell membrane* előadás anyagából. Minden indításnál új rácsot generál: a
+szótár 72 fogalmából választ, és keresztezésekre épülő elrendezést épít
+belőlük.
 
 **Játék indítása:** nyisd meg az `index.html` fájlt bármelyik böngészőben.
 Nincs telepítés, build vagy netkapcsolat-igény (a betűtípusok hiányában is
@@ -12,11 +13,13 @@ olvasható marad az oldal).
 
 - **Három nyelv egy kattintással** – magyar, angol és német. Nemcsak a felület
   fordul le: a megfejtések és a meghatározások is nyelvenként külön szótárból
-  jönnek (GLÜKÓZ / GLUCOSE / GLUCOSE), ezért a nyelvváltás új rácsot generál.
+  jönnek (KETTŐSRÉTEG / BILAYER / DOPPELSCHICHT), ezért a nyelvváltás új rácsot
+  generál.
   Induláskor a böngésző nyelve, illetve a legutóbbi választás dönt.
 - **Három nehézségi szint** – Könnyű (10 szó), Haladó (14 szó), Profi (18 szó).
-- **Hat témakör** – aminosavak, szénhidrátok, lipidek, nukleinsavak, anyagcsere
-  és enzimek, vitaminok. A választott témakör szavai kerülnek előtérbe, a rács
+- **Hat témakör az előadás felépítése szerint** – membránlipidek,
+  szfingolipidek, koleszterin, membránfehérjék, membráncukrok, valamint
+  szerkezet és dinamika. A választott témakör szavai kerülnek előtérbe, a rács
   feltöltéséhez szükséges maradékot a többi kör adja.
 - **Teljes billentyűzetes kezelés** – gépelés, `Szóköz` irányváltás, `Tab`
   következő meghatározás, nyilak, `Backspace`.
@@ -47,7 +50,7 @@ hogy a bordó rajz jól látszódjon.
 
 ## Saját kérdések feltöltése
 
-A beépített 111 fogalom mellé (vagy helyette) bármikor betölthető saját
+A beépített 72 fogalom mellé (vagy helyette) bármikor betölthető saját
 szólista. Három út vezet ide, ugyanazzal a táblázatformátummal.
 
 ### 1. A játékon belül – „Saját szavak" gomb
@@ -85,7 +88,7 @@ Minta: **`szavak-minta.csv`** (nyisd meg Excelben vagy szövegszerkesztőben).
 
 ```
 temakor;megfejtes_hu;meghatarozas_hu;megfejtes_en;meghatarozas_en;megfejtes_de;meghatarozas_de
-aminosav;GLICIN;A legegyszerűbb aminosav;GLYCINE;The simplest amino acid;GLYCIN;Die einfachste Aminosäure
+feherje;AKVAPORIN;Vízcsatorna-fehérje a membránban;AQUAPORIN;Water channel protein;AQUAPORIN;Wasserkanalprotein
 ```
 
 - **Elválasztó**: pontosvessző, vessző vagy tabulátor – a játék felismeri. A
@@ -94,8 +97,8 @@ aminosav;GLICIN;A legegyszerűbb aminosav;GLYCINE;The simplest amino acid;GLYCIN
   jelenik meg, ahol ki van töltve. Rövid alak is jó: `megfejtés;meghatározás`
   vagy `témakör;megfejtés;meghatározás` – ilyenkor az éppen beállított nyelvre
   kerül a sor.
-- **Témakör**: `aminosav`, `szenhidrat`, `lipid`, `nukleinsav`, `anyagcsere`,
-  `vitamin` (a magyar, angol vagy német nevük is elfogadott). Bármi más a
+- **Témakör**: `lipid`, `szfingo`, `szterin`, `feherje`, `szenhidrat`,
+  `dinamika` (a magyar, angol vagy német nevük is elfogadott). Bármi más a
   „Saját szavak" körbe kerül.
 - **Megfejtés**: 3–20 betű, csak az adott nyelv ábécéjéből. A szóköz, a kötőjel
   és a pont automatikusan kiesik (FATTY ACID → FATTYACID), a számjegy viszont
