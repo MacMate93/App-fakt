@@ -95,6 +95,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html, body { height: 100%; }
 body {
   margin: 0;
@@ -133,16 +134,16 @@ button, select, input { font: inherit; color: inherit; }
 :focus-visible { outline: 3px solid var(--narancs); outline-offset: 3px; }
 
 .burok {
-  max-width: 1200px;
+  max-width: 1340px;
   margin: 0 auto;
-  padding: 20px 16px 104px;
+  padding: 16px 16px 96px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
 }
 
 /* ---------- Fejléc ---------- */
-.fejlec { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.fejlec { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
 .cimblokk { flex: 1 1 260px; display: flex; flex-direction: column; gap: 0; }
 .cimer {
   flex: 0 0 auto;
@@ -176,7 +177,7 @@ button, select, input { font: inherit; color: inherit; }
 h1 {
   font-family: var(--diszp);
   font-weight: 800;
-  font-size: clamp(30px, 5vw, 46px);
+  font-size: clamp(27px, 4vw, 38px);
   line-height: 1;
   margin: 0;
   text-wrap: balance;
@@ -274,7 +275,7 @@ h1 em {
 /* ---------- Elrendezés ---------- */
 .jatekter {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(310px, .95fr);
+  grid-template-columns: minmax(0, 1.7fr) minmax(290px, .8fr);
   grid-template-areas: "racs megh" "racs klavia";
   grid-template-rows: auto 1fr;
   gap: 18px;
@@ -283,6 +284,12 @@ h1 em {
 .racs-lap { grid-area: racs; }
 .megh-lap { grid-area: megh; }
 .klavia { grid-area: klavia; }
+/* Kis kijelzőn minden képpont a rácsé: szűkebb keret, kisebb belső margó. */
+@media (max-width: 600px) {
+  .burok { padding-left: 8px; padding-right: 8px; }
+  .racs-lap { padding: 10px; }
+  .eszkozsav { padding-left: 8px; padding-right: 8px; }
+}
 @media (max-width: 900px) {
   .jatekter {
     grid-template-columns: minmax(0, 1fr);
@@ -298,24 +305,21 @@ h1 em {
 }
 
 /* ---------- Rács ---------- */
-.racs-lap { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.racs-lap { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
 .racs-doboz {
-  container-type: inline-size;
   display: flex;
   justify-content: center;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  padding: 2px 2px 6px;
+  align-items: flex-start;
+  padding: 2px 0 6px;
   position: relative;
+  min-width: 0;
 }
+/* A cellaméretet a szabad hely alapján a meretezdRacsot() állítja be, így a
+   rács mindig kifér – vízszintes görgetés nélkül. */
 .racs {
   display: grid;
-  grid-template-columns: repeat(var(--o), 1fr);
-  gap: 4px;
-  width: 100%;
-  max-width: calc(var(--o) * 48px);
-  min-width: calc(var(--o) * 28px);
-  flex: 0 0 auto;
+  grid-template-columns: repeat(var(--o), var(--cella, 40px));
+  gap: var(--rés, 4px);
   --akt: var(--narancs);
 }
 .cella {
@@ -326,7 +330,7 @@ h1 em {
   justify-content: center;
   font-family: var(--diszp);
   font-weight: 700;
-  font-size: clamp(14px, calc(58cqi / var(--o)), 28px);
+  font-size: calc(var(--cella, 40px) * .58);
   line-height: 1;
   user-select: none;
 }
@@ -345,7 +349,7 @@ h1 em {
   top: 6%;
   left: 9%;
   font-family: var(--szoveg);
-  font-size: clamp(8px, calc(24cqi / var(--o)), 11px);
+  font-size: max(7px, calc(var(--cella, 40px) * .26));
   font-weight: 800;
   color: var(--halvany);
   line-height: 1;
@@ -393,6 +397,9 @@ h1 em {
 
 /* ---------- Aktív meghatározás ---------- */
 .aktiv-sav {
+  position: sticky;
+  top: 8px;
+  z-index: 5;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -485,7 +492,6 @@ ol.megh { list-style: none; margin: 0; padding: 0; display: flex; flex-direction
 
 /* ---------- Betűsor ---------- */
 .klavia { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
-.klavia[hidden] { display: none; }
 .klavia-sor { display: flex; gap: 5px; justify-content: center; }
 .klavia button {
   flex: 1 1 0;
@@ -1623,6 +1629,8 @@ function ujJatek(mentesbol) {
     allapot.irany = elso.vv ? "vv" : "ff";
   }
   epitsRacsot();
+  meretezdRacsot();
+  requestAnimationFrame(meretezdRacsot);
   epitsMeghatarozasokat();
   frissitsMindent();
   inditsOrat();
@@ -1680,6 +1688,44 @@ function epitsRacsot() {
 
   racs.classList.add("indul");
   setTimeout(() => racs.classList.remove("indul"), 900);
+}
+
+/** A rács a rendelkezésre álló helyhez igazodik: a lehető legnagyobb cella,
+    ami vízszintesen és – ha belefér – függőlegesen is elfér. */
+function meretezdRacsot() {
+  if (!allapot || !allapot.rejtveny) return;
+  const racs = E("racs");
+  const doboz = racs.parentElement;
+  const oszlopok = allapot.rejtveny.oszlopok;
+
+  const res = oszlopok > 22 ? 2 : oszlopok > 16 ? 3 : 4;
+  const MAX = 68;   // ennél nagyobb cella már nem olvastat jobban
+  const MIN = 14;
+
+  const szelesseg = doboz.clientWidth - 2;
+  const szelessegbol = Math.floor((szelesseg - res * (oszlopok - 1)) / oszlopok);
+  const cella = Math.min(Math.max(szelessegbol, MIN), MAX, Math.max(szelessegbol, 1));
+
+  if (racs.style.getPropertyValue("--cella") !== cella + "px") {
+    racs.style.setProperty("--cella", cella + "px");
+  }
+  racs.style.setProperty("--rés", res + "px");
+}
+
+let meretezoIdozito = null;
+window.addEventListener("resize", () => {
+  clearTimeout(meretezoIdozito);
+  meretezoIdozito = setTimeout(meretezdRacsot, 120);
+});
+
+// A rács dobozának minden méretváltozására újraszámolunk: így a betűtípusok
+// betöltése vagy az elrendezés utólagos rendeződése sem hagy kihasználatlan
+// helyet.
+if (window.ResizeObserver) {
+  new ResizeObserver(() => meretezdRacsot()).observe(E("racs").parentElement);
+}
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => meretezdRacsot());
 }
 
 function szavakAtCellan(r, c) {
@@ -2391,6 +2437,7 @@ E("klavia-gomb").addEventListener("click", () => {
   doboz.hidden = !latszik;
   E("klavia-gomb").setAttribute("aria-expanded", String(latszik));
   try { localStorage.setItem("biokem-kr-klavia", latszik ? "1" : "0"); } catch (e) {}
+  meretezdRacsot();
   fokuszal();
 });
 
