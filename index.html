@@ -131,6 +131,7 @@ body {
 }
 
 button, select, input { font: inherit; color: inherit; }
+button, select, label.gomb { touch-action: manipulation; }
 :focus-visible { outline: 3px solid var(--narancs); outline-offset: 3px; }
 
 .burok {
@@ -214,6 +215,13 @@ h1 em {
   transition: transform .12s ease, background-color .12s ease, color .12s ease;
 }
 .nyelvvalto button:hover { color: var(--tinta); }
+/* Ujjal is biztosan eltalálható méret. */
+@media (pointer: coarse) {
+  .nyelvvalto { padding: 5px; gap: 5px; }
+  .nyelvvalto button { min-width: 56px; min-height: 44px; font-size: 16px; }
+  .fejlec-eszkozok .gomb { min-height: 44px; }
+  .lepteto { width: 44px; height: 44px; }
+}
 .nyelvvalto button[aria-pressed="true"] {
   background: var(--narancs);
   color: var(--kiemeles-tinta);
@@ -2382,6 +2390,10 @@ document.addEventListener("keydown", (ev) => {
   if (ev.target.tagName === "INPUT" && ev.target !== rejtett) return;
   if (document.querySelector("dialog[open]")) return;
   if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+  // Ha egy gombon áll a fókusz, az Enter és a szóköz azt működtesse, ne a
+  // rejtvényt; a betűk viszont ilyenkor is a rácsba kerülnek.
+  const gombonAll = ev.target && (ev.target.tagName === "BUTTON" || ev.target.tagName === "A");
+  if (gombonAll && (ev.key === "Enter" || ev.key === " ")) return;
   const rejtettben = ev.target === rejtett;
 
   switch (ev.key) {
@@ -2408,8 +2420,35 @@ document.addEventListener("keydown", (ev) => {
   }
 });
 
+/**
+ * Érintőképernyőn a koppintás előbb a rendszerbillentyűzetet csukja be, és az
+ * emiatt megugró elrendezés miatt a click már mellémehet. Ezért a gomb a
+ * pointerup eseményre is működik – a rákövetkező click ilyenkor kimarad.
+ */
+function koppintasra(elem, teendo) {
+  let kezdet = null;
+  let utolso = 0;
+
+  elem.addEventListener("pointerdown", (ev) => {
+    kezdet = { x: ev.clientX, y: ev.clientY };
+  });
+  elem.addEventListener("pointercancel", () => { kezdet = null; });
+  elem.addEventListener("pointerup", (ev) => {
+    if (!kezdet) return;
+    const mozgas = Math.hypot(ev.clientX - kezdet.x, ev.clientY - kezdet.y);
+    kezdet = null;
+    if (mozgas > 12) return;          // ez görgetés volt, nem koppintás
+    utolso = Date.now();
+    teendo();
+  });
+  elem.addEventListener("click", () => {
+    if (Date.now() - utolso < 700) return;   // a koppintás már elintézte
+    teendo();
+  });
+}
+
 for (const g of document.querySelectorAll("#nyelvvalto button")) {
-  g.addEventListener("click", () => {
+  koppintasra(g, () => {
     if (g.dataset.nyelv === nyelv) return;
     allitsNyelvet(g.dataset.nyelv);
   });
@@ -2426,12 +2465,12 @@ E("gyozelem").addEventListener("close", fokuszalVissza);
 E("sugo").addEventListener("close", fokuszalVissza);
 E("nehezseg").addEventListener("change", () => ujJatek());
 E("temakor").addEventListener("change", () => ujJatek());
-E("sugo-gomb").addEventListener("click", () => E("sugo").showModal());
+koppintasra(E("sugo-gomb"), () => E("sugo").showModal());
 E("sugo-bezar").addEventListener("click", () => E("sugo").close());
 E("gyozelem-bezar").addEventListener("click", () => E("gyozelem").close());
 E("gyozelem-uj").addEventListener("click", () => { E("gyozelem").close(); ujJatek(); });
 
-E("klavia-gomb").addEventListener("click", () => {
+koppintasra(E("klavia-gomb"), () => {
   const doboz = E("klavia");
   const latszik = doboz.hidden;
   doboz.hidden = !latszik;
@@ -2439,9 +2478,9 @@ E("klavia-gomb").addEventListener("click", () => {
   try { localStorage.setItem("biokem-kr-klavia", latszik ? "1" : "0"); } catch (e) {}
   meretezdRacsot();
   fokuszal();
-});
+})
 
-E("tema-gomb").addEventListener("click", () => {
+koppintasra(E("tema-gomb"), () => {
   const sotetE = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const most = document.documentElement.dataset.tema;
   let uj;
@@ -2450,7 +2489,7 @@ E("tema-gomb").addEventListener("click", () => {
   else uj = sotetE ? "vilagos" : "sotet";
   document.documentElement.dataset.tema = uj;
   try { localStorage.setItem("biokem-kr-tema", uj); } catch (e) {}
-});
+})
 
 /* ==========================================================================
    8. Címer
