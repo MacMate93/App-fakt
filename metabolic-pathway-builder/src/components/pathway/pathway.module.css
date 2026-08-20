@@ -1,0 +1,436 @@
+/* The pathway canvas: one top-down column of metabolite cards joined by
+   reaction arrows. Every visual category keeps the hue it owns in tokens.css. */
+
+.canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: var(--space-5) var(--space-5) var(--space-6);
+  width: 100%;
+}
+
+.nodeRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+/* ---- metabolite card ---- */
+
+.metabolite {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 208px;
+  max-width: 280px;
+  padding: 10px 16px 10px 20px;
+  border: 1px solid var(--metabolite-border);
+  border-left: 4px solid var(--metabolite);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.metaboliteName {
+  font-weight: 620;
+  font-size: 0.98rem;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.metaboliteMeta {
+  display: flex;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+
+.clickable {
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+}
+
+.clickable:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- arrow block ---- */
+
+.arrowBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  width: 100%;
+}
+
+.line {
+  width: 2px;
+  height: 14px;
+  background: var(--border-strong);
+}
+
+.lineTall {
+  height: 20px;
+}
+
+.arrowHead {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--border-strong);
+  margin-top: -2px;
+}
+
+.irreversible .line,
+.irreversible .arrowHead {
+  background: var(--regulatory);
+}
+
+.irreversible .arrowHead {
+  border-top-color: var(--regulatory);
+  background: none;
+}
+
+.reversibleMark {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+.enzymeRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  max-width: 100%;
+}
+
+/* Step number and reversibility marker are annotations: they hang off the
+   centre line rather than pushing the enzyme off it. */
+.enzymeRow .stepTag {
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.enzymeRow .reversibleMark {
+  position: absolute;
+  right: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.enzyme {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--enzyme-border);
+  background: var(--enzyme-soft);
+  color: var(--enzyme);
+  font-size: 0.86rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.enzymeRegulatory {
+  border-color: var(--regulatory-border);
+  background: var(--regulatory-soft);
+  color: var(--regulatory);
+}
+
+.regMark {
+  font-size: 0.9em;
+}
+
+.chipRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.chipEnergy {
+  border-color: var(--energy-border);
+  background: var(--energy-soft);
+  color: var(--energy);
+}
+
+.chipRedox {
+  border-color: var(--redox-border);
+  background: var(--redox-soft);
+  color: var(--redox);
+}
+
+.extra {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+
+.stepTag {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+}
+
+/* ---- ×2 divider and side branch ---- */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 640px;
+  margin: var(--space-4) 0 var(--space-2);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.dividerLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 1px dashed var(--border-strong);
+  background: var(--surface);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.branch {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 var(--space-2) auto;
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  max-width: 340px;
+}
+
+.branchCaption {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ---- drop slots ---- */
+
+.slot {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 75%, transparent);
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease;
+  font: inherit;
+  text-align: center;
+}
+
+.slotMetabolite {
+  min-width: 208px;
+  max-width: 280px;
+  min-height: 56px;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+}
+
+.slotEnzyme,
+.slotCouple {
+  min-width: 172px;
+  min-height: 40px;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.slotLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.slotHint {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+}
+
+.slotActive {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.slotOver {
+  border-color: var(--accent);
+  border-style: solid;
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: scale(1.02);
+}
+
+.slotFilled {
+  border-style: solid;
+  border-color: var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.slotCorrect {
+  border-style: solid;
+  border-color: var(--correct-border);
+  background: var(--correct-soft);
+  color: var(--correct);
+  animation: mpb-pop 0.32s ease;
+}
+
+.slot[data-armed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.slotWrong {
+  animation: mpb-shake 0.3s ease;
+  border-color: var(--incorrect);
+  color: var(--incorrect);
+}
+
+.slotMissed {
+  border-style: solid;
+  border-color: var(--incorrect-border);
+  background: var(--incorrect-soft);
+  color: var(--incorrect);
+}
+
+.slotContent {
+  font-weight: 620;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.slotSub {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  opacity: 0.75;
+}
+
+.slotClear {
+  font-size: 0.68rem;
+  text-decoration: underline;
+  opacity: 0.7;
+}
+
+@media (max-width: 560px) {
+  .metabolite,
+  .slotMetabolite {
+    min-width: 168px;
+  }
+  .slotEnzyme,
+  .slotCouple {
+    min-width: 148px;
+  }
+  .branch {
+    max-width: 100%;
+    margin-left: 0;
+    align-self: stretch;
+  }
+}
+
+/* ---- solved positions: the real card, with a quiet confirmation ---- */
+
+.solved {
+  border-color: var(--correct-border);
+  animation: mpb-pop 0.32s ease;
+}
+
+.metabolite.solved {
+  border-left-color: var(--correct);
+}
+
+.solvedMark {
+  color: var(--correct);
+  font-weight: 700;
+  font-size: 0.85em;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px dashed var(--border);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}

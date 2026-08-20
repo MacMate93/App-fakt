@@ -1,0 +1,129 @@
+/*
+ * Design tokens.
+ *
+ * Colour carries meaning here, never decoration: every visual category of the
+ * pathway (metabolite, enzyme, energy carrier, redox cofactor, regulatory step)
+ * owns one hue and keeps it everywhere it appears — on the canvas, in the tray
+ * and in the legend.
+ */
+:root {
+  color-scheme: light dark;
+
+  --bg: #f4f6f9;
+  --bg-grid: rgba(19, 33, 53, 0.045);
+  --surface: #ffffff;
+  --surface-2: #eef1f6;
+  --surface-3: #e4e9f0;
+  --border: #dce2ea;
+  --border-strong: #c3ccd8;
+  --text: #101823;
+  --text-muted: #57626f;
+  --text-faint: #8a94a1;
+
+  --accent: #1b5fa8;
+  --accent-hover: #164e8c;
+  --accent-soft: #e8f0fb;
+  --accent-border: #b5cdea;
+  --accent-contrast: #ffffff;
+
+  --metabolite: #1f4e79;
+  --metabolite-soft: #e9f0f8;
+  --metabolite-border: #b9cee3;
+
+  --enzyme: #6b3fa0;
+  --enzyme-soft: #f1ebf9;
+  --enzyme-border: #d0bce9;
+
+  --energy: #9a6212;
+  --energy-soft: #fbf1de;
+  --energy-border: #e6cfa4;
+
+  --redox: #14705a;
+  --redox-soft: #e3f3ee;
+  --redox-border: #aed8cb;
+
+  --regulatory: #b0491d;
+  --regulatory-soft: #fdeee6;
+  --regulatory-border: #f0c6ad;
+
+  --correct: #11704b;
+  --correct-soft: #e3f3eb;
+  --correct-border: #a9d6c2;
+  --incorrect: #a52a25;
+  --incorrect-soft: #fbeae9;
+  --incorrect-border: #eec3c0;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.09);
+  --shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.16);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  --max-width: 1180px;
+  --tray-height: 168px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0c1117;
+    --bg-grid: rgba(148, 178, 214, 0.05);
+    --surface: #151b24;
+    --surface-2: #1b222d;
+    --surface-3: #232c39;
+    --border: #262f3b;
+    --border-strong: #3a4655;
+    --text: #e6edf5;
+    --text-muted: #9aa6b4;
+    --text-faint: #6d7885;
+
+    --accent: #5b9dff;
+    --accent-hover: #7db0ff;
+    --accent-soft: #142338;
+    --accent-border: #2b4670;
+    --accent-contrast: #08111d;
+
+    --metabolite: #79b3e8;
+    --metabolite-soft: #13202e;
+    --metabolite-border: #2b455f;
+
+    --enzyme: #c3a4ef;
+    --enzyme-soft: #1e1a2b;
+    --enzyme-border: #443861;
+
+    --energy: #e3b465;
+    --energy-soft: #2a2214;
+    --energy-border: #574728;
+
+    --redox: #62c8a8;
+    --redox-soft: #12261f;
+    --redox-border: #275044;
+
+    --regulatory: #f0956a;
+    --regulatory-soft: #2b1a12;
+    --regulatory-border: #5c3826;
+
+    --correct: #4fce9b;
+    --correct-soft: #10241b;
+    --correct-border: #2a5442;
+    --incorrect: #ff8a80;
+    --incorrect-soft: #2a1917;
+    --incorrect-border: #5a2f2b;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+  }
+}

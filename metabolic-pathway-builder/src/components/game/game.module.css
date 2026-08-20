@@ -1,0 +1,321 @@
+/* Task strip, token tray, hints, feedback and the score rail. */
+
+.playLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.canvasColumn {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.sideColumn {
+  position: sticky;
+  top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (max-width: 1000px) {
+  .playLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sideColumn {
+    position: static;
+  }
+}
+
+/* ---- task strip ---- */
+
+.task {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+}
+
+.taskHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.taskPrompt {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.taskMeta {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ---- hints ---- */
+
+.hintList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+}
+
+.hint {
+  display: flex;
+  gap: var(--space-3);
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  animation: mpb-rise 0.2s ease;
+}
+
+.hintIndex {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  padding-top: 2px;
+}
+
+.hintFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+/* ---- feedback ---- */
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  animation: mpb-rise 0.22s ease;
+}
+
+.feedbackCorrect {
+  border-color: var(--correct-border);
+  background: var(--correct-soft);
+}
+
+.feedbackIncorrect {
+  border-color: var(--incorrect-border);
+  background: var(--incorrect-soft);
+}
+
+.feedbackTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.feedbackCorrect .feedbackTitle { color: var(--correct); }
+.feedbackIncorrect .feedbackTitle { color: var(--incorrect); }
+
+.feedbackBody {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ---- token tray ---- */
+
+.tray {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 -6px 24px rgba(16, 24, 40, 0.08);
+}
+
+.trayHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.trayGroups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.trayGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.trayGroupLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  min-width: 82px;
+  padding-top: 8px;
+  align-self: flex-start;
+}
+
+.token {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: grab;
+  min-height: 40px;
+  justify-content: center;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.token:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.token:active {
+  cursor: grabbing;
+}
+
+.tokenMetabolite { border-color: var(--metabolite-border); background: var(--metabolite-soft); color: var(--metabolite); border-radius: var(--radius); }
+.tokenEnzyme { border-color: var(--enzyme-border); background: var(--enzyme-soft); color: var(--enzyme); }
+.tokenEnergy { border-color: var(--energy-border); background: var(--energy-soft); color: var(--energy); font-family: var(--font-mono); }
+.tokenRedox { border-color: var(--redox-border); background: var(--redox-soft); color: var(--redox); font-family: var(--font-mono); }
+
+.tokenSelected {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: var(--shadow-md);
+}
+
+.tokenSub {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  opacity: 0.75;
+  font-weight: 500;
+}
+
+.tokenCount {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  opacity: 0.8;
+}
+
+.ghost {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1.04);
+  box-shadow: var(--shadow-lg);
+  opacity: 0.96;
+}
+
+/* ---- score rail ---- */
+
+.scoreGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.streak {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  border: 1px solid var(--energy-border);
+  background: var(--energy-soft);
+  color: var(--energy);
+  font-weight: 650;
+  font-size: 0.9rem;
+  animation: mpb-pop 0.3s ease;
+}
+
+.progressHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+}
+
+.progressLine {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.progressTitle {
+  font-weight: 650;
+}
+
+.progressCount {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}

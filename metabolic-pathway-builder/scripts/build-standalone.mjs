@@ -1,0 +1,36 @@
+/**
+ * Inlines the Vite build into a single HTML file with no external requests, so
+ * the trainer can be handed out on a stick, dropped into an LMS or opened
+ * straight from disk during a seminar.
+ */
+import { readFile, writeFile, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+
+const DIST = 'dist';
+const OUT = join(DIST, 'metabolic-pathway-builder.html');
+
+const html = await readFile(join(DIST, 'index.html'), 'utf8');
+const assets = await readdir(join(DIST, 'assets'));
+
+const jsName = assets.find((name) => name.endsWith('.js'));
+const cssName = assets.find((name) => name.endsWith('.css'));
+if (!jsName || !cssName) throw new Error('Run `vite build` first.');
+
+const js = await readFile(join(DIST, 'assets', jsName), 'utf8');
+const css = await readFile(join(DIST, 'assets', cssName), 'utf8');
+const title = html.match(/<title>(.*?)<\/title>/)?.[1] ?? 'Metabolic Pathway Builder';
+
+const out = `<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>${title}</title>
+<style>
+${css}
+</style>
+<div id="root"></div>
+<script type="module">
+${js.replaceAll('</script', '<\\/script')}
+</script>
+`;
+
+await writeFile(OUT, out, 'utf8');
+console.log(`${OUT} — ${(Buffer.byteLength(out) / 1024).toFixed(0)} kB`);

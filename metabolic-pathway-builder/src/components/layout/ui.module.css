@@ -1,0 +1,108 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  min-height: 44px;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: transparent;
+  padding: 8px 12px;
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.small {
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.cardPad {
+  padding: var(--space-5);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.badgeMetabolite { background: var(--metabolite-soft); border-color: var(--metabolite-border); color: var(--metabolite); }
+.badgeEnzyme { background: var(--enzyme-soft); border-color: var(--enzyme-border); color: var(--enzyme); }
+.badgeEnergy { background: var(--energy-soft); border-color: var(--energy-border); color: var(--energy); }
+.badgeRedox { background: var(--redox-soft); border-color: var(--redox-border); color: var(--redox); }
+.badgeRegulatory { background: var(--regulatory-soft); border-color: var(--regulatory-border); color: var(--regulatory); }
+.badgeCorrect { background: var(--correct-soft); border-color: var(--correct-border); color: var(--correct); }
+.badgeAccent { background: var(--accent-soft); border-color: var(--accent-border); color: var(--accent); }
+
+.progress {
+  height: 8px;
+  width: 100%;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 0.35s ease;
+}
+
+.progressFill[data-tone='correct'] { background: var(--correct); }

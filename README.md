@@ -1,3 +1,11 @@
+> **Ez a repó két oktatási alkalmazást tartalmaz.**
+> A gyökérben a *From Pathway to Therapy* fakultációs modul él; a
+> [`metabolic-pathway-builder/`](metabolic-pathway-builder/) könyvtárban pedig a
+> *Metabolic Pathway Builder* — interaktív anyagcsereút-építő biokémia-gyakorláshoz.
+> A két alkalmazás önálló: külön `package.json`, külön build, közös stílusfilozófia.
+
+---
+
 # From Pathway to Therapy
 
 **Interactive Cases in Medical and Veterinary Biochemistry**
