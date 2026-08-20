@@ -41,6 +41,7 @@
   --kat-nukleinsav: #14B8A6; --kat-nukleinsav-tinta: #04302B;
   --kat-anyagcsere: #2D6BE0; --kat-anyagcsere-tinta: #FFFFFF;
   --kat-vitamin: #7C3FD1;    --kat-vitamin-tinta: #FFFFFF;
+  --kat-sajat: #12968A;      --kat-sajat-tinta: #FFFFFF;
 
   --bokeh: rgba(255, 255, 255, .40);
   --sugar: 14px;
@@ -75,6 +76,7 @@
     --kat-nukleinsav: #3FD9C6; --kat-nukleinsav-tinta: #04302B;
     --kat-anyagcsere: #6BA2FF; --kat-anyagcsere-tinta: #05204D;
     --kat-vitamin: #B48AF5;    --kat-vitamin-tinta: #22004F;
+    --kat-sajat: #59DBCB;      --kat-sajat-tinta: #04302B;
   }
 }
 
@@ -104,6 +106,7 @@
   --kat-nukleinsav: #3FD9C6; --kat-nukleinsav-tinta: #04302B;
   --kat-anyagcsere: #6BA2FF; --kat-anyagcsere-tinta: #05204D;
   --kat-vitamin: #B48AF5;    --kat-vitamin-tinta: #22004F;
+  --kat-sajat: #59DBCB;      --kat-sajat-tinta: #04302B;
 }
 
 * { box-sizing: border-box; }
@@ -620,6 +623,45 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
 }
 .parbeszed-gombsor { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
 
+/* ---------- Saját lista párbeszéd ---------- */
+.sablon {
+  margin: 0;
+  padding: 12px 14px;
+  background: var(--felulet-2);
+  border-radius: var(--sugar);
+  box-shadow: inset 0 0 0 3px var(--vonal);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--tinta);
+  overflow-x: auto;
+  white-space: pre;
+}
+.apro { font-size: 13px; }
+.mezo-cimke { font-family: var(--diszp); font-weight: 700; font-size: 15px; }
+#sajat-szoveg {
+  width: 100%;
+  border: 0;
+  border-radius: var(--sugar);
+  background: var(--felulet-2);
+  box-shadow: inset 0 0 0 3px var(--vonal);
+  padding: 10px 12px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  resize: vertical;
+}
+.uzenet-doboz {
+  border-radius: var(--sugar);
+  padding: 10px 14px;
+  font-size: 13.5px;
+  background: var(--felulet-2);
+  box-shadow: inset 0 0 0 3px var(--vonal);
+}
+.uzenet-doboz ul { padding-left: 18px; gap: 3px; }
+.uzenet-doboz .rendben { color: var(--siker); font-weight: 800; }
+.uzenet-doboz .gond { color: var(--hiba); font-weight: 800; }
+.parbeszed-test .szet { display: flex; gap: 8px; justify-content: space-between; flex-wrap: wrap; }
+
 /* Rejtett mező: ezen keresztül érkezik a mobil- és IME-bevitel is. */
 .rejtett-bevitel {
   position: absolute;
@@ -728,6 +770,7 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
     <div class="eszkoz-csoport">
       <select class="gomb" id="nehezseg" data-sz-aria="nehezseg"></select>
       <select class="gomb" id="temakor" data-sz-aria="temakor"></select>
+      <button class="gomb" id="sajat-gomb" data-sz="sajatGomb"></button>
       <button class="gomb elsodleges" id="uj-gomb" data-sz="ujRejtveny"></button>
     </div>
     <div class="eszkoz-csoport">
@@ -754,6 +797,35 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
       <button class="gomb" id="gyozelem-bezar" data-sz="racsMegtekintese"></button>
       <button class="gomb elsodleges" id="gyozelem-uj" data-sz="ujRejtveny"></button>
     </div>
+  </div>
+</dialog>
+
+<dialog id="sajat">
+  <div class="parbeszed-test">
+    <h2 data-sz="sajatCim"></h2>
+    <p data-sz="sajatLeiras"></p>
+    <pre class="sablon" id="sajat-sablon"></pre>
+    <p class="apro" data-sz="sajatOszlopok"></p>
+
+    <label class="gomb" style="align-self: flex-start;">
+      <span data-sz="sajatFajl"></span>
+      <input type="file" id="sajat-fajl" accept=".csv,.tsv,.txt,text/csv,text/plain" style="display: none;">
+    </label>
+
+    <label class="mezo-cimke" for="sajat-szoveg" data-sz="sajatBeillesztes"></label>
+    <textarea id="sajat-szoveg" rows="6" spellcheck="false" data-sz-aria="sajatSzoveg"></textarea>
+
+    <div class="szet">
+      <button class="gomb" id="sajat-torol" data-sz="sajatTorles"></button>
+      <button class="gomb elsodleges" id="sajat-betolt" data-sz="sajatBetoltes"></button>
+    </div>
+
+    <div class="uzenet-doboz" id="sajat-eredmeny"></div>
+
+    <label class="mezo-cimke" for="sajat-forras" data-sz="sajatForras"></label>
+    <select class="gomb" id="sajat-forras" data-sz-aria="sajatForras"></select>
+
+    <div class="parbeszed-gombsor"><button class="gomb elsodleges" id="sajat-bezar" data-sz="ertem"></button></div>
   </div>
 </dialog>
 
@@ -792,6 +864,29 @@ const SZOVEGEK = {
       aminosav: "Aminosavak", szenhidrat: "Szénhidrátok", lipid: "Lipidek",
       nukleinsav: "Nukleinsavak", anyagcsere: "Anyagcsere", vitamin: "Vitaminok"
     },
+    sajatGomb: "Saját szavak",
+    sajatCim: "Saját szavak feltöltése",
+    sajatLeiras: "Tölts fel egy táblázatot (CSV), vagy másold be a sorait. Soronként egy fogalom. Az elválasztó lehet pontosvessző, vessző vagy tabulátor – Excelből kimásolt sorok is jók.",
+    sajatOszlopok: "Oszlopok: témakör; magyar megfejtés; magyar meghatározás; angol megfejtés; angol meghatározás; német megfejtés; német meghatározás. Az idegen nyelvű oszlopok elhagyhatók: az a fogalom csak ott jelenik meg, ahol ki van töltve. Rövid alak is jó: megfejtés; meghatározás – ilyenkor az éppen beállított nyelvre kerül.",
+    sajatFajl: "Táblázat kiválasztása",
+    sajatBeillesztes: "…vagy másold ide a sorokat",
+    sajatBetoltes: "Lista betöltése",
+    sajatTorles: "Saját lista törlése",
+    sajatForras: "Miből álljon a rejtvény?",
+    sajatForrasBeepitett: "Csak a beépített 111 fogalom",
+    sajatForrasSajat: "Csak a saját listám",
+    sajatForrasMindketto: "Beépített és saját együtt",
+    sajatAllapot: "Saját lista: {n} fogalom",
+    sajatUres: "Még nincs saját lista feltöltve.",
+    sajatEredmeny: "{ok} sor betöltve.",
+    sajatKimaradt: "{n} sor kimaradt:",
+    sajatKeves: "Ehhez a nyelvhez és szinthez kevés a saját szó, ezért a beépített lista egészíti ki.",
+    hibaRovid: "a megfejtés túl rövid (legalább 3 betű)",
+    hibaHosszu: "a megfejtés túl hosszú (legfeljebb 20 betű)",
+    hibaKarakter: "a megfejtés nem szereplő betűt tartalmaz: {ch}",
+    hibaMeghatarozas: "hiányzik a meghatározás",
+    hibaOszlop: "kevés oszlop",
+    temakorSajat: "Saját szavak",
     mindHelyes: "Eddig minden betű helyes!",
     hibasBetuk: "{n} hibás betű pirossal jelölve.",
     megoldasKerdes: "Biztosan feltárod a teljes megoldást? A játék ezzel véget ér.",
@@ -817,7 +912,8 @@ const SZOVEGEK = {
       meghatarozasok: "Meghatározások", betusor: "Képernyő-billentyűzet",
       bevitel: "Betűbevitel a kijelölt mezőbe", elozo: "Előző meghatározás",
       kovetkezo: "Következő meghatározás", nehezseg: "Nehézségi szint",
-      temakor: "Témakör", torles: "Betű törlése", iranyvaltas: "Irányváltás"
+      temakor: "Témakör", torles: "Betű törlése", iranyvaltas: "Irányváltás",
+      sajatSzoveg: "Saját szólista sorai", sajatForras: "A rejtvény szóforrása"
     }
   },
   en: {
@@ -838,6 +934,29 @@ const SZOVEGEK = {
       aminosav: "Amino acids", szenhidrat: "Carbohydrates", lipid: "Lipids",
       nukleinsav: "Nucleic acids", anyagcsere: "Metabolism", vitamin: "Vitamins"
     },
+    sajatGomb: "Your words",
+    sajatCim: "Upload your own words",
+    sajatLeiras: "Upload a spreadsheet (CSV) or paste its rows. One term per row. The separator can be a semicolon, a comma or a tab – rows copied straight out of Excel work too.",
+    sajatOszlopok: "Columns: topic; Hungarian answer; Hungarian clue; English answer; English clue; German answer; German clue. Columns for a language may be left out: the term then appears only where it is filled in. A short form also works: answer; clue – it goes to the language currently selected.",
+    sajatFajl: "Choose a spreadsheet",
+    sajatBeillesztes: "…or paste the rows here",
+    sajatBetoltes: "Load list",
+    sajatTorles: "Delete my list",
+    sajatForras: "What should the puzzle use?",
+    sajatForrasBeepitett: "Only the built-in 111 terms",
+    sajatForrasSajat: "Only my own list",
+    sajatForrasMindketto: "Built-in and my own together",
+    sajatAllapot: "Your list: {n} terms",
+    sajatUres: "No list of your own yet.",
+    sajatEredmeny: "{ok} rows loaded.",
+    sajatKimaradt: "{n} rows skipped:",
+    sajatKeves: "Your list is short for this language and level, so the built-in list fills the rest.",
+    hibaRovid: "answer too short (at least 3 letters)",
+    hibaHosszu: "answer too long (at most 20 letters)",
+    hibaKarakter: "answer contains a letter outside this alphabet: {ch}",
+    hibaMeghatarozas: "clue missing",
+    hibaOszlop: "too few columns",
+    temakorSajat: "Your words",
     mindHelyes: "Every letter is correct so far!",
     hibasBetuk: "{n} wrong letters marked in red.",
     megoldasKerdes: "Reveal the whole solution? This ends the game.",
@@ -863,7 +982,8 @@ const SZOVEGEK = {
       meghatarozasok: "Clues", betusor: "On-screen keyboard",
       bevitel: "Type a letter into the selected square", elozo: "Previous clue",
       kovetkezo: "Next clue", nehezseg: "Difficulty",
-      temakor: "Topic", torles: "Delete letter", iranyvaltas: "Switch direction"
+      temakor: "Topic", torles: "Delete letter", iranyvaltas: "Switch direction",
+      sajatSzoveg: "Rows of your own word list", sajatForras: "Word source of the puzzle"
     }
   },
   de: {
@@ -884,6 +1004,29 @@ const SZOVEGEK = {
       aminosav: "Aminosäuren", szenhidrat: "Kohlenhydrate", lipid: "Lipide",
       nukleinsav: "Nukleinsäuren", anyagcsere: "Stoffwechsel", vitamin: "Vitamine"
     },
+    sajatGomb: "Eigene Wörter",
+    sajatCim: "Eigene Wörter hochladen",
+    sajatLeiras: "Lade eine Tabelle (CSV) hoch oder füge ihre Zeilen ein. Ein Begriff pro Zeile. Als Trennzeichen dienen Semikolon, Komma oder Tabulator – direkt aus Excel kopierte Zeilen funktionieren ebenfalls.",
+    sajatOszlopok: "Spalten: Thema; ungarische Lösung; ungarische Frage; englische Lösung; englische Frage; deutsche Lösung; deutsche Frage. Die Spalten einer Sprache dürfen fehlen: der Begriff erscheint dann nur dort, wo er ausgefüllt ist. Auch die Kurzform genügt: Lösung; Frage – sie landet in der gerade gewählten Sprache.",
+    sajatFajl: "Tabelle auswählen",
+    sajatBeillesztes: "…oder füge die Zeilen hier ein",
+    sajatBetoltes: "Liste laden",
+    sajatTorles: "Eigene Liste löschen",
+    sajatForras: "Woraus soll das Rätsel bestehen?",
+    sajatForrasBeepitett: "Nur die eingebauten 111 Begriffe",
+    sajatForrasSajat: "Nur meine eigene Liste",
+    sajatForrasMindketto: "Eingebaute und eigene zusammen",
+    sajatAllapot: "Eigene Liste: {n} Begriffe",
+    sajatUres: "Noch keine eigene Liste vorhanden.",
+    sajatEredmeny: "{ok} Zeilen geladen.",
+    sajatKimaradt: "{n} Zeilen übersprungen:",
+    sajatKeves: "Für diese Sprache und Stufe reicht die eigene Liste nicht, daher ergänzt sie die eingebaute Liste.",
+    hibaRovid: "Lösung zu kurz (mindestens 3 Buchstaben)",
+    hibaHosszu: "Lösung zu lang (höchstens 20 Buchstaben)",
+    hibaKarakter: "Lösung enthält einen Buchstaben außerhalb dieses Alphabets: {ch}",
+    hibaMeghatarozas: "Frage fehlt",
+    hibaOszlop: "zu wenige Spalten",
+    temakorSajat: "Eigene Wörter",
     mindHelyes: "Bisher ist jeder Buchstabe richtig!",
     hibasBetuk: "{n} falsche Buchstaben rot markiert.",
     megoldasKerdes: "Die ganze Lösung aufdecken? Damit endet das Spiel.",
@@ -909,7 +1052,8 @@ const SZOVEGEK = {
       meghatarozasok: "Fragen", betusor: "Bildschirmtastatur",
       bevitel: "Buchstabe in das gewählte Feld eingeben", elozo: "Vorherige Frage",
       kovetkezo: "Nächste Frage", nehezseg: "Schwierigkeitsgrad",
-      temakor: "Thema", torles: "Buchstabe löschen", iranyvaltas: "Richtung wechseln"
+      temakor: "Thema", torles: "Buchstabe löschen", iranyvaltas: "Richtung wechseln",
+      sajatSzoveg: "Zeilen der eigenen Wortliste", sajatForras: "Wortquelle des Rätsels"
     }
   }
 };
@@ -1523,10 +1667,154 @@ function keszitsRejtvenyt(tetelek, probak = 70) {
   return { sorok: legjobb.sorok, oszlopok: legjobb.oszlopok, szavak };
 }
 
+/* ---------- Saját szólista ---------- */
+const SAJAT_KULCS = "biokem-kr-sajat";
+const FORRAS_KULCS = "biokem-kr-forras";
+const TEMAKOR_KULCSOK = ["aminosav", "szenhidrat", "lipid", "nukleinsav", "anyagcsere", "vitamin"];
+const FEJLEC_SZAVAK = [
+  "temakor", "témakör", "topic", "thema", "kategoria", "kategória",
+  "megfejtes", "megfejtés", "answer", "solution", "losung", "lösung", "wort",
+  "meghatarozas", "meghatározás", "clue", "definition", "frage", "definicio"
+];
+
+let sajatSzavak = [];
+let szoForras = "mindketto";
+
+/** Egy CSV/TSV sor cellákra bontása, idézőjeles mezőket is kezelve. */
+function bontsSort(sor, hatar) {
+  const cellak = [];
+  let mezo = "";
+  let idezojelben = false;
+  for (let i = 0; i < sor.length; i++) {
+    const ch = sor[i];
+    if (idezojelben) {
+      if (ch === '"') {
+        if (sor[i + 1] === '"') { mezo += '"'; i++; }
+        else idezojelben = false;
+      } else mezo += ch;
+    } else if (ch === '"') {
+      idezojelben = true;
+    } else if (ch === hatar) {
+      cellak.push(mezo.trim());
+      mezo = "";
+    } else mezo += ch;
+  }
+  cellak.push(mezo.trim());
+  return cellak;
+}
+
+/** A megfejtés egységesítése: nagybetűk, szóköz és kötőjel nélkül. */
+function tisztitsMegfejtest(nyers, celNyelv) {
+  const abc = new Set(ABC[celNyelv]);
+  const nagy = String(nyers).toUpperCase().replace(/[\s\-–—_.,'’()]/g, "");
+  const rossz = [...nagy].find((ch) => !abc.has(ch));
+  return { szo: nagy, rossz };
+}
+
+function temakorKulcs(nyers) {
+  const t = String(nyers || "").trim().toLowerCase();
+  if (!t) return "sajat";
+  if (TEMAKOR_KULCSOK.includes(t)) return t;
+  for (const k of TEMAKOR_KULCSOK) {
+    for (const ny of Object.keys(SZOVEGEK)) {
+      if (SZOVEGEK[ny].temakorok[k].toLowerCase() === t) return k;
+    }
+  }
+  return "sajat";
+}
+
+function temakorNeve(k) {
+  return k === "sajat" ? t("temakorSajat") : SZ.temakorok[k] || k;
+}
+
+/**
+ * Szöveg feldolgozása szólistává.
+ * Elfogadott oszlopszámok: 7 (témakör + mindhárom nyelv), 6 (mindhárom nyelv),
+ * 3 (témakör + megfejtés + meghatározás) és 2 (megfejtés + meghatározás).
+ * A rövid alakok az éppen beállított nyelvre kerülnek.
+ */
+function elemezListat(szoveg) {
+  const sorok = String(szoveg).split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
+  const tetelek = [];
+  const hibak = [];
+  if (!sorok.length) return { tetelek, hibak };
+
+  const elso = sorok[0];
+  const hatar = [";", "\t", ","]
+    .map((h) => ({ h, db: elso.split(h).length }))
+    .sort((a, b) => b.db - a.db)[0].h;
+
+  let kezdet = 0;
+  const elsoCellak = bontsSort(elso, hatar).map((x) => x.toLowerCase());
+  if (elsoCellak.some((c) => FEJLEC_SZAVAK.includes(c))) kezdet = 1;
+
+  for (let i = kezdet; i < sorok.length; i++) {
+    const c = bontsSort(sorok[i], hatar);
+    const sorSzam = i + 1;
+    let terv;
+    if (c.length >= 7) {
+      terv = { k: temakorKulcs(c[0]), parok: { hu: [c[1], c[2]], en: [c[3], c[4]], de: [c[5], c[6]] } };
+    } else if (c.length === 6) {
+      terv = { k: "sajat", parok: { hu: [c[0], c[1]], en: [c[2], c[3]], de: [c[4], c[5]] } };
+    } else if (c.length >= 3) {
+      terv = { k: temakorKulcs(c[0]), parok: { [nyelv]: [c[1], c[2]] } };
+    } else if (c.length === 2) {
+      terv = { k: "sajat", parok: { [nyelv]: [c[0], c[1]] } };
+    } else {
+      hibak.push(sorSzam + ". " + t("hibaOszlop"));
+      continue;
+    }
+
+    const tetel = { k: terv.k };
+    let volt = false;
+    let sorHiba = null;
+    for (const [ny, par] of Object.entries(terv.parok)) {
+      const megfejtes = (par[0] || "").trim();
+      const meghatarozas = (par[1] || "").trim();
+      if (!megfejtes && !meghatarozas) continue;         // ez a nyelv üresen maradt
+      if (!meghatarozas) { sorHiba = sorHiba || t("hibaMeghatarozas"); continue; }
+      const { szo, rossz } = tisztitsMegfejtest(megfejtes, ny);
+      if (szo.length < 3) { sorHiba = sorHiba || t("hibaRovid"); continue; }
+      if (szo.length > 20) { sorHiba = sorHiba || t("hibaHosszu"); continue; }
+      if (rossz) { sorHiba = sorHiba || t("hibaKarakter", { ch: rossz }); continue; }
+      tetel[ny] = [szo, meghatarozas];
+      volt = true;
+    }
+    if (volt) tetelek.push(tetel);
+    else hibak.push(sorSzam + ". " + (sorHiba || t("hibaOszlop")));
+  }
+  return { tetelek, hibak };
+}
+
+function toltsdSajatot() {
+  try {
+    const nyers = localStorage.getItem(SAJAT_KULCS);
+    sajatSzavak = nyers ? JSON.parse(nyers) : [];
+    if (!Array.isArray(sajatSzavak)) sajatSzavak = [];
+  } catch (e) { sajatSzavak = []; }
+  try {
+    const f = localStorage.getItem(FORRAS_KULCS);
+    if (f) szoForras = f;
+  } catch (e) {}
+  if (!sajatSzavak.length && szoForras !== "beepitett") szoForras = "beepitett";
+}
+
+function mentsdSajatot() {
+  try { localStorage.setItem(SAJAT_KULCS, JSON.stringify(sajatSzavak)); } catch (e) {}
+  try { localStorage.setItem(FORRAS_KULCS, szoForras); } catch (e) {}
+}
+
 /** A szótár átalakítása a kért nyelvre: a = megfejtés, m = meghatározás. */
 function nyelviKeszlet(nyelv) {
   const oszlop = { hu: 1, en: 2, de: 3 }[nyelv];
-  return SZOTAR.map((sor) => ({ k: sor[0], a: sor[oszlop][0], m: sor[oszlop][1] }));
+  const beepitett = SZOTAR.map((sor) => ({ k: sor[0], a: sor[oszlop][0], m: sor[oszlop][1] }));
+  const sajat = sajatSzavak
+    .filter((x) => x[nyelv] && x[nyelv][0])
+    .map((x) => ({ k: x.k || "sajat", a: x[nyelv][0], m: x[nyelv][1] }));
+
+  if (szoForras === "sajat") return sajat.length >= 6 ? sajat : sajat.concat(beepitett);
+  if (szoForras === "mindketto") return sajat.concat(beepitett);
+  return beepitett;
 }
 
 function valasszTeteleket(nehezseg, temakor, nyelv) {
@@ -1617,12 +1905,14 @@ function allitsNyelvet(uj, ujJatekot = true) {
 
   const temakorElem = E("temakor");
   const elozoKor = temakorElem.value || "mind";
+  const sajatVan = sajatSzavak.some((x) => x[nyelv] && x[nyelv][0]);
   temakorElem.innerHTML =
     '<option value="mind">' + t("mindenTemakor") + "</option>" +
     Object.entries(SZ.temakorok)
       .map(([k, nev]) => '<option value="' + k + '">' + nev + "</option>")
-      .join("");
-  temakorElem.value = elozoKor;
+      .join("") +
+    (sajatVan ? '<option value="sajat">' + t("temakorSajat") + "</option>" : "");
+  temakorElem.value = [...temakorElem.options].some((o) => o.value === elozoKor) ? elozoKor : "mind";
 
   E("sugo-lista").innerHTML = SZ.sugoPontok.map((p) => "<li>" + p + "</li>").join("");
 
@@ -1749,7 +2039,7 @@ function epitsMeghatarozasokat() {
     .map(
       (k) =>
         '<span class="jel" style="--kat: var(--kat-' + k + ')"><span class="pont"></span>' +
-        SZ.temakorok[k] + "</span>"
+        temakorNeve(k) + "</span>"
     )
     .join("");
 }
@@ -1814,7 +2104,7 @@ function frissitsMindent() {
     E("aktiv-sav").style.setProperty("--akt", "var(--kat-" + akt.k + ")");
     E("aktiv-fej").textContent =
       (akt.vv ? t("vizszintes") : t("fuggoleges")) + " " + akt.szam + " · " +
-      t("betuDb", { n: akt.a.length }) + " · " + SZ.temakorok[akt.k];
+      t("betuDb", { n: akt.a.length }) + " · " + temakorNeve(akt.k);
     E("aktiv-meg").textContent = akt.m;
   } else {
     E("aktiv-fej").textContent = "";
@@ -2191,7 +2481,117 @@ function epitsKlaviat() {
 }
 
 /* ==========================================================================
-   6. Bevitel és események
+   6. Saját lista párbeszéd
+   ========================================================================== */
+const SABLON = [
+  "temakor;megfejtes_hu;meghatarozas_hu;megfejtes_en;meghatarozas_en;megfejtes_de;meghatarozas_de",
+  "aminosav;GLICIN;A legegyszerűbb aminosav;GLYCINE;The simplest amino acid;GLYCIN;Die einfachste Aminosäure",
+  "sajat;ATP;A sejt energiavalutája;ATP;The energy currency of the cell;ATP;Die Energiewährung der Zelle",
+  "",
+  "KODON;Három bázisból álló kódszó"
+].join("\n");
+
+function frissitsSajatUzenetet(eredmeny) {
+  const doboz = E("sajat-eredmeny");
+  const db = sajatSzavak.filter((x) => x[nyelv] && x[nyelv][0]).length;
+  let html = "";
+  if (eredmeny) {
+    html += '<div class="rendben">' + t("sajatEredmeny", { ok: eredmeny.tetelek.length }) + "</div>";
+    if (eredmeny.hibak.length) {
+      html += '<div class="gond">' + t("sajatKimaradt", { n: eredmeny.hibak.length }) + "</div><ul>" +
+        eredmeny.hibak.slice(0, 8).map((h) => "<li>" + h + "</li>").join("") +
+        (eredmeny.hibak.length > 8 ? "<li>…</li>" : "") + "</ul>";
+    }
+  }
+  html += "<div>" + (sajatSzavak.length ? t("sajatAllapot", { n: db }) : t("sajatUres")) + "</div>";
+  doboz.innerHTML = html;
+}
+
+function frissitsForrasValasztot() {
+  const v = E("sajat-forras");
+  v.innerHTML =
+    '<option value="beepitett">' + t("sajatForrasBeepitett") + "</option>" +
+    '<option value="sajat">' + t("sajatForrasSajat") + "</option>" +
+    '<option value="mindketto">' + t("sajatForrasMindketto") + "</option>";
+  v.value = szoForras;
+}
+
+function alkalmazdListat(szoveg, kezi) {
+  const eredmeny = elemezListat(szoveg);
+  if (eredmeny.tetelek.length) {
+    sajatSzavak = eredmeny.tetelek;
+    if (szoForras === "beepitett") szoForras = "mindketto";
+    if (kezi) { try { localStorage.setItem("biokem-kr-sajat-kezi", "1"); } catch (e) {} }
+    mentsdSajatot();
+    allitsNyelvet(nyelv, false);   // a témakörlista is megkapja a saját kört
+    frissitsForrasValasztot();
+    ujJatek();
+  }
+  frissitsSajatUzenetet(eredmeny);
+  return eredmeny;
+}
+
+E("sajat-gomb").addEventListener("click", () => {
+  E("sajat-sablon").textContent = SABLON;
+  frissitsForrasValasztot();
+  frissitsSajatUzenetet(null);
+  E("sajat").showModal();
+});
+
+E("sajat-fajl").addEventListener("change", async (ev) => {
+  const fajl = ev.target.files && ev.target.files[0];
+  if (!fajl) return;
+  const szoveg = await fajl.text();
+  E("sajat-szoveg").value = szoveg;
+  alkalmazdListat(szoveg, true);
+  ev.target.value = "";
+});
+
+E("sajat-betolt").addEventListener("click", () => alkalmazdListat(E("sajat-szoveg").value, true));
+
+E("sajat-torol").addEventListener("click", () => {
+  sajatSzavak = [];
+  szoForras = "beepitett";
+  E("sajat-szoveg").value = "";
+  try { localStorage.removeItem("biokem-kr-sajat-kezi"); } catch (e) {}
+  mentsdSajatot();
+  allitsNyelvet(nyelv, false);
+  frissitsForrasValasztot();
+  frissitsSajatUzenetet(null);
+  ujJatek();
+});
+
+E("sajat-forras").addEventListener("change", (ev) => {
+  szoForras = ev.target.value;
+  mentsdSajatot();
+  ujJatek();
+});
+
+E("sajat-bezar").addEventListener("click", () => E("sajat").close());
+E("sajat").addEventListener("close", fokuszalVissza);
+
+/** Ha a játék mellé fel van töltve egy szavak.csv, azt is beolvassuk. */
+async function toltsdSzerverListat() {
+  if (!/^https?:$/.test(location.protocol)) return;   // fájlból megnyitva nincs mit kérni
+  let kezi = false;
+  try { kezi = localStorage.getItem("biokem-kr-sajat-kezi") === "1"; } catch (e) {}
+  if (kezi) return;                                   // a saját feltöltés erősebb
+  try {
+    const valasz = await fetch("szavak.csv", { cache: "no-cache" });
+    if (!valasz.ok) return;
+    const szoveg = await valasz.text();
+    const eredmeny = elemezListat(szoveg);
+    if (!eredmeny.tetelek.length) return;
+    sajatSzavak = eredmeny.tetelek;
+    if (szoForras === "beepitett") szoForras = "mindketto";
+    mentsdSajatot();
+    allitsNyelvet(nyelv, false);
+    ujJatek();
+  } catch (e) { /* nincs ilyen fájl: marad a beépített lista */ }
+}
+
+/* ==========================================================================
+   7. Bevitel és események
    ========================================================================== */
 const rejtett = E("rejtett");
 
@@ -2319,7 +2719,7 @@ E("tema-gomb").addEventListener("click", () => {
 });
 
 /* ==========================================================================
-   7. Indulás
+   8. Indulás
    ========================================================================== */
 (function indul() {
   try {
@@ -2343,6 +2743,7 @@ E("tema-gomb").addEventListener("click", () => {
     if (mentettKlavia !== null) klaviaNyitva = mentettKlavia === "1";
   } catch (e) {}
 
+  toltsdSajatot();
   allitsNyelvet(kezdoNyelv, false);
   E("klavia").hidden = !klaviaNyitva;
   E("klavia-gomb").setAttribute("aria-expanded", String(klaviaNyitva));
@@ -2356,6 +2757,8 @@ E("tema-gomb").addEventListener("click", () => {
   } else {
     ujJatek();
   }
+
+  toltsdSzerverListat();
 })();
 </script>
 </body>

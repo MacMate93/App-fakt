@@ -29,6 +29,62 @@ olvasható marad az oldal).
   félbehagyott játék a böngésző tárolójában marad meg.
 - **Világos és sötét téma**, mobilra szabott elrendezés, győzelmi konfetti.
 
+## Saját kérdések feltöltése
+
+A beépített 111 fogalom mellé (vagy helyette) bármikor betölthető saját
+szólista. Három út vezet ide, ugyanazzal a táblázatformátummal.
+
+### 1. A játékon belül – „Saját szavak" gomb
+
+Az alsó eszközsor **Saját szavak** gombjára kattintva feltölthető egy CSV-fájl,
+vagy egyszerűen beilleszthetők a táblázat sorai (Excelből kimásolt sorok is
+jók). A játék soronként visszajelzi, mi ment át és mi maradt ki, miért. A lista
+a böngésző tárolójában marad, tehát arra a gépre/böngészőre vonatkozik.
+
+A **„Miből álljon a rejtvény?"** választóval állítható, hogy a beépített lista,
+a saját lista, vagy a kettő együtt adja a szavakat. A saját, témakör nélküli
+fogalmak külön „Saját szavak" témakörbe kerülnek, és a témakörválasztóban is
+megjelennek.
+
+### 2. Mindenkinek egyszerre – `szavak.csv` a játék mellé
+
+Ha a játékot webszerverről szolgálod ki (GitHub Pages, Moodle, iskolai
+tárhely), tegyél egy **`szavak.csv`** nevű fájlt az `index.html` mellé: a játék
+induláskor magától beolvassa, és minden hallgató ezzel a listával játszik.
+Így nem kell semmit sem kézzel feltölteniük. Moodle-ben ehhez a két fájlt
+ugyanabba a Fájl-erőforrásba töltsd fel (fő fájl az `index.html`).
+
+A kézi feltöltés erősebb: ha valaki a játékon belül tölt fel listát, azt a
+`szavak.csv` nem írja felül. A saját lista törlése után újra a szerveroldali
+fájl lép életbe.
+
+### 3. A beépített szótár bővítése
+
+Tartós bővítéshez a `SZOTAR` tömbhöz kell új sort adni az `index.html`-ben,
+mind a három nyelven.
+
+### A táblázat formátuma
+
+Minta: **`szavak-minta.csv`** (nyisd meg Excelben vagy szövegszerkesztőben).
+
+```
+temakor;megfejtes_hu;meghatarozas_hu;megfejtes_en;meghatarozas_en;megfejtes_de;meghatarozas_de
+aminosav;GLICIN;A legegyszerűbb aminosav;GLYCINE;The simplest amino acid;GLYCIN;Die einfachste Aminosäure
+```
+
+- **Elválasztó**: pontosvessző, vessző vagy tabulátor – a játék felismeri. A
+  fejlécsor elhagyható.
+- **Idegen nyelvű oszlopok elhagyhatók**: az a fogalom csak azokon a nyelveken
+  jelenik meg, ahol ki van töltve. Rövid alak is jó: `megfejtés;meghatározás`
+  vagy `témakör;megfejtés;meghatározás` – ilyenkor az éppen beállított nyelvre
+  kerül a sor.
+- **Témakör**: `aminosav`, `szenhidrat`, `lipid`, `nukleinsav`, `anyagcsere`,
+  `vitamin` (a magyar, angol vagy német nevük is elfogadott). Bármi más a
+  „Saját szavak" körbe kerül.
+- **Megfejtés**: 3–20 betű, csak az adott nyelv ábécéjéből. A szóköz, a kötőjel
+  és a pont automatikusan kiesik (FATTY ACID → FATTYACID), a számjegy viszont
+  hibának számít – az ilyen sor kimarad, és a játék meg is mondja, miért.
+
 ## Felépítés
 
 Egyetlen önálló fájl, külső függőség nélkül:
