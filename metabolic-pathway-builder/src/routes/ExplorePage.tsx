@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getPlayablePathway } from '@/data';
 import { indexPathway } from '@/engine/pathwayModel';
@@ -8,6 +8,9 @@ import { Card } from '@/components/layout/Card';
 import { BalancePanel } from '@/components/explore/BalancePanel';
 import { DetailPanel } from '@/components/explore/DetailPanel';
 import { PathwayCanvas, type CanvasSelection } from '@/components/pathway/PathwayCanvas';
+import { ZoomControl } from '@/components/game/ZoomControl';
+import { useFitZoom } from '@/components/layout/useFitZoom';
+import { useMediaQuery } from '@/components/layout/useMediaQuery';
 import styles from './routes.module.css';
 
 export function ExplorePage() {
@@ -15,6 +18,14 @@ export function ExplorePage() {
   const pathway = getPlayablePathway(pathwayId);
   const [selection, setSelection] = useState<CanvasSelection>(null);
   const index = useMemo(() => (pathway ? indexPathway(pathway) : null), [pathway]);
+
+  const twoColumns = useMediaQuery('(min-width: 760px)');
+  const threeColumns = useMediaQuery('(min-width: 1240px)');
+  const columns = threeColumns ? 3 : twoColumns ? 2 : 1;
+  const paneRef = useRef<HTMLDivElement>(null);
+  const [zoom, setZoom] = useState(1);
+  const [autoZoom, setAutoZoom] = useState(true);
+  useFitZoom({ paneRef, enabled: autoZoom && Boolean(pathway), zoom, onZoom: setZoom, deps: [columns] });
 
   if (!pathway || !index) {
     return (
@@ -31,7 +42,7 @@ export function ExplorePage() {
   }
 
   return (
-    <>
+    <div className={styles.exploreRoot}>
       <div className={styles.playHead}>
         <div className={styles.playTitle}>
           <h1 className={styles.pathwayName}>{pathway.name}</h1>
@@ -39,6 +50,13 @@ export function ExplorePage() {
           <Badge>{pathway.reactions.length} steps</Badge>
         </div>
         <div className={styles.inlineActions}>
+          <ZoomControl
+            zoom={zoom}
+            onChange={(next) => {
+              setAutoZoom(false);
+              setZoom(next);
+            }}
+          />
           <Link to={`/play/${pathway.id}?mode=build&difficulty=beginner&game=learning`}>
             <Button size="small">Practise this pathway</Button>
           </Link>
@@ -46,8 +64,14 @@ export function ExplorePage() {
       </div>
 
       <div className={styles.exploreLayout}>
-        <Card className={styles.canvasCard} padded={false}>
-          <PathwayCanvas index={index} onSelect={setSelection} selection={selection} />
+        <Card className={styles.canvasCard} padded={false} ref={paneRef}>
+          <PathwayCanvas
+            index={index}
+            onSelect={setSelection}
+            selection={selection}
+            columns={columns}
+            zoom={zoom}
+          />
         </Card>
 
         <div className={styles.detail}>
@@ -67,6 +91,6 @@ export function ExplorePage() {
           ) : null}
         </div>
       </div>
-    </>
+    </div>
   );
 }

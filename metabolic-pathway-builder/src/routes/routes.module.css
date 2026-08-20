@@ -154,7 +154,7 @@
   justify-content: space-between;
   gap: var(--space-3);
   flex-wrap: wrap;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .playTitle {
@@ -165,7 +165,32 @@
 }
 
 .canvasCard {
-  overflow-x: auto;
+  overflow: auto;
+}
+
+/* Phones keep a capped, scrollable pane: there is no room to give the diagram
+   a share of the viewport and still show the prompt and the tray. */
+@media (max-width: 759px) {
+  .canvasCard {
+    max-height: calc(100vh - 430px);
+  }
+}
+
+/* Everywhere else the pane simply fills the height the layout hands it. */
+@media (min-width: 760px) {
+  .canvasCard {
+    height: 100%;
+  }
+}
+
+/* Explore on a tablet stacks the detail panel under the diagram, so the
+   diagram takes a share of the viewport instead of all of it. */
+@media (min-width: 760px) and (max-width: 1000px) {
+  .exploreRoot .canvasCard {
+    height: auto;
+    max-height: calc(100vh - 200px);
+    max-height: calc(100dvh - 200px);
+  }
 }
 
 .emptyState {
@@ -177,20 +202,40 @@
 
 /* ---- explore ---- */
 
+/* Explore is height-constrained the same way the play view is: the diagram and
+   the detail panel each scroll on their own, the page does not. */
+.exploreRoot {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .exploreLayout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
-  gap: var(--space-5);
+  gap: var(--space-4);
   align-items: start;
 }
 
+@media (min-width: 760px) {
+  .exploreRoot {
+    height: calc(100vh - var(--header-h) - var(--space-5) - var(--space-7));
+    height: calc(100dvh - var(--header-h) - var(--space-5) - var(--space-7));
+  }
+  .exploreLayout {
+    flex: 1;
+    min-height: 0;
+  }
+  .detail {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
 .detail {
-  position: sticky;
-  top: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  max-height: calc(100vh - var(--space-7));
+  gap: var(--space-3);
   overflow-y: auto;
 }
 
@@ -198,8 +243,10 @@
   .exploreLayout {
     grid-template-columns: minmax(0, 1fr);
   }
+  .exploreRoot {
+    height: auto;
+  }
   .detail {
-    position: static;
     max-height: none;
   }
 }

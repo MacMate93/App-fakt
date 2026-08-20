@@ -72,8 +72,10 @@
     'Noto Sans', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
-  --max-width: 1180px;
-  --tray-height: 168px;
+  --max-width: 1320px;
+  /* Chrome heights the play view against these, so they live with the tokens. */
+  --header-h: 70px;
+  --tray-h: 0px;
 }
 
 @media (prefers-color-scheme: dark) {

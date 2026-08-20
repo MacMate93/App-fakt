@@ -156,7 +156,33 @@ foszfátszám), ha az adatfájl nem ír felül.
 
 ---
 
-## 7. Interakció
+## 7. Képernyőn tartás
+
+Egy tíz lépéses útvonal függőlegesen három képernyő magas, a tálca meg a lap
+alján van: minden egyes kártyáért le-fel kellene görgetni. Négy dolog együtt
+oldja meg:
+
+1. **Több oszlop.** A `splitRowsIntoColumns` a reakciókat kiegyensúlyozott
+   oszlopokra bontja — nem darabszám, hanem becsült magasság szerint (az
+   oldalág és a kétterméses hasítás magasabb sor). Glikolízisnél a kettes
+   bontás pontosan a befektetési és a kifizetődési fázis határán vág.
+   Oszlopszám: 1 (< 760 px), 2, majd 3 széles képernyőn.
+2. **Magasságra kötött elrendezés.** A játéknézet nem összeadja a magasságokat,
+   hanem elosztja: a feladatpanel annyit kap, amennyi kell, a vászon a
+   maradékot (`flex: 1; min-height: 0`). Így a *lap* nem görgethető — csak a
+   diagram, a saját panelján belül.
+3. **A tálca a vászon mellett van** (≥ 1000 px), alatta pedig a képernyő aljára
+   rögzített sávban. Nincs többé oda-vissza út a kártya és a hely között.
+4. **Automatikus méretezés.** A `useFitZoom` a legnagyobb olyan méretet
+   választja (100 / 90 / 80%), amely még belefér a panelba; a fejlécben lévő
+   vezérlővel felülírható. 80% alá nem megy: az alatt a felirat már nem
+   olvasható kényelmesen, és inkább egy rövid görgetés a jobb csere.
+
+Ezen felül a vászon **magától a soron következő feladathoz görget**
+(`scrollIntoView`, `block: 'nearest'`), tehát a hallgatónak sosem kell keresnie,
+hol tart.
+
+## 8. Interakció
 
 Egyetlen pointer-alapú megvalósítás fedi le az egeret, a tollat és az érintést —
 ezért működik iPaden külön kód nélkül. A drag & drop **soha nem az egyetlen út**:
@@ -169,7 +195,7 @@ ezért működik iPaden külön kód nélkül. A drag & drop **soha nem az egyet
 
 ---
 
-## 8. Ami tudatosan kimaradt az MVP-ből
+## 9. Ami tudatosan kimaradt az MVP-ből
 
 | Elem | Hol kapcsolódik majd |
 | --- | --- |

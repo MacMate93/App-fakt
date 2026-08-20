@@ -1,33 +1,81 @@
 /* Task strip, token tray, hints, feedback and the score rail. */
 
+/*
+ * The play view is height-constrained rather than height-summed: the task panel
+ * takes what it needs and the diagram gets everything left over. Chasing the
+ * remainder with a fixed calc() breaks the moment a prompt wraps to two lines.
+ */
+.playRoot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 0;
+}
+
+@media (min-width: 760px) {
+  .playRoot {
+    height: calc(100vh - var(--header-h) - var(--space-5) - var(--space-7) - var(--tray-h));
+    height: calc(100dvh - var(--header-h) - var(--space-5) - var(--space-7) - var(--tray-h));
+  }
+
+  .playLayout {
+    flex: 1;
+    min-height: 0;
+    margin-top: 0;
+  }
+
+  .canvasColumn {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .sideColumn {
+    min-height: 0;
+    height: 100%;
+  }
+}
+
 .playLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: var(--space-4);
   align-items: start;
+  margin-top: var(--space-4);
 }
 
 .canvasColumn {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .sideColumn {
-  position: sticky;
-  top: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
-@media (max-width: 1000px) {
+/*
+ * Wide screens: nothing scrolls except the diagram itself, and the tray sits
+ * beside it. Dragging a card no longer means scrolling to find the blank and
+ * then scrolling back for the next card.
+ */
+@media (min-width: 1000px) {
+  .sideColumn {
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 999px) {
+  :root {
+    --tray-h: 176px;
+  }
   .playLayout {
     grid-template-columns: minmax(0, 1fr);
   }
   .sideColumn {
-    position: static;
+    overflow: visible;
   }
 }
 
@@ -36,8 +84,29 @@
 .task {
   display: flex;
   flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+}
+
+.taskTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   gap: var(--space-3);
-  padding: var(--space-4) var(--space-5);
+  flex-wrap: wrap;
+}
+
+.taskTitleGroup {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.taskActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
 .taskHead {
@@ -46,10 +115,11 @@
   justify-content: space-between;
   gap: var(--space-3);
   flex-wrap: wrap;
+  margin-top: var(--space-1);
 }
 
 .taskPrompt {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.35;
 }
@@ -59,6 +129,46 @@
   gap: var(--space-2);
   flex-wrap: wrap;
   align-items: center;
+  min-width: 0;
+}
+
+.zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.zoom button {
+  min-width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.zoom button:hover:not(:disabled) {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.zoom button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.zoom span {
+  min-width: 40px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---- hints ---- */
@@ -104,8 +214,9 @@
 .feedback {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: var(--space-4);
+  gap: 4px;
+  padding: var(--space-3);
+  margin-top: var(--space-1);
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--surface-2);
@@ -142,18 +253,55 @@
 /* ---- token tray ---- */
 
 .tray {
-  position: sticky;
-  bottom: 0;
-  z-index: 5;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-4);
-  border-top: 1px solid var(--border);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 -6px 24px rgba(16, 24, 40, 0.08);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+/* Narrow screens keep the familiar bottom sheet, pinned to the viewport. */
+@media (max-width: 999px) {
+  .tray {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    border: 0;
+    border-top: 1px solid var(--border);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 -6px 24px rgba(16, 24, 40, 0.1);
+  }
+}
+
+/* In the rail the tokens read as a list rather than a wrapped row. */
+@media (min-width: 1000px) {
+  .trayGroup {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .trayGroupLabel {
+    padding-top: 0;
+  }
+  .token {
+    width: 100%;
+    border-radius: var(--radius);
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-2);
+    min-height: 38px;
+    padding: 6px 12px;
+  }
+  .tokenSub {
+    margin-left: auto;
+  }
 }
 
 .trayHead {
@@ -256,6 +404,20 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
+}
+
+/* Stacked under the canvas, the score has to cost as little height as possible. */
+@media (max-width: 999px) {
+  .scoreGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+  .stat {
+    padding: var(--space-2);
+  }
+  .statValue {
+    font-size: 1.1rem;
+  }
 }
 
 .stat {

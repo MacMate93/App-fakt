@@ -193,3 +193,51 @@ export function reactionEquation(index: PathwayIndex, reaction: Reaction): strin
 
   return `${left.join(' + ')} ${reaction.reversible ? '⇌' : '→'} ${right.join(' + ')}`;
 }
+
+/**
+ * Splits the rows into balanced vertical columns.
+ *
+ * A ten-step pathway is three screens tall in one column, which turns every
+ * placement into a scroll hunt between the tray and the blank. Textbook figures
+ * solve this the same way: break the chain into columns that read left to
+ * right. The split is by row count, so glycolysis falls apart exactly where a
+ * textbook splits it — investment phase, then payoff phase.
+ */
+export function splitRowsIntoColumns(rows: CanvasRow[], columns: number): CanvasRow[][] {
+  const count = Math.max(1, Math.min(columns, rows.length || 1));
+  if (count === 1) return [rows];
+
+  // Rows are not equally tall: a split into two products wraps, a side branch
+  // carries its own frame and caption. Balancing by row count alone leaves one
+  // column overflowing while another has room to spare.
+  const weightOf = (row: CanvasRow): number =>
+    1 +
+    (row.nodes.length > 1 ? 0.5 : 0) +
+    (row.reaction.branch ? 0.8 : 0) +
+    (row.multiplierDivider ? 0.3 : 0);
+
+  const weights = rows.map(weightOf);
+  const total = weights.reduce((sum, weight) => sum + weight, 0);
+
+  const groups: CanvasRow[][] = [];
+  let current: CanvasRow[] = [];
+  let carried = 0;
+
+  rows.forEach((row, position) => {
+    current.push(row);
+    carried += weights[position] ?? 1;
+    const columnsLeft = count - groups.length;
+    const rowsLeft = rows.length - position - 1;
+    const target = total / count;
+    // Close the column once it has its share — but never so early that a later
+    // column would be left with nothing to show.
+    if (columnsLeft > 1 && carried >= target && rowsLeft >= columnsLeft - 1) {
+      groups.push(current);
+      current = [];
+      carried = 0;
+    }
+  });
+  if (current.length > 0) groups.push(current);
+
+  return groups;
+}

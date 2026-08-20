@@ -6,15 +6,50 @@
   flex-direction: column;
   align-items: center;
   gap: 0;
-  padding: var(--space-5) var(--space-5) var(--space-6);
+  padding: var(--space-4) var(--space-5) var(--space-5);
   width: 100%;
+}
+
+/* A long pathway is broken into columns that read left to right, the way a
+   textbook figure does, instead of one three-screen-tall chain. */
+.columns {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-5);
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.column + .column {
+  border-left: 1px dashed var(--border);
+  padding-left: var(--space-5);
+}
+
+.carryOver {
+  padding: 4px 10px;
+  margin: var(--space-2) 0;
+  border-radius: 999px;
+  border: 1px dashed var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text-faint);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .nodeRow {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   width: 100%;
 }
 
@@ -25,9 +60,9 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 208px;
-  max-width: 280px;
-  padding: 10px 16px 10px 20px;
+  min-width: 190px;
+  max-width: 260px;
+  padding: 7px 14px 7px 16px;
   border: 1px solid var(--metabolite-border);
   border-left: 4px solid var(--metabolite);
   border-radius: var(--radius);
@@ -38,7 +73,7 @@
 
 .metaboliteName {
   font-weight: 620;
-  font-size: 0.98rem;
+  font-size: 0.94rem;
   color: var(--text);
   line-height: 1.3;
 }
@@ -72,19 +107,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 6px 0;
+  gap: 4px;
+  padding: 3px 0;
   width: 100%;
 }
 
 .line {
   width: 2px;
-  height: 14px;
+  height: 9px;
   background: var(--border-strong);
 }
 
 .lineTall {
-  height: 20px;
+  height: 13px;
 }
 
 .arrowHead {
@@ -113,42 +148,34 @@
   line-height: 1;
 }
 
+/* Step number and reversibility marker travel with the enzyme rather than
+   sitting in gutters: in a narrow column the row wraps, and an annotation
+   pinned to the row's edge would end up a long way from what it annotates. */
 .enzymeRow {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.enzymeMain {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  max-width: 100%;
-}
-
-/* Step number and reversibility marker are annotations: they hang off the
-   centre line rather than pushing the enzyme off it. */
-.enzymeRow .stepTag {
-  position: absolute;
-  left: -22px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.enzymeRow .reversibleMark {
-  position: absolute;
-  right: -22px;
-  top: 50%;
-  transform: translateY(-50%);
+  gap: 6px;
+  min-width: 0;
 }
 
 .enzyme {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 5px 13px;
   border-radius: 999px;
   border: 1px solid var(--enzyme-border);
   background: var(--enzyme-soft);
   color: var(--enzyme);
-  font-size: 0.86rem;
+  font-size: 0.83rem;
   font-weight: 650;
   letter-spacing: 0.01em;
   text-align: center;
@@ -176,12 +203,12 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 10px;
+  padding: 2px 9px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
   font-family: var(--font-mono);
   white-space: nowrap;
@@ -220,9 +247,9 @@
   gap: var(--space-3);
   width: 100%;
   max-width: 640px;
-  margin: var(--space-4) 0 var(--space-2);
+  margin: var(--space-3) 0 var(--space-1);
   color: var(--text-muted);
-  font-size: 0.8rem;
+  font-size: 0.76rem;
 }
 
 .divider::before,
@@ -246,17 +273,16 @@
 }
 
 .branch {
-  align-self: flex-end;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
-  margin: var(--space-2) 0 var(--space-2) auto;
-  padding: var(--space-3) var(--space-4);
+  gap: var(--space-1);
+  margin: var(--space-2) 0;
+  padding: var(--space-2) var(--space-3);
   border: 1px dashed var(--border-strong);
   border-radius: var(--radius);
   background: color-mix(in srgb, var(--surface) 70%, transparent);
-  max-width: 340px;
 }
 
 .branchCaption {
@@ -285,18 +311,18 @@
 }
 
 .slotMetabolite {
-  min-width: 208px;
-  max-width: 280px;
-  min-height: 56px;
-  padding: 8px 14px;
+  min-width: 190px;
+  max-width: 260px;
+  min-height: 48px;
+  padding: 6px 12px;
   border-radius: var(--radius);
 }
 
 .slotEnzyme,
 .slotCouple {
-  min-width: 172px;
-  min-height: 40px;
-  padding: 6px 14px;
+  min-width: 158px;
+  min-height: 36px;
+  padding: 4px 13px;
   border-radius: 999px;
 }
 
@@ -378,6 +404,21 @@
   opacity: 0.7;
 }
 
+/* One column on narrow screens: the columns stack rather than squeeze. */
+@media (max-width: 759px) {
+  .columns {
+    flex-direction: column;
+    align-items: center;
+  }
+  .column + .column {
+    border-left: 0;
+    border-top: 1px dashed var(--border);
+    padding-left: 0;
+    padding-top: var(--space-4);
+    width: 100%;
+  }
+}
+
 @media (max-width: 560px) {
   .metabolite,
   .slotMetabolite {
@@ -416,9 +457,10 @@
   flex-wrap: wrap;
   gap: var(--space-3);
   justify-content: center;
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-3) var(--space-4) 0;
+  margin-top: var(--space-3);
   border-top: 1px dashed var(--border);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
 }
 

@@ -37,6 +37,7 @@ szabály nélkül.
 | Feladattípusok | Build the pathway · Missing metabolite · Missing enzyme · Energy challenge · Cofactor challenge |
 | Nehézség | Beginner / Intermediate / Expert — más lefedettség, más kitöltendő kategóriák, több disztraktor |
 | Interakció | Pointer-alapú drag & drop (egér, toll, érintés) + koppintásos és billentyűzetes elhelyezés |
+| Elrendezés | Az útvonal 2–3 oszlopban, a képernyő magasságához igazítva; a tálca a vászon mellett; a nézet magától a soron következő feladathoz görget |
 | Visszajelzés | Azonnali, magyarázó — a rossz válasz megmondja, hogy a választott enzim/molekula *valójában* mit csinál |
 | Hint | Háromszintű létra, szintenként −20 XP |
 | Pontozás | 100 / 70 / 40 XP próbálkozásonként, hibátlan futásért +500 XP bónusz, streak-számláló |

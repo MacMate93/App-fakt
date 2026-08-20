@@ -15,15 +15,15 @@ import {
 } from '@/engine/sessionReducer';
 import { summariseRun } from '@/engine/summary';
 import { DragProvider } from '@/interaction/DragContext';
-import { Badge } from '@/components/layout/Badge';
 import { Button } from '@/components/layout/Button';
 import { Card } from '@/components/layout/Card';
 import { DragLayer } from '@/components/game/DragLayer';
-import { FeedbackPanel } from '@/components/game/FeedbackPanel';
-import { ProgressHeader } from '@/components/game/ProgressHeader';
 import { ScoreRail } from '@/components/game/ScoreRail';
 import { TaskStrip } from '@/components/game/TaskStrip';
 import { TokenTray } from '@/components/game/TokenTray';
+import { ZoomControl } from '@/components/game/ZoomControl';
+import { useFitZoom } from '@/components/layout/useFitZoom';
+import { useMediaQuery } from '@/components/layout/useMediaQuery';
 import { PathwayCanvas } from '@/components/pathway/PathwayCanvas';
 import { CompletionScreen } from '@/components/results/CompletionScreen';
 import { SummaryQuiz } from '@/components/results/SummaryQuiz';
@@ -114,6 +114,13 @@ function GameSession({
     dispatch({ type: 'place', slotId, tokenId });
   }, []);
 
+  const twoColumns = useMediaQuery('(min-width: 760px)');
+  const threeColumns = useMediaQuery('(min-width: 1360px)');
+  const columns = threeColumns ? 3 : twoColumns ? 2 : 1;
+  const paneRef = useRef<HTMLDivElement>(null);
+  const [zoom, setZoom] = useState(1);
+  const [autoZoom, setAutoZoom] = useState(true);
+
   const exam = config.gameMode === 'exam';
   const activeSlot = state.slots.find((slot) => slot.id === state.activeSlotId) ?? null;
   const hints = useMemo(
@@ -121,6 +128,13 @@ function GameSession({
     [index, activeSlot],
   );
   const availability = useMemo(() => tokenAvailability(state), [state]);
+  useFitZoom({
+    paneRef,
+    enabled: autoZoom,
+    zoom,
+    onZoom: setZoom,
+    deps: [columns, state.phase, state.slots.length],
+  });
   const done = exam
     ? state.slots.filter((slot) => state.placements[slot.id]).length
     : state.slots.filter((slot) => state.results[slot.id]?.solved).length;
@@ -142,42 +156,45 @@ function GameSession({
           </div>
         </div>
       ) : (
-        <>
-          <ProgressHeader
+        <div className={gameStyles.playRoot}>
+          <TaskStrip
             title={`${pathway.name} — ${taskModeLabel(config.mode)}`}
             subtitle={`${config.difficulty} · ${exam ? 'exam mode — no hints, marked at the end' : 'learning mode — hints and retries allowed'}`}
             done={done}
             total={state.slots.length}
+            slot={exam ? null : activeSlot}
+            position={
+              activeSlot ? state.slots.findIndex((slot) => slot.id === activeSlot.id) + 1 : 0
+            }
+            hints={hints}
+            hintsShown={activeSlot ? (state.hintsShown[activeSlot.id] ?? 0) : 0}
+            canHint={!exam}
+            onHint={() => {
+              if (activeSlot) dispatch({ type: 'hint', slotId: activeSlot.id });
+            }}
+            feedback={exam ? null : state.feedback}
+            onDismissFeedback={() => dispatch({ type: 'dismiss-feedback' })}
+            actions={
+              <>
+                <ZoomControl
+                  zoom={zoom}
+                  onChange={(next) => {
+                    setAutoZoom(false);
+                    setZoom(next);
+                  }}
+                />
+                <Link to={`/explore/${pathway.id}`}>
+                  <Button variant="ghost" size="small">
+                    Explore
+                  </Button>
+                </Link>
+              </>
+            }
           />
 
-          <div className={styles.playLayout} style={{ marginTop: 'var(--space-4)' }}>
-            <div className={styles.canvasColumn}>
-              {!exam ? (
-                <TaskStrip
-                  slot={activeSlot}
-                  position={
-                    activeSlot
-                      ? state.slots.findIndex((slot) => slot.id === activeSlot.id) + 1
-                      : 0
-                  }
-                  total={state.slots.length}
-                  hints={hints}
-                  hintsShown={activeSlot ? (state.hintsShown[activeSlot.id] ?? 0) : 0}
-                  canHint
-                  onHint={() =>
-                    activeSlot ? dispatch({ type: 'hint', slotId: activeSlot.id }) : undefined
-                  }
-                />
-              ) : null}
-
-              {!exam ? (
-                <FeedbackPanel
-                  feedback={state.feedback}
-                  onDismiss={() => dispatch({ type: 'dismiss-feedback' })}
-                />
-              ) : null}
-
-              <Card padded={false} className={styles.canvasCard}>
+          <div className={gameStyles.playLayout}>
+            <div className={gameStyles.canvasColumn}>
+              <Card padded={false} className={styles.canvasCard} ref={paneRef}>
                 <PathwayCanvas
                   index={index}
                   slots={state.slots}
@@ -186,13 +203,15 @@ function GameSession({
                   tokens={state.tokens}
                   activeSlotId={state.activeSlotId}
                   wrongSlotId={state.feedback?.tone === 'incorrect' ? state.feedback.slotId : null}
+                  columns={columns}
+                  zoom={zoom}
                   onSlotActivate={(slotId) => dispatch({ type: 'select-slot', slotId })}
                   onSlotClear={exam ? (slotId) => dispatch({ type: 'clear', slotId }) : undefined}
                 />
               </Card>
             </div>
 
-            <div className={styles.sideColumn}>
+            <aside className={gameStyles.sideColumn}>
               <ScoreRail
                 xp={state.xp}
                 streak={state.streak}
@@ -210,47 +229,16 @@ function GameSession({
                   </p>
                   <div style={{ marginTop: 'var(--space-3)' }}>
                     <Button onClick={() => dispatch({ type: 'submit' })}>
-                      {allSlotsAnswered(state)
-                        ? 'Submit'
-                        : `Submit (${unanswered} unanswered)`}
+                      {allSlotsAnswered(state) ? 'Submit' : `Submit (${unanswered} unanswered)`}
                     </Button>
                   </div>
                 </Card>
-              ) : (
-                <Card>
-                  <h3 className={gameStyles.progressTitle}>Where you are</h3>
-                  <p className={styles.detailText} style={{ marginTop: 'var(--space-2)' }}>
-                    {activeSlot
-                      ? 'The highlighted position is the current task. You can answer them in any order — just tap another blank.'
-                      : 'Every position is filled.'}
-                  </p>
-                  <div className={styles.detailList} style={{ marginTop: 'var(--space-3)' }}>
-                    <Badge tone="accent">100 XP first try</Badge>
-                    <Badge>70 XP second</Badge>
-                    <Badge>40 XP third</Badge>
-                  </div>
-                </Card>
-              )}
+              ) : null}
 
-              <Card>
-                <h3 className={gameStyles.progressTitle}>Need the map?</h3>
-                <p className={styles.detailText} style={{ marginTop: 'var(--space-2)' }}>
-                  Explore shows the complete pathway with regulation and clinical notes. Opening it
-                  costs nothing — but the answers are all there.
-                </p>
-                <div style={{ marginTop: 'var(--space-3)' }}>
-                  <Link to={`/explore/${pathway.id}`}>
-                    <Button variant="secondary" size="small">
-                      Open Explore
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            </div>
+              <TokenTray tokens={state.tokens} availability={availability} />
+            </aside>
           </div>
-
-          <TokenTray tokens={state.tokens} availability={availability} />
-        </>
+        </div>
       )}
       <DragLayer />
     </DragProvider>

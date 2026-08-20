@@ -6,12 +6,13 @@
  * exam review (right and wrong placements marked). It reads the layout from the
  * pathway data through buildCanvasModel — it knows nothing about glycolysis.
  */
-import { Fragment, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useRef } from 'react';
 import type { Reaction } from '@/types/pathway';
 import type { Slot, SlotResult, Token } from '@/types/session';
 import {
   buildCanvasModel,
   factorOf,
+  splitRowsIntoColumns,
   type CanvasNode,
   type PathwayIndex,
 } from '@/engine/pathwayModel';
@@ -37,6 +38,10 @@ interface PathwayCanvasProps {
   onSlotClear?: (slotId: string) => void;
   onSelect?: (selection: NonNullable<CanvasSelection>) => void;
   selection?: CanvasSelection;
+  /** How many vertical columns to break the pathway into. */
+  columns?: number;
+  /** 1 = full size. Shrinks the whole diagram so a long pathway fits. */
+  zoom?: number;
 }
 
 export function PathwayCanvas({
@@ -52,8 +57,20 @@ export function PathwayCanvas({
   onSlotClear,
   onSelect,
   selection = null,
+  columns = 1,
+  zoom = 1,
 }: PathwayCanvasProps) {
   const model = useMemo(() => buildCanvasModel(index.pathway), [index]);
+  const groups = useMemo(() => splitRowsIntoColumns(model.rows, columns), [model.rows, columns]);
+  const canvasRef = useRef<HTMLDivElement>(null);
+
+  // Follow the current task rather than making the student look for it. "nearest"
+  // keeps a slot that is already on screen exactly where it is.
+  useEffect(() => {
+    if (!activeSlotId) return;
+    const element = canvasRef.current?.querySelector(`[data-slot="${activeSlotId}"]`);
+    element?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+  }, [activeSlotId]);
   const slotById = useMemo(() => new Map(slots.map((slot) => [slot.id, slot])), [slots]);
   const tokenById = useMemo(() => new Map(tokens.map((token) => [token.id, token])), [tokens]);
 
@@ -135,25 +152,26 @@ export function PathwayCanvas({
       <div className={[styles.arrowBlock, reaction.reversible ? '' : styles.irreversible].join(' ')}>
         <div className={styles.line} />
         <div className={styles.enzymeRow}>
-          <span className={styles.stepTag}>{reaction.step}</span>
-          {enzymeSlot && !enzymeSolved ? (
+          <div className={styles.enzymeMain}>
+            <span className={styles.stepTag}>{reaction.step}</span>
+            {enzymeSlot && !enzymeSolved ? (
             renderSlot(enzymeSlot)
-          ) : enzyme ? (
-            <EnzymePill
-              enzyme={enzyme}
-              solved={enzymeSolved}
-              selected={selection?.kind === 'enzyme' && selection.id === enzyme.id}
-              onClick={onSelect ? () => onSelect({ kind: 'enzyme', id: enzyme.id }) : undefined}
-            />
-          ) : null}
-          {reaction.reversible ? (
-            <span className={styles.reversibleMark} title="Reversible under physiological conditions">
-              ⇌
-            </span>
-          ) : null}
-        </div>
-        {coupleViews.some(Boolean) || extras.length > 0 ? (
-          <div className={styles.chipRow}>
+            ) : enzyme ? (
+              <EnzymePill
+                enzyme={enzyme}
+                solved={enzymeSolved}
+                selected={selection?.kind === 'enzyme' && selection.id === enzyme.id}
+                onClick={onSelect ? () => onSelect({ kind: 'enzyme', id: enzyme.id }) : undefined}
+              />
+            ) : null}
+            {reaction.reversible ? (
+              <span
+                className={styles.reversibleMark}
+                title="Reversible under physiological conditions"
+              >
+                ⇌
+              </span>
+            ) : null}
             {coupleViews}
             {extras.map((item) => (
               <span key={item} className={styles.extra}>
@@ -161,50 +179,64 @@ export function PathwayCanvas({
               </span>
             ))}
           </div>
-        ) : null}
+        </div>
         <div className={[styles.line, styles.lineTall].join(' ')} />
         <div className={styles.arrowHead} />
       </div>
     );
   };
 
+  const renderRow = (row: (typeof model.rows)[number]) => {
+    const multiplier = factorOf(row.reaction);
+    const body = (
+      <>
+        {renderArrow(row.reaction)}
+        <div className={styles.nodeRow}>
+          {row.nodes.map((node) => renderNode(node, multiplier))}
+        </div>
+      </>
+    );
+
+    return (
+      <Fragment key={row.reaction.id}>
+        {row.multiplierDivider ? (
+          <div className={styles.divider}>
+            <span className={styles.dividerLabel}>
+              ×2 — every step below runs twice per {index.pathway.input ?? 'input molecule'}
+            </span>
+          </div>
+        ) : null}
+        {row.reaction.branch ? (
+          <div className={styles.branch}>
+            <span className={styles.branchCaption}>
+              Side branch — this is where the second three-carbon molecule joins in
+            </span>
+            {body}
+          </div>
+        ) : (
+          body
+        )}
+      </Fragment>
+    );
+  };
+
   return (
-    <div className={styles.canvas}>
-      <div className={styles.nodeRow}>{model.head.map((node) => renderNode(node, 1))}</div>
-
-      {model.rows.map((row) => {
-        const multiplier = factorOf(row.reaction);
-        const body = (
-          <>
-            {renderArrow(row.reaction)}
-            <div className={styles.nodeRow}>
-              {row.nodes.map((node) => renderNode(node, multiplier))}
-            </div>
-          </>
-        );
-
-        return (
-          <Fragment key={row.reaction.id}>
-            {row.multiplierDivider ? (
-              <div className={styles.divider}>
-                <span className={styles.dividerLabel}>
-                  ×2 — every step below runs twice per {index.pathway.input ?? 'input molecule'}
-                </span>
-              </div>
-            ) : null}
-            {row.reaction.branch ? (
-              <div className={styles.branch}>
-                <span className={styles.branchCaption}>
-                  Side branch — this is where the second three-carbon molecule joins in
-                </span>
-                {body}
-              </div>
+    <div className={styles.canvas} ref={canvasRef}>
+      <div className={styles.columns} data-canvas-content="true" style={{ zoom }}>
+        {groups.map((group, groupIndex) => (
+          <div className={styles.column} key={group[0]?.reaction.id ?? groupIndex}>
+            {groupIndex === 0 ? (
+              <div className={styles.nodeRow}>{model.head.map((node) => renderNode(node, 1))}</div>
             ) : (
-              body
+              <div className={styles.carryOver}>continued from column {groupIndex}</div>
             )}
-          </Fragment>
-        );
-      })}
+            {group.map(renderRow)}
+            {groupIndex < groups.length - 1 ? (
+              <div className={styles.carryOver}>continues in column {groupIndex + 2} →</div>
+            ) : null}
+          </div>
+        ))}
+      </div>
 
       <div className={styles.legend}>
         <span className={styles.legendItem}>

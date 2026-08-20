@@ -1,8 +1,19 @@
-import type { Slot } from '@/types/session';
+/*
+ * The one panel above the canvas: where you are, what the current task is, the
+ * hint ladder and the feedback for the last placement.
+ *
+ * These used to be three stacked cards, which pushed the pathway itself off the
+ * screen. Progress, prompt and feedback belong together anyway — they are all
+ * answers to "what am I doing right now".
+ */
+import type { ReactNode } from 'react';
+import type { Feedback, Slot } from '@/types/session';
 import { Badge } from '@/components/layout/Badge';
 import { Button } from '@/components/layout/Button';
 import { Card } from '@/components/layout/Card';
+import { ProgressBar } from '@/components/layout/ProgressBar';
 import { HINT_COST } from '@/engine/scoring';
+import { FeedbackPanel } from './FeedbackPanel';
 import styles from './game.module.css';
 
 const KIND_LABEL: Record<Slot['kind'], string> = {
@@ -20,43 +31,72 @@ const KIND_TONE = {
 } as const;
 
 export function TaskStrip({
+  title,
+  subtitle,
+  done,
+  total,
   slot,
   position,
-  total,
   hints,
   hintsShown,
   canHint,
   onHint,
+  feedback,
+  onDismissFeedback,
+  actions,
 }: {
+  title: string;
+  subtitle?: string;
+  done: number;
+  total: number;
   slot: Slot | null;
   position: number;
-  total: number;
   hints: string[];
   hintsShown: number;
   canHint: boolean;
   onHint: () => void;
+  feedback: Feedback | null;
+  onDismissFeedback: () => void;
+  actions?: ReactNode;
 }) {
-  if (!slot) return null;
   const remaining = hints.length - hintsShown;
 
   return (
     <Card padded={false}>
       <div className={styles.task}>
-        <div className={styles.taskHead}>
-          <div className={styles.taskMeta}>
-            <Badge tone={KIND_TONE[slot.kind]}>{KIND_LABEL[slot.kind]}</Badge>
-            <span className={styles.hintIndex}>
-              Task {position} of {total}
+        <div className={styles.taskTop}>
+          <div className={styles.taskTitleGroup}>
+            <span className={styles.progressTitle}>{title}</span>
+            <span className={styles.progressCount}>
+              {done} / {total} positions
             </span>
           </div>
-          {canHint ? (
-            <Button variant="secondary" size="small" onClick={onHint} disabled={remaining <= 0}>
-              {remaining > 0 ? `Hint (−${HINT_COST} XP)` : 'No hints left'}
-            </Button>
-          ) : null}
+          {actions ? <div className={styles.taskActions}>{actions}</div> : null}
         </div>
 
-        <p className={styles.taskPrompt}>{slot.prompt}</p>
+        <ProgressBar
+          value={total === 0 ? 0 : done / total}
+          label={`${done} of ${total} positions completed`}
+          tone={done === total ? 'correct' : 'accent'}
+        />
+        {subtitle ? <span className={styles.progressCount}>{subtitle}</span> : null}
+
+        {slot ? (
+          <div className={styles.taskHead}>
+            <div className={styles.taskMeta}>
+              <Badge tone={KIND_TONE[slot.kind]}>{KIND_LABEL[slot.kind]}</Badge>
+              <span className={styles.hintIndex}>
+                {position} / {total}
+              </span>
+              <p className={styles.taskPrompt}>{slot.prompt}</p>
+            </div>
+            {canHint ? (
+              <Button variant="secondary" size="small" onClick={onHint} disabled={remaining <= 0}>
+                {remaining > 0 ? `Hint (−${HINT_COST} XP)` : 'No hints left'}
+              </Button>
+            ) : null}
+          </div>
+        ) : null}
 
         {hintsShown > 0 ? (
           <ul className={styles.hintList}>
@@ -68,6 +108,8 @@ export function TaskStrip({
             ))}
           </ul>
         ) : null}
+
+        <FeedbackPanel feedback={feedback} onDismiss={onDismissFeedback} />
       </div>
     </Card>
   );

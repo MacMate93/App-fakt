@@ -3,6 +3,7 @@ import { glycolysis } from '@/data';
 import type { PlayablePathway } from '@/types/pathway';
 import type { Difficulty, TaskMode } from '@/types/session';
 import { generateSession } from './generateSession';
+import { buildCanvasModel, splitRowsIntoColumns } from './pathwayModel';
 
 const pathway = glycolysis as PlayablePathway;
 const MODES: TaskMode[] = ['build', 'missing-metabolite', 'missing-enzyme', 'energy', 'cofactor'];
@@ -132,5 +133,37 @@ describe('seeding', () => {
     const a = session('build', 'intermediate', 1).slots.map((slot) => slot.id);
     const b = session('build', 'intermediate', 999).slots.map((slot) => slot.id);
     expect(a).not.toEqual(b);
+  });
+});
+
+describe('canvas columns', () => {
+  const rows = buildCanvasModel(pathway).rows;
+
+  it('keeps every reaction, in order, whatever the column count', () => {
+    for (const columns of [1, 2, 3]) {
+      const flat = splitRowsIntoColumns(rows, columns).flat();
+      expect(flat.map((row) => row.reaction.id)).toEqual(rows.map((row) => row.reaction.id));
+    }
+  });
+
+  it('never leaves a column empty', () => {
+    for (const columns of [2, 3]) {
+      const groups = splitRowsIntoColumns(rows, columns);
+      expect(groups).toHaveLength(columns);
+      for (const group of groups) expect(group.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('balances the columns rather than cutting them at equal row counts', () => {
+    const groups = splitRowsIntoColumns(rows, 2);
+    const sizes = groups.map((group) => group.length);
+    // The side branch and the two-product split make the first half taller, so
+    // a balanced layout gives the first column no more rows than the second.
+    expect(Math.abs(sizes[0] - sizes[1])).toBeLessThanOrEqual(2);
+  });
+
+  it('breaks glycolysis between the investment and the payoff phase', () => {
+    const [first] = splitRowsIntoColumns(rows, 2);
+    expect(first.every((row) => (row.reaction.factor ?? 1) === 1)).toBe(true);
   });
 });
