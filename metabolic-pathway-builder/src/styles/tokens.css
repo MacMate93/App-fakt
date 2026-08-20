@@ -127,3 +127,56 @@
     --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
   }
 }
+
+/* An embedding host (or the artifact viewer) may pin the theme rather than
+   leaving it to the OS preference — honour that in both directions. */
+:root[data-theme='dark'] {
+
+  --bg: #0c1117;
+  --bg-grid: rgba(148, 178, 214, 0.05);
+  --surface: #151b24;
+  --surface-2: #1b222d;
+  --surface-3: #232c39;
+  --border: #262f3b;
+  --border-strong: #3a4655;
+  --text: #e6edf5;
+  --text-muted: #9aa6b4;
+  --text-faint: #6d7885;
+
+  --accent: #5b9dff;
+  --accent-hover: #7db0ff;
+  --accent-soft: #142338;
+  --accent-border: #2b4670;
+  --accent-contrast: #08111d;
+
+  --metabolite: #79b3e8;
+  --metabolite-soft: #13202e;
+  --metabolite-border: #2b455f;
+
+  --enzyme: #c3a4ef;
+  --enzyme-soft: #1e1a2b;
+  --enzyme-border: #443861;
+
+  --energy: #e3b465;
+  --energy-soft: #2a2214;
+  --energy-border: #574728;
+
+  --redox: #62c8a8;
+  --redox-soft: #12261f;
+  --redox-border: #275044;
+
+  --regulatory: #f0956a;
+  --regulatory-soft: #2b1a12;
+  --regulatory-border: #5c3826;
+
+  --correct: #4fce9b;
+  --correct-soft: #10241b;
+  --correct-border: #2a5442;
+  --incorrect: #ff8a80;
+  --incorrect-soft: #2a1917;
+  --incorrect-border: #5a2f2b;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+}
