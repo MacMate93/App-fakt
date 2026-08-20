@@ -29,6 +29,22 @@ olvasható marad az oldal).
   félbehagyott játék a böngésző tárolójában marad meg.
 - **Világos és sötét téma**, mobilra szabott elrendezés, győzelmi konfetti.
 
+## A címer elhelyezése
+
+A fejléc bal oldalán megjelenik az egyetem címere, mellette az intézmény neve
+(nyelvenként a megfelelő alakban). A képfájl kétféleképpen kerülhet a helyére:
+
+1. **Fájlként a játék mellé** – tegyen egy `cimer.svg`, `cimer.png` vagy
+   `cimer.jpg` nevű fájlt az `index.html` mellé (a repóban, a webszerveren
+   vagy a Moodle-erőforrásban). A játék induláskor megkeresi és betölti.
+2. **Beágyazva** – az `index.html`-ben a `CIMER_ADAT` állandóba írt `data:` URL
+   is működik. Ez akkor kell, ha a játékot egyetlen fájlként adja tovább,
+   mellékelt képfájl nélkül.
+
+Ha egyik sincs meg, a fejléc egyszerűen címer nélkül jelenik meg – a játék
+működését ez nem érinti. Sötét témán a címer fehér, kör alakú alapra kerül,
+hogy a bordó rajz jól látszódjon.
+
 ## Saját kérdések feltöltése
 
 A beépített 111 fogalom mellé (vagy helyette) bármikor betölthető saját

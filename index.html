@@ -157,14 +157,36 @@ button, select, input { font: inherit; color: inherit; }
 }
 
 /* ---------- Fejléc ---------- */
-.fejlec { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 20px; }
-.cimblokk { flex: 1 1 280px; display: flex; flex-direction: column; gap: 0; }
-.szemoldok {
-  font-size: 12px;
+.fejlec { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.cimblokk { flex: 1 1 260px; display: flex; flex-direction: column; gap: 0; }
+.cimer {
+  flex: 0 0 auto;
+  width: clamp(52px, 7vw, 68px);
+  height: auto;
+  align-self: center;
+}
+/* Sötét témán fehér medál emeli ki a bordó címert. */
+:root[data-tema="sotet"] .cimer,
+:root[data-theme="dark"]:not([data-tema="vilagos"]) .cimer {
+  background: #FFFFFF;
+  border-radius: 50%;
+  padding: 3px;
+  box-shadow: 0 3px 0 var(--el);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="vilagos"]):not([data-theme="light"]) .cimer {
+    background: #FFFFFF;
+    border-radius: 50%;
+    padding: 3px;
+    box-shadow: 0 3px 0 var(--el);
+  }
+}
+.intezmeny {
+  font-size: 12.5px;
   font-weight: 800;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  letter-spacing: .04em;
   color: var(--halvany);
+  text-wrap: balance;
 }
 h1 {
   font-family: var(--diszp);
@@ -638,6 +660,7 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
 }
 .lablec p { margin: 0; }
 .lablec .nev { font-family: var(--diszp); font-weight: 700; color: var(--tinta); }
+.lablec .lablec-adat { flex-basis: 100%; text-transform: uppercase; letter-spacing: .08em; font-size: 11px; opacity: .85; }
 .lablec a { color: var(--narancs); text-decoration-thickness: 2px; text-underline-offset: 2px; }
 .lablec a:hover { color: var(--narancs-sotet); }
 
@@ -721,8 +744,9 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
 
 <div class="burok">
   <header class="fejlec">
+    <img class="cimer" id="cimer" alt="" hidden>
     <div class="cimblokk">
-      <div class="szemoldok" data-sz="szemoldok"></div>
+      <div class="intezmeny" data-sz="intezmeny"></div>
       <h1><span data-sz="cim1"></span> <em data-sz="cim2"></em></h1>
     </div>
     <div class="fejlec-eszkozok">
@@ -785,6 +809,7 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
   <footer class="lablec">
     <p class="nev" id="lablec-szerk"></p>
     <p id="lablec-hiba"></p>
+    <p class="lablec-adat" data-sz="szemoldok"></p>
   </footer>
 </div>
 
@@ -871,6 +896,7 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
 const SZOVEGEK = {
   hu: {
     kod: "hu",
+    intezmeny: "Állatorvostudományi Egyetem, Budapest · Biokémiai Osztály",
     szemoldok: "111 fogalom · 6 témakör · minden játék új rács",
     cim1: "Biokémia", cim2: "keresztrejtvény",
     ido: "Idő", tipp: "Tipp", rekord: "Rekord", pont: "Pont",
@@ -933,6 +959,7 @@ const SZOVEGEK = {
     lablecSzerkeszto: "Felelős szerkesztő és készítő: Dr. Mackei Máté",
     lablecHiba: "Hiba esetén kérjük, jelezze a {email} címen.",
     aria: {
+      cimer: "Az Állatorvostudományi Egyetem címere",
       nyelvValaszto: "Nyelv választása", racsCimke: "Keresztrejtvény rács",
       meghatarozasok: "Meghatározások", betusor: "Képernyő-billentyűzet",
       bevitel: "Betűbevitel a kijelölt mezőbe", elozo: "Előző meghatározás",
@@ -943,6 +970,7 @@ const SZOVEGEK = {
   },
   en: {
     kod: "en",
+    intezmeny: "University of Veterinary Medicine Budapest · Division of Biochemistry",
     szemoldok: "111 terms · 6 topics · a fresh grid every game",
     cim1: "Biochemistry", cim2: "crossword",
     ido: "Time", tipp: "Hints", rekord: "Best", pont: "Score",
@@ -1005,6 +1033,7 @@ const SZOVEGEK = {
     lablecSzerkeszto: "Editor and creator: Dr. Máté Mackei",
     lablecHiba: "Please report any errors to {email}.",
     aria: {
+      cimer: "Crest of the University of Veterinary Medicine Budapest",
       nyelvValaszto: "Choose language", racsCimke: "Crossword grid",
       meghatarozasok: "Clues", betusor: "On-screen keyboard",
       bevitel: "Type a letter into the selected square", elozo: "Previous clue",
@@ -1015,6 +1044,7 @@ const SZOVEGEK = {
   },
   de: {
     kod: "de",
+    intezmeny: "Veterinärmedizinische Universität Budapest · Abteilung für Biochemie",
     szemoldok: "111 Begriffe · 6 Themen · jedes Spiel ein neues Gitter",
     cim1: "Biochemie", cim2: "Kreuzworträtsel",
     ido: "Zeit", tipp: "Tipps", rekord: "Rekord", pont: "Punkte",
@@ -1077,6 +1107,7 @@ const SZOVEGEK = {
     lablecSzerkeszto: "Verantwortlicher Redakteur und Ersteller: Dr. Máté Mackei",
     lablecHiba: "Fehler bitte an {email} melden.",
     aria: {
+      cimer: "Wappen der Veterinärmedizinischen Universität Budapest",
       nyelvValaszto: "Sprache wählen", racsCimke: "Kreuzworträtsel-Gitter",
       meghatarozasok: "Fragen", betusor: "Bildschirmtastatur",
       bevitel: "Buchstabe in das gewählte Feld eingeben", elozo: "Vorherige Frage",
@@ -1945,6 +1976,7 @@ function allitsNyelvet(uj, ujJatekot = true) {
 
   E("sugo-lista").innerHTML = SZ.sugoPontok.map((p) => "<li>" + p + "</li>").join("");
 
+  E("cimer").alt = SZ.aria.cimer;
   E("lablec-szerk").textContent = t("lablecSzerkeszto");
   E("lablec-hiba").innerHTML = t("lablecHiba", {
     email: '<a href="mailto:mackei.mate@univet.hu">mackei.mate@univet.hu</a>'
@@ -2753,7 +2785,31 @@ E("tema-gomb").addEventListener("click", () => {
 });
 
 /* ==========================================================================
-   8. Indulás
+   8. Címer
+   ==========================================================================
+   Beágyazott kép esetén a CIMER_ADAT állandóba kerül a data: URL. Ha üres,
+   a játék az index.html mellé tett cimer.svg vagy cimer.png fájlt keresi;
+   ha az sincs, a fejléc egyszerűen címer nélkül jelenik meg.
+   ========================================================================== */
+const CIMER_ADAT = "";
+const CIMER_FAJLOK = ["cimer.svg", "cimer.png", "cimer.jpg"];
+
+function toltsdCimert() {
+  const kep = E("cimer");
+  const jeloltek = CIMER_ADAT ? [CIMER_ADAT] : CIMER_FAJLOK.slice();
+
+  const kovetkezo = () => {
+    const forras = jeloltek.shift();
+    if (!forras) { kep.hidden = true; return; }
+    kep.src = forras;
+  };
+  kep.addEventListener("error", kovetkezo);
+  kep.addEventListener("load", () => { kep.hidden = false; });
+  kovetkezo();
+}
+
+/* ==========================================================================
+   9. Indulás
    ========================================================================== */
 (function indul() {
   try {
@@ -2778,6 +2834,7 @@ E("tema-gomb").addEventListener("click", () => {
   } catch (e) {}
 
   toltsdSajatot();
+  toltsdCimert();
   allitsNyelvet(kezdoNyelv, false);
   E("klavia").hidden = !klaviaNyitva;
   E("klavia-gomb").setAttribute("aria-expanded", String(klaviaNyitva));
