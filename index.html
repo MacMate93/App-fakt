@@ -623,6 +623,24 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
 }
 .parbeszed-gombsor { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
 
+/* ---------- Lábléc ---------- */
+.lablec {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding: 6px 4px 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--halvany);
+}
+.lablec p { margin: 0; }
+.lablec .nev { font-family: var(--diszp); font-weight: 700; color: var(--tinta); }
+.lablec a { color: var(--narancs); text-decoration-thickness: 2px; text-underline-offset: 2px; }
+.lablec a:hover { color: var(--narancs-sotet); }
+
 /* ---------- Saját lista párbeszéd ---------- */
 .sablon {
   margin: 0;
@@ -763,6 +781,11 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
 
     <section class="lap klavia" id="klavia" data-sz-aria="betusor"></section>
   </main>
+
+  <footer class="lablec">
+    <p class="nev" id="lablec-szerk"></p>
+    <p id="lablec-hiba"></p>
+  </footer>
 </div>
 
 <div class="eszkozsav">
@@ -907,6 +930,8 @@ const SZOVEGEK = {
     ],
     pontszamitasCim: "Pontszámítás",
     pontszamitas: "Szavanként 100 pont, minden felhasznált tipp 40 pontot von le, és számít a megoldás ideje is. A rekordokat a böngésző menti el, nyelvenként és nehézségi szintenként.",
+    lablecSzerkeszto: "Felelős szerkesztő és készítő: Dr. Mackei Máté",
+    lablecHiba: "Hiba esetén jelezd a {email} címen.",
     aria: {
       nyelvValaszto: "Nyelv választása", racsCimke: "Keresztrejtvény rács",
       meghatarozasok: "Meghatározások", betusor: "Képernyő-billentyűzet",
@@ -977,6 +1002,8 @@ const SZOVEGEK = {
     ],
     pontszamitasCim: "Scoring",
     pontszamitas: "100 points per word, each hint costs 40 points, and solving time counts too. Best results are stored in your browser per language and level.",
+    lablecSzerkeszto: "Editor and creator: Dr. Máté Mackei",
+    lablecHiba: "Please report any errors to {email}.",
     aria: {
       nyelvValaszto: "Choose language", racsCimke: "Crossword grid",
       meghatarozasok: "Clues", betusor: "On-screen keyboard",
@@ -1047,6 +1074,8 @@ const SZOVEGEK = {
     ],
     pontszamitasCim: "Punkte",
     pontszamitas: "100 Punkte je Wort, jeder Tipp kostet 40 Punkte, und auch die Zeit zählt. Die Rekorde speichert der Browser je Sprache und Schwierigkeitsgrad.",
+    lablecSzerkeszto: "Verantwortlicher Redakteur und Ersteller: Dr. Máté Mackei",
+    lablecHiba: "Fehler bitte an {email} melden.",
     aria: {
       nyelvValaszto: "Sprache wählen", racsCimke: "Kreuzworträtsel-Gitter",
       meghatarozasok: "Fragen", betusor: "Bildschirmtastatur",
@@ -1915,6 +1944,11 @@ function allitsNyelvet(uj, ujJatekot = true) {
   temakorElem.value = [...temakorElem.options].some((o) => o.value === elozoKor) ? elozoKor : "mind";
 
   E("sugo-lista").innerHTML = SZ.sugoPontok.map((p) => "<li>" + p + "</li>").join("");
+
+  E("lablec-szerk").textContent = t("lablecSzerkeszto");
+  E("lablec-hiba").innerHTML = t("lablecHiba", {
+    email: '<a href="mailto:mackei.mate@univet.hu">mackei.mate@univet.hu</a>'
+  });
 
   epitsKlaviat();
   if (ujJatekot) ujJatek();
