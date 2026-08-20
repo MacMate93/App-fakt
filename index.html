@@ -4,102 +4,150 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Biokémia Keresztrejtvény</title>
-<meta name="description" content="Magyar nyelvű biokémia keresztrejtvény: 111 fogalom hat témakörből, minden játékban új rácsot generálva.">
+<meta name="description" content="Háromnyelvű biokémia keresztrejtvény: 111 fogalom hat témakörből, magyarul, angolul és németül, minden játékban új rácsot generálva.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Zilla+Slab:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
 /* ==========================================================================
-   Színek: az egyetemes indikátorpapír skálája adja a témakörök jelöléseit.
+   Napfényes rajzfilmpaletta: meleg kulcsfény, hűvös árnyék, cukorka-élénk
+   témakörszínek. Minden szín tokenen keresztül jut a komponensekhez, hogy a
+   világos és a sötét változat is végig egy készletből dolgozzon.
    ========================================================================== */
 :root {
-  --alap: #EDF1EE;
-  --felulet: #FBFCFA;
-  --felulet-2: #E3EAE5;
-  --tinta: #141D1A;
-  --halvany: #5B6B65;
-  --vonal: #C7D3CD;
-  --vonal-eros: #9FB0A9;
-  --kiemeles: #0F6E5A;
+  --alap: #FFF1E0;
+  --alap-fenypont: #FFFFFF;
+  --alap-hus: #FFD9C0;
+  --alap-eg: #BFE1FF;
+  --felulet: #FFFFFF;
+  --felulet-2: #FFF6EC;
+  --felulet-3: #F7E6D3;
+  --tinta: #2E2318;
+  --halvany: #7C6754;
+  --vonal: #F0DCC7;
+  --el: rgba(96, 62, 26, .22);
+  --arnyek: 0 18px 34px -20px rgba(96, 62, 26, .75);
+
+  --narancs: #FF7A18;
+  --narancs-sotet: #C95900;
   --kiemeles-tinta: #FFFFFF;
-  --tipp: #B5720E;
-  --hiba: #C0392F;
+  --tipp: #B87400;
+  --hiba: #E63946;
+  --siker: #1F9D63;
 
-  --kat-aminosav: #B33357;
-  --kat-szenhidrat: #B5720E;
-  --kat-lipid: #77871B;
-  --kat-nukleinsav: #1F7A57;
-  --kat-anyagcsere: #2A6BA8;
-  --kat-vitamin: #6A4C9C;
+  --kat-aminosav: #E23757;   --kat-aminosav-tinta: #FFFFFF;
+  --kat-szenhidrat: #FF9F1C; --kat-szenhidrat-tinta: #3A2500;
+  --kat-lipid: #FFD23F;      --kat-lipid-tinta: #493400;
+  --kat-nukleinsav: #14B8A6; --kat-nukleinsav-tinta: #04302B;
+  --kat-anyagcsere: #2D6BE0; --kat-anyagcsere-tinta: #FFFFFF;
+  --kat-vitamin: #7C3FD1;    --kat-vitamin-tinta: #FFFFFF;
 
-  --arnyek: 0 1px 2px rgba(20, 29, 26, .06), 0 8px 24px -12px rgba(20, 29, 26, .18);
-  --sugar: 10px;
-  --diszp: "Zilla Slab", Georgia, "Times New Roman", serif;
-  --szoveg: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --bokeh: rgba(255, 255, 255, .40);
+  --sugar: 14px;
+  --sugar-nagy: 26px;
+  --diszp: "Baloo 2", "Trebuchet MS", Verdana, sans-serif;
+  --szoveg: "Nunito", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="vilagos"]):not([data-theme="light"]) {
-    --alap: #0B1211;
-    --felulet: #141D1A;
-    --felulet-2: #1C2723;
-    --tinta: #E4EDE8;
-    --halvany: #93A8A0;
-    --vonal: #2A3833;
-    --vonal-eros: #3E524B;
-    --kiemeles: #45C9A4;
-    --kiemeles-tinta: #06211A;
-    --tipp: #E0A248;
-    --hiba: #F0705F;
-    --kat-aminosav: #EE7295;
-    --kat-szenhidrat: #E0A248;
-    --kat-lipid: #B8CB4E;
-    --kat-nukleinsav: #4FC894;
-    --kat-anyagcsere: #6FAEE8;
-    --kat-vitamin: #AE8DE0;
-    --arnyek: 0 1px 2px rgba(0, 0, 0, .5), 0 10px 30px -14px rgba(0, 0, 0, .8);
+    --alap: #101B2E;
+    --alap-fenypont: #24395C;
+    --alap-hus: #2A2140;
+    --alap-eg: #0A1120;
+    --felulet: #1C2B45;
+    --felulet-2: #243450;
+    --felulet-3: #2E4166;
+    --tinta: #F7EFE5;
+    --halvany: #A8BAD4;
+    --vonal: #33456A;
+    --el: rgba(0, 0, 0, .5);
+    --arnyek: 0 18px 36px -20px rgba(0, 0, 0, .95);
+    --bokeh: rgba(130, 175, 255, .05);
+    --narancs: #FF9440;
+    --narancs-sotet: #B95A0C;
+    --tipp: #FFC46B;
+    --hiba: #FF7078;
+    --siker: #3FD69B;
+    --kat-aminosav: #FF6B87;   --kat-aminosav-tinta: #3A0010;
+    --kat-szenhidrat: #FFB454; --kat-szenhidrat-tinta: #3A2500;
+    --kat-lipid: #FFDE6B;      --kat-lipid-tinta: #493400;
+    --kat-nukleinsav: #3FD9C6; --kat-nukleinsav-tinta: #04302B;
+    --kat-anyagcsere: #6BA2FF; --kat-anyagcsere-tinta: #05204D;
+    --kat-vitamin: #B48AF5;    --kat-vitamin-tinta: #22004F;
   }
 }
+
 :root[data-tema="sotet"],
 :root[data-theme="dark"]:not([data-tema="vilagos"]) {
-  --alap: #0B1211;
-  --felulet: #141D1A;
-  --felulet-2: #1C2723;
-  --tinta: #E4EDE8;
-  --halvany: #93A8A0;
-  --vonal: #2A3833;
-  --vonal-eros: #3E524B;
-  --kiemeles: #45C9A4;
-  --kiemeles-tinta: #06211A;
-  --tipp: #E0A248;
-  --hiba: #F0705F;
-  --kat-aminosav: #EE7295;
-  --kat-szenhidrat: #E0A248;
-  --kat-lipid: #B8CB4E;
-  --kat-nukleinsav: #4FC894;
-  --kat-anyagcsere: #6FAEE8;
-  --kat-vitamin: #AE8DE0;
-  --arnyek: 0 1px 2px rgba(0, 0, 0, .5), 0 10px 30px -14px rgba(0, 0, 0, .8);
+  --alap: #101B2E;
+  --alap-fenypont: #24395C;
+  --alap-hus: #2A2140;
+  --alap-eg: #0A1120;
+  --felulet: #1C2B45;
+  --felulet-2: #243450;
+  --felulet-3: #2E4166;
+  --tinta: #F7EFE5;
+  --halvany: #A8BAD4;
+  --vonal: #33456A;
+  --el: rgba(0, 0, 0, .5);
+  --arnyek: 0 18px 36px -20px rgba(0, 0, 0, .95);
+  --bokeh: rgba(130, 175, 255, .05);
+  --narancs: #FF9440;
+  --narancs-sotet: #B95A0C;
+  --tipp: #FFC46B;
+  --hiba: #FF7078;
+  --siker: #3FD69B;
+  --kat-aminosav: #FF6B87;   --kat-aminosav-tinta: #3A0010;
+  --kat-szenhidrat: #FFB454; --kat-szenhidrat-tinta: #3A2500;
+  --kat-lipid: #FFDE6B;      --kat-lipid-tinta: #493400;
+  --kat-nukleinsav: #3FD9C6; --kat-nukleinsav-tinta: #04302B;
+  --kat-anyagcsere: #6BA2FF; --kat-anyagcsere-tinta: #05204D;
+  --kat-vitamin: #B48AF5;    --kat-vitamin-tinta: #22004F;
 }
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
   margin: 0;
-  background: var(--alap);
   color: var(--tinta);
+  background: var(--alap);
   font-family: var(--szoveg);
   font-size: 15px;
+  font-weight: 600;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
 }
-button, select { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--kiemeles); outline-offset: 2px; }
+
+/* Színpadi háttér: felülről érkező meleg fény, alul hűvös ellenfény. */
+.hatter {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(120% 70% at 50% -20%, var(--alap-fenypont) 0%, transparent 60%),
+    radial-gradient(90% 60% at 100% 0%, var(--alap-hus) 0%, transparent 55%),
+    radial-gradient(100% 70% at 0% 100%, var(--alap-eg) 0%, transparent 60%),
+    var(--alap);
+}
+.hatter::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 22%, var(--bokeh) 0 8px, transparent 9px),
+    radial-gradient(circle at 88% 14%, var(--bokeh) 0 12px, transparent 13px),
+    radial-gradient(circle at 76% 78%, var(--bokeh) 0 16px, transparent 17px),
+    radial-gradient(circle at 22% 84%, var(--bokeh) 0 10px, transparent 11px);
+}
+
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--narancs); outline-offset: 3px; }
 
 .burok {
-  max-width: 1180px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 16px 96px;
+  padding: 20px 16px 104px;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -107,69 +155,110 @@ button, select { font: inherit; color: inherit; }
 
 /* ---------- Fejléc ---------- */
 .fejlec { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 20px; }
-.cimblokk { flex: 1 1 260px; display: flex; flex-direction: column; gap: 2px; }
+.cimblokk { flex: 1 1 280px; display: flex; flex-direction: column; gap: 0; }
 .szemoldok {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .16em;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--halvany);
 }
 h1 {
   font-family: var(--diszp);
-  font-weight: 700;
-  font-size: clamp(26px, 4.4vw, 40px);
-  line-height: 1.05;
+  font-weight: 800;
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1;
   margin: 0;
   text-wrap: balance;
-  letter-spacing: -.01em;
+  letter-spacing: .005em;
 }
-h1 em { font-style: normal; color: var(--kiemeles); }
+h1 em {
+  font-style: normal;
+  color: var(--narancs);
+  -webkit-text-stroke: 0;
+  text-shadow: 0 2px 0 var(--narancs-sotet);
+}
 .fejlec-eszkozok { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- Nyelvváltó ---------- */
+.nyelvvalto {
+  display: inline-flex;
+  padding: 4px;
+  gap: 3px;
+  background: var(--felulet-3);
+  border-radius: 999px;
+  box-shadow: inset 0 2px 5px var(--el);
+}
+.nyelvvalto button {
+  border: 0;
+  background: transparent;
+  color: var(--halvany);
+  font-family: var(--diszp);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .04em;
+  padding: 5px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform .12s ease, background-color .12s ease, color .12s ease;
+}
+.nyelvvalto button:hover { color: var(--tinta); }
+.nyelvvalto button[aria-pressed="true"] {
+  background: var(--narancs);
+  color: var(--kiemeles-tinta);
+  box-shadow: 0 3px 0 var(--narancs-sotet);
+  transform: translateY(-1px);
+}
 
 .mero {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  padding: 7px 12px;
+  gap: 7px;
+  padding: 7px 14px;
   background: var(--felulet);
-  border: 1px solid var(--vonal);
-  border-radius: var(--sugar);
-  box-shadow: var(--arnyek);
+  border-radius: 999px;
+  box-shadow: 0 3px 0 var(--el), var(--arnyek);
 }
 .mero .cimke {
-  font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: .12em;
+  font-weight: 800;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--halvany);
 }
-.mero .ertek { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.mero .ertek {
+  font-family: var(--diszp);
+  font-weight: 700;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
 
-/* ---------- Indikátorcsík: haladásjelző ---------- */
+/* ---------- Energiacsík ---------- */
 .csik-sor { display: flex; align-items: center; gap: 12px; }
 .csik {
   position: relative;
   flex: 1;
-  height: 10px;
+  height: 16px;
   border-radius: 999px;
   overflow: hidden;
-  background: var(--felulet-2);
-  border: 1px solid var(--vonal);
+  background: var(--felulet-3);
+  box-shadow: inset 0 3px 6px var(--el);
 }
 .csik .toltes {
   position: absolute;
-  inset: 0;
+  inset: 2px;
   width: 0%;
+  border-radius: 999px;
   background: linear-gradient(90deg,
     var(--kat-aminosav), var(--kat-szenhidrat), var(--kat-lipid),
     var(--kat-nukleinsav), var(--kat-anyagcsere), var(--kat-vitamin));
-  background-size: 620px 100%;
-  transition: width .45s cubic-bezier(.22, .68, .35, 1);
+  background-size: 640px 100%;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .55);
+  transition: width .5s cubic-bezier(.34, 1.56, .64, 1);
 }
 .csik-cimke {
-  font-family: var(--mono);
-  font-size: 11px;
+  font-weight: 800;
+  font-size: 13px;
   color: var(--halvany);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -178,7 +267,7 @@ h1 em { font-style: normal; color: var(--kiemeles); }
 /* ---------- Elrendezés ---------- */
 .jatekter {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(310px, .95fr);
   grid-template-areas: "racs megh" "racs klavia";
   grid-template-rows: auto 1fr;
   gap: 18px;
@@ -187,7 +276,6 @@ h1 em { font-style: normal; color: var(--kiemeles); }
 .racs-lap { grid-area: racs; }
 .megh-lap { grid-area: megh; }
 .klavia { grid-area: klavia; }
-/* Kis kijelzőn a betűsor a rács alá kerül, a meghatározások mögé. */
 @media (max-width: 900px) {
   .jatekter {
     grid-template-columns: minmax(0, 1fr);
@@ -198,210 +286,271 @@ h1 em { font-style: normal; color: var(--kiemeles); }
 
 .lap {
   background: var(--felulet);
-  border: 1px solid var(--vonal);
-  border-radius: 14px;
-  box-shadow: var(--arnyek);
+  border-radius: var(--sugar-nagy);
+  box-shadow: 0 5px 0 var(--el), var(--arnyek);
 }
 
 /* ---------- Rács ---------- */
-.racs-lap { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.racs-lap { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
 .racs-doboz {
   container-type: inline-size;
   display: flex;
   justify-content: center;
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  padding-bottom: 2px;
+  padding: 2px 2px 6px;
+  position: relative;
 }
 .racs {
   display: grid;
   grid-template-columns: repeat(var(--o), 1fr);
-  gap: 2px;
+  gap: 4px;
   width: 100%;
-  max-width: calc(var(--o) * 46px);
-  min-width: calc(var(--o) * 26px); /* tapintható marad kis kijelzőn is */
+  max-width: calc(var(--o) * 48px);
+  min-width: calc(var(--o) * 28px);
   flex: 0 0 auto;
-  --akt: var(--kiemeles);
+  --akt: var(--narancs);
 }
 .cella {
   position: relative;
   aspect-ratio: 1;
-  border-radius: 3px;
-  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--mono);
-  font-weight: 600;
-  font-size: clamp(13px, calc(56cqi / var(--o)), 26px);
+  font-family: var(--diszp);
+  font-weight: 700;
+  font-size: clamp(14px, calc(58cqi / var(--o)), 28px);
   line-height: 1;
   user-select: none;
-  cursor: default;
 }
 .cella.betu {
-  background: var(--felulet-2);
-  border: 1px solid var(--vonal);
+  border-radius: 28%;
+  background: linear-gradient(180deg, var(--felulet-2) 0%, var(--felulet-3) 100%);
+  box-shadow: 0 3px 0 var(--el), inset 0 2px 0 rgba(255, 255, 255, .75);
   cursor: pointer;
   color: var(--tinta);
-  transition: background-color .12s ease, border-color .12s ease;
+  transition: transform .14s cubic-bezier(.34, 1.56, .64, 1),
+              background-color .14s ease, box-shadow .14s ease;
 }
-.cella.betu:hover { border-color: var(--vonal-eros); }
+.cella.betu:hover { transform: translateY(-2px); }
 .cella .szam {
   position: absolute;
-  top: 1px;
-  left: 3px;
-  font-size: clamp(7px, calc(22cqi / var(--o)), 10px);
-  font-weight: 500;
+  top: 6%;
+  left: 9%;
+  font-family: var(--szoveg);
+  font-size: clamp(8px, calc(24cqi / var(--o)), 11px);
+  font-weight: 800;
   color: var(--halvany);
   line-height: 1;
 }
-.cella.aktiv-szo { background: color-mix(in srgb, var(--akt) 16%, var(--felulet)); border-color: color-mix(in srgb, var(--akt) 38%, var(--vonal)); }
-.cella.aktiv { background: color-mix(in srgb, var(--akt) 34%, var(--felulet)); border-color: var(--akt); box-shadow: inset 0 0 0 1px var(--akt); }
+.cella.aktiv-szo {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--akt) 22%, var(--felulet)) 0%,
+    color-mix(in srgb, var(--akt) 34%, var(--felulet)) 100%);
+}
+.cella.aktiv {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--akt) 62%, white) 0%, var(--akt) 100%);
+  color: var(--akt-tinta, var(--tinta));
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--akt) 60%, black),
+              0 10px 18px -8px rgba(0, 0, 0, .5);
+  z-index: 2;
+}
+.cella.aktiv .szam { color: inherit; opacity: .75; }
 .cella.tippelt { color: var(--tipp); }
 .cella.rossz { color: var(--hiba); }
 .cella.rossz::after {
   content: "";
   position: absolute;
-  inset: 12% 12% auto auto;
-  width: 34%;
-  height: 2px;
+  inset: 14% 14% auto auto;
+  width: 32%;
+  height: 3px;
+  border-radius: 2px;
   background: var(--hiba);
   transform: rotate(45deg);
   transform-origin: right center;
 }
-.cella.kesz { animation: villan .7s ease-out; }
-@keyframes villan {
-  0% { background: color-mix(in srgb, var(--akt) 70%, var(--felulet)); }
-  100% { background: var(--felulet-2); }
+.cella.kesz { animation: ugras .55s cubic-bezier(.34, 1.56, .64, 1) both; }
+@keyframes ugras {
+  0% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(-26%) scale(1.12); }
+  70% { transform: translateY(4%) scale(.96); }
+  100% { transform: translateY(0) scale(1); }
+}
+.racs.indul .cella.betu { animation: bepattan .45s cubic-bezier(.34, 1.56, .64, 1) both; }
+@keyframes bepattan {
+  0% { transform: scale(0) rotate(-12deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
 }
 
-/* ---------- Aktív meghatározás sáv ---------- */
+/* ---------- Aktív meghatározás ---------- */
 .aktiv-sav {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+  padding: 12px 14px;
   border-radius: var(--sugar);
-  background: color-mix(in srgb, var(--akt, var(--kiemeles)) 10%, var(--felulet));
-  border: 1px solid color-mix(in srgb, var(--akt, var(--kiemeles)) 28%, var(--vonal));
-  min-height: 56px;
+  background: color-mix(in srgb, var(--akt, var(--narancs)) 16%, var(--felulet));
+  box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--akt, var(--narancs)) 34%, transparent);
+  min-height: 62px;
 }
-.aktiv-sav .lepteto {
-  border: 1px solid var(--vonal);
+.lepteto {
+  border: 0;
   background: var(--felulet);
-  border-radius: 8px;
-  width: 32px;
-  height: 32px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
   flex: 0 0 auto;
   cursor: pointer;
-  font-size: 15px;
+  font-family: var(--diszp);
+  font-size: 18px;
+  font-weight: 700;
   line-height: 1;
+  box-shadow: 0 3px 0 var(--el);
+  transition: transform .1s ease, box-shadow .1s ease;
 }
-.aktiv-sav .lepteto:hover { border-color: var(--vonal-eros); }
+.lepteto:active { transform: translateY(3px); box-shadow: 0 0 0 var(--el); }
 .aktiv-szoveg { flex: 1; min-width: 0; }
 .aktiv-szoveg .fej {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .12em;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .09em;
   text-transform: uppercase;
   color: var(--halvany);
 }
-.aktiv-szoveg .meg { font-size: 15px; line-height: 1.35; text-wrap: pretty; }
+.aktiv-szoveg .meg { font-size: 16px; line-height: 1.35; text-wrap: pretty; }
 
-/* ---------- Meghatározás-listák ---------- */
-.megh-lap { padding: 14px; display: flex; flex-direction: column; gap: 16px; }
+/* ---------- Meghatározások ---------- */
+.megh-lap { padding: 16px; display: flex; flex-direction: column; gap: 18px; }
 .megh-cim {
   font-family: var(--diszp);
-  font-weight: 600;
-  font-size: 17px;
-  margin: 0 0 6px;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0 0 8px;
   display: flex;
   align-items: baseline;
   gap: 8px;
 }
-.megh-cim span { font-family: var(--mono); font-size: 11px; color: var(--halvany); font-weight: 500; }
-ol.megh { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-ol.megh li { margin: 0; }
+.megh-cim span { font-family: var(--szoveg); font-size: 12px; font-weight: 700; color: var(--halvany); }
+ol.megh { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
 .megh-gomb {
   width: 100%;
   display: grid;
   grid-template-columns: 26px 1fr auto;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
   text-align: left;
   background: transparent;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 6px 8px;
+  border: 0;
+  border-radius: 12px;
+  padding: 7px 9px;
   cursor: pointer;
   line-height: 1.35;
-}
-.megh-gomb:hover { background: var(--felulet-2); }
-.megh-gomb .sorszam {
-  font-family: var(--mono);
-  font-size: 12px;
   font-weight: 600;
-  color: var(--kat, var(--halvany));
+  transition: background-color .12s ease, transform .12s ease;
+}
+.megh-gomb:hover { background: var(--felulet-2); transform: translateX(2px); }
+.megh-gomb .sorszam {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--kat);
+  color: var(--kat-tinta);
+  font-family: var(--diszp);
+  font-size: 13px;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
+  box-shadow: 0 2px 0 var(--el);
 }
-.megh-gomb .hossz { font-family: var(--mono); font-size: 11px; color: var(--halvany); }
+.megh-gomb .hossz { font-size: 12px; font-weight: 800; color: var(--halvany); }
 .megh-gomb[aria-current="true"] {
-  background: color-mix(in srgb, var(--kat) 12%, var(--felulet));
-  border-color: color-mix(in srgb, var(--kat) 34%, var(--vonal));
+  background: color-mix(in srgb, var(--kat) 16%, var(--felulet));
+  box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--kat) 36%, transparent);
 }
-.megh-gomb.kesz .megh-szoveg { color: var(--halvany); text-decoration: line-through; text-decoration-thickness: 1px; }
-.megh-gomb.kesz .sorszam::after { content: " ✓"; }
+.megh-gomb.kesz .megh-szoveg { color: var(--halvany); text-decoration: line-through; text-decoration-thickness: 2px; }
+.megh-gomb.kesz .sorszam { background: var(--siker); color: #FFFFFF; }
+.megh-gomb.kesz .sorszam::after { content: "✓"; }
+.megh-gomb.kesz .sorszam span { display: none; }
 
-/* ---------- Billentyűzet ---------- */
-.klavia { padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+/* ---------- Betűsor ---------- */
+.klavia { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
 .klavia[hidden] { display: none; }
-.klavia-sor { display: flex; gap: 4px; justify-content: center; }
+.klavia-sor { display: flex; gap: 5px; justify-content: center; }
 .klavia button {
   flex: 1 1 0;
   min-width: 0;
-  max-width: 46px;
-  padding: 9px 0;
-  border: 1px solid var(--vonal);
-  background: var(--felulet-2);
-  border-radius: 7px;
-  font-family: var(--mono);
-  font-weight: 600;
+  max-width: 48px;
+  padding: 10px 0;
+  border: 0;
+  background: linear-gradient(180deg, var(--felulet-2), var(--felulet-3));
+  border-radius: 11px;
+  font-family: var(--diszp);
+  font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
+  box-shadow: 0 3px 0 var(--el);
+  transition: transform .08s ease, box-shadow .08s ease;
 }
-.klavia button:active { background: color-mix(in srgb, var(--kiemeles) 22%, var(--felulet)); }
-.klavia button.szeles { max-width: 92px; flex: 1.6 1 0; }
+.klavia button:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 var(--el);
+  background: var(--narancs);
+  color: var(--kiemeles-tinta);
+}
+.klavia button.szeles { max-width: 96px; flex: 1.6 1 0; }
 
-/* ---------- Vezérlők ---------- */
+/* ---------- Gombok ---------- */
 .gomb {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 13px;
-  border: 1px solid var(--vonal);
+  padding: 9px 16px;
+  border: 0;
   background: var(--felulet);
-  border-radius: var(--sugar);
+  border-radius: 999px;
   cursor: pointer;
-  font-weight: 500;
+  font-family: var(--diszp);
+  font-weight: 700;
+  font-size: 15px;
   white-space: nowrap;
-  transition: border-color .12s ease, background-color .12s ease;
+  box-shadow: 0 4px 0 var(--el);
+  transition: transform .09s ease, box-shadow .09s ease, filter .12s ease;
 }
-.gomb:hover { border-color: var(--vonal-eros); }
-.gomb.elsodleges { background: var(--kiemeles); color: var(--kiemeles-tinta); border-color: var(--kiemeles); font-weight: 600; }
-.gomb.elsodleges:hover { filter: brightness(1.06); }
-.gomb.tipp { color: var(--tipp); border-color: color-mix(in srgb, var(--tipp) 40%, var(--vonal)); }
-select.gomb { padding-right: 8px; }
+.gomb:hover { filter: brightness(1.03); }
+.gomb:active { transform: translateY(4px); box-shadow: 0 0 0 var(--el); }
+.gomb.elsodleges {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--narancs) 82%, white), var(--narancs));
+  color: var(--kiemeles-tinta);
+  box-shadow: 0 4px 0 var(--narancs-sotet);
+}
+.gomb.elsodleges:active { box-shadow: 0 0 0 var(--narancs-sotet); }
+.gomb.tipp { color: var(--tipp); }
+select.gomb {
+  padding-right: 10px;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 14px center, right 9px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 30px;
+}
 
 .eszkozsav {
   position: fixed;
   left: 0; right: 0; bottom: 0;
   z-index: 20;
-  background: color-mix(in srgb, var(--alap) 88%, transparent);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid var(--vonal);
-  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--alap) 82%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -8px 24px -18px rgba(0, 0, 0, .8);
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
 }
 .eszkozsav-belso {
-  max-width: 1180px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   gap: 8px;
@@ -412,53 +561,63 @@ select.gomb { padding-right: 8px; }
 .eszkoz-csoport { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
 /* ---------- Jelmagyarázat ---------- */
-.jelmagy { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 0 2px; }
-.jel { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--halvany); }
-.jel .pont { width: 9px; height: 9px; border-radius: 50%; background: var(--kat); }
+.jelmagy { display: flex; flex-wrap: wrap; gap: 7px 14px; padding: 0 4px; }
+.jel { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: var(--halvany); }
+.jel .pont { width: 11px; height: 11px; border-radius: 50%; background: var(--kat); box-shadow: 0 2px 0 var(--el); }
 
 /* ---------- Párbeszédek ---------- */
 dialog {
-  border: 1px solid var(--vonal);
-  border-radius: 14px;
+  border: 0;
+  border-radius: var(--sugar-nagy);
   background: var(--felulet);
   color: var(--tinta);
   padding: 0;
-  max-width: 520px;
+  max-width: 540px;
   width: calc(100% - 32px);
-  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .45);
+  box-shadow: 0 8px 0 var(--el), 0 40px 70px -30px rgba(0, 0, 0, .7);
 }
-dialog::backdrop { background: color-mix(in srgb, var(--tinta) 55%, transparent); }
-.parbeszed-test { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
-.parbeszed-test h2 { font-family: var(--diszp); font-size: 24px; margin: 0; }
-.parbeszed-test h3 { font-family: var(--diszp); font-size: 15px; margin: 6px 0 0; }
+dialog[open] { animation: pattanas .38s cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes pattanas {
+  0% { transform: scale(.82) translateY(18px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
+.parbeszed-test { padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.parbeszed-test h2 { font-family: var(--diszp); font-size: 30px; margin: 0; line-height: 1.1; }
+.parbeszed-test h3 { font-family: var(--diszp); font-size: 17px; margin: 6px 0 0; }
 .parbeszed-test p, .parbeszed-test li { margin: 0; color: var(--halvany); }
-.parbeszed-test ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
+.parbeszed-test ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
 .parbeszed-test kbd {
-  font-family: var(--mono);
-  font-size: 11px;
-  border: 1px solid var(--vonal);
-  border-bottom-width: 2px;
-  border-radius: 5px;
-  padding: 1px 5px;
-  background: var(--felulet-2);
+  font-family: var(--diszp);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 7px;
+  padding: 2px 7px;
+  background: var(--felulet-3);
   color: var(--tinta);
+  box-shadow: 0 2px 0 var(--el);
 }
 .eredmeny-racs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .eredmeny-racs div {
   background: var(--felulet-2);
-  border: 1px solid var(--vonal);
   border-radius: var(--sugar);
-  padding: 10px;
+  padding: 12px 8px;
   text-align: center;
+  box-shadow: inset 0 0 0 3px var(--vonal);
 }
 .eredmeny-racs .e-cimke {
-  font-family: var(--mono);
   font-size: 10px;
+  font-weight: 800;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--halvany);
 }
-.eredmeny-racs .e-ertek { font-family: var(--mono); font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.eredmeny-racs .e-ertek {
+  font-family: var(--diszp);
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
 .parbeszed-gombsor { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
 
 /* Rejtett mező: ezen keresztül érkezik a mobil- és IME-bevitel is. */
@@ -471,11 +630,26 @@ dialog::backdrop { background: color-mix(in srgb, var(--tinta) 55%, transparent)
   opacity: 0;
   caret-color: transparent;
   background: transparent;
-  font-size: 16px; /* iOS így nem nagyít rá */
+  font-size: 16px;
 }
-.racs-doboz { position: relative; }
 
-.buvos { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#konfetti {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+@media (max-width: 620px) {
+  .burok { padding: 14px 12px 104px; gap: 14px; }
+  .fejlec-eszkozok { gap: 6px; }
+  .mero { padding: 5px 11px; gap: 5px; }
+  .mero .ertek { font-size: 15px; }
+  .mero.masodlagos { display: none; }   /* a rekord kis kijelzőn elfér a győzelmi lapon */
+  .gomb { padding: 7px 13px; font-size: 14px; }
+  .szemoldok { font-size: 11px; }
+  .racs-lap, .megh-lap { padding: 12px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
@@ -483,19 +657,26 @@ dialog::backdrop { background: color-mix(in srgb, var(--tinta) 55%, transparent)
 </style>
 </head>
 <body>
+<div class="hatter" aria-hidden="true"></div>
+
 <div class="burok">
   <header class="fejlec">
     <div class="cimblokk">
-      <div class="szemoldok">111 fogalom · 6 témakör · minden játék új rács</div>
-      <h1>Biokémia <em>keresztrejtvény</em></h1>
+      <div class="szemoldok" data-sz="szemoldok"></div>
+      <h1><span data-sz="cim1"></span> <em data-sz="cim2"></em></h1>
     </div>
     <div class="fejlec-eszkozok">
-      <div class="mero"><span class="cimke">Idő</span><span class="ertek" id="ora">00:00</span></div>
-      <div class="mero"><span class="cimke">Tipp</span><span class="ertek" id="tipp-szam">0</span></div>
-      <div class="mero"><span class="cimke">Rekord</span><span class="ertek" id="rekord">–</span></div>
-      <button class="gomb" id="klavia-gomb" aria-expanded="true" aria-controls="klavia">Betűk</button>
-      <button class="gomb" id="tema-gomb" title="Világos és sötét téma váltása">Téma</button>
-      <button class="gomb" id="sugo-gomb">Súgó</button>
+      <div class="nyelvvalto" id="nyelvvalto" role="group" data-sz-aria="nyelvValaszto">
+        <button type="button" data-nyelv="hu" aria-pressed="true">HU</button>
+        <button type="button" data-nyelv="en" aria-pressed="false">EN</button>
+        <button type="button" data-nyelv="de" aria-pressed="false">DE</button>
+      </div>
+      <div class="mero"><span class="cimke" data-sz="ido"></span><span class="ertek" id="ora">00:00</span></div>
+      <div class="mero"><span class="cimke" data-sz="tipp"></span><span class="ertek" id="tipp-szam">0</span></div>
+      <div class="mero masodlagos"><span class="cimke" data-sz="rekord"></span><span class="ertek" id="rekord">–</span></div>
+      <button class="gomb" id="klavia-gomb" aria-expanded="true" aria-controls="klavia" data-sz="betuk"></button>
+      <button class="gomb" id="tema-gomb" data-sz="tema"></button>
+      <button class="gomb" id="sugo-gomb" data-sz="sugo"></button>
     </div>
   </header>
 
@@ -503,104 +684,86 @@ dialog::backdrop { background: color-mix(in srgb, var(--tinta) 55%, transparent)
     <div class="csik" role="progressbar" aria-labelledby="csik-cimke" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="csik">
       <div class="toltes" id="toltes"></div>
     </div>
-    <div class="csik-cimke" id="csik-cimke">0 / 0 szó</div>
+    <div class="csik-cimke" id="csik-cimke"></div>
   </div>
 
   <main class="jatekter">
-    <section class="lap racs-lap" aria-label="Rejtvényrács">
+    <section class="lap racs-lap" data-sz-aria="racsCimke">
       <div class="aktiv-sav" id="aktiv-sav">
-        <button class="lepteto" id="elozo-gomb" title="Előző meghatározás" aria-label="Előző meghatározás">‹</button>
+        <button class="lepteto" id="elozo-gomb" data-sz-aria="elozo">‹</button>
         <div class="aktiv-szoveg">
-          <div class="fej" id="aktiv-fej">Vízszintes 1 · 6 betű</div>
-          <div class="meg" id="aktiv-meg">Válassz egy mezőt vagy meghatározást.</div>
+          <div class="fej" id="aktiv-fej"></div>
+          <div class="meg" id="aktiv-meg"></div>
         </div>
-        <button class="lepteto" id="kovetkezo-gomb" title="Következő meghatározás" aria-label="Következő meghatározás">›</button>
+        <button class="lepteto" id="kovetkezo-gomb" data-sz-aria="kovetkezo">›</button>
       </div>
 
       <div class="racs-doboz">
-        <div class="racs" id="racs" role="grid" tabindex="0" aria-label="Keresztrejtvény rács"></div>
+        <div class="racs" id="racs" role="grid" tabindex="0" data-sz-aria="racsCimke"></div>
         <input id="rejtett" class="rejtett-bevitel" type="text" value=" "
                inputmode="text" autocomplete="off" autocorrect="off"
-               autocapitalize="characters" spellcheck="false"
-               aria-label="Betűbevitel a kijelölt mezőbe">
+               autocapitalize="characters" spellcheck="false" data-sz-aria="bevitel">
       </div>
 
       <div class="jelmagy" id="jelmagy"></div>
     </section>
 
-      <section class="lap megh-lap" aria-label="Meghatározások">
-        <div>
-          <h2 class="megh-cim">Vízszintes <span id="vv-db"></span></h2>
-          <ol class="megh" id="vv-lista"></ol>
-        </div>
-        <div>
-          <h2 class="megh-cim">Függőleges <span id="ff-db"></span></h2>
-          <ol class="megh" id="ff-lista"></ol>
-        </div>
-      </section>
+    <section class="lap megh-lap" data-sz-aria="meghatarozasok">
+      <div>
+        <h2 class="megh-cim"><span data-sz="vizszintes"></span> <span id="vv-db"></span></h2>
+        <ol class="megh" id="vv-lista"></ol>
+      </div>
+      <div>
+        <h2 class="megh-cim"><span data-sz="fuggoleges"></span> <span id="ff-db"></span></h2>
+        <ol class="megh" id="ff-lista"></ol>
+      </div>
+    </section>
 
-      <section class="lap klavia" id="klavia" aria-label="Képernyő-billentyűzet"></section>
+    <section class="lap klavia" id="klavia" data-sz-aria="betusor"></section>
   </main>
 </div>
 
 <div class="eszkozsav">
   <div class="eszkozsav-belso">
     <div class="eszkoz-csoport">
-      <select class="gomb" id="nehezseg" aria-label="Nehézségi szint">
-        <option value="konnyu">Könnyű · 10 szó</option>
-        <option value="halado" selected>Haladó · 14 szó</option>
-        <option value="profi">Profi · 18 szó</option>
-      </select>
-      <select class="gomb" id="temakor" aria-label="Témakör">
-        <option value="mind" selected>Minden témakör</option>
-        <option value="aminosav">Aminosavak</option>
-        <option value="szenhidrat">Szénhidrátok</option>
-        <option value="lipid">Lipidek</option>
-        <option value="nukleinsav">Nukleinsavak</option>
-        <option value="anyagcsere">Anyagcsere és enzimek</option>
-        <option value="vitamin">Vitaminok</option>
-      </select>
-      <button class="gomb elsodleges" id="uj-gomb">Új rejtvény</button>
+      <select class="gomb" id="nehezseg" data-sz-aria="nehezseg"></select>
+      <select class="gomb" id="temakor" data-sz-aria="temakor"></select>
+      <button class="gomb elsodleges" id="uj-gomb" data-sz="ujRejtveny"></button>
     </div>
     <div class="eszkoz-csoport">
-      <button class="gomb" id="ellenoriz-gomb">Ellenőrzés</button>
-      <button class="gomb tipp" id="betu-gomb">Betű</button>
-      <button class="gomb tipp" id="szo-gomb">Szó</button>
-      <button class="gomb" id="megold-gomb">Megoldás</button>
+      <button class="gomb" id="ellenoriz-gomb" data-sz="ellenorzes"></button>
+      <button class="gomb tipp" id="betu-gomb" data-sz="betu"></button>
+      <button class="gomb tipp" id="szo-gomb" data-sz="szo"></button>
+      <button class="gomb" id="megold-gomb" data-sz="megoldas"></button>
     </div>
   </div>
 </div>
 
+<canvas id="konfetti" aria-hidden="true"></canvas>
+
 <dialog id="gyozelem">
   <div class="parbeszed-test">
-    <h2 id="gyozelem-cim">Kész a rejtvény!</h2>
-    <p id="gyozelem-szoveg">Minden szó a helyén.</p>
+    <h2 id="gyozelem-cim"></h2>
+    <p id="gyozelem-szoveg"></p>
     <div class="eredmeny-racs">
-      <div><div class="e-cimke">Idő</div><div class="e-ertek" id="ered-ido">00:00</div></div>
-      <div><div class="e-cimke">Tipp</div><div class="e-ertek" id="ered-tipp">0</div></div>
-      <div><div class="e-cimke">Pont</div><div class="e-ertek" id="ered-pont">0</div></div>
+      <div><div class="e-cimke" data-sz="ido"></div><div class="e-ertek" id="ered-ido">00:00</div></div>
+      <div><div class="e-cimke" data-sz="tipp"></div><div class="e-ertek" id="ered-tipp">0</div></div>
+      <div><div class="e-cimke" data-sz="pont"></div><div class="e-ertek" id="ered-pont">0</div></div>
     </div>
     <div class="parbeszed-gombsor">
-      <button class="gomb" id="gyozelem-bezar">Rács megtekintése</button>
-      <button class="gomb elsodleges" id="gyozelem-uj">Új rejtvény</button>
+      <button class="gomb" id="gyozelem-bezar" data-sz="racsMegtekintese"></button>
+      <button class="gomb elsodleges" id="gyozelem-uj" data-sz="ujRejtveny"></button>
     </div>
   </div>
 </dialog>
 
 <dialog id="sugo">
   <div class="parbeszed-test">
-    <h2>Hogyan játszd?</h2>
-    <ul>
-      <li>Kattints egy mezőre, és gépeld be a betűt. Ugyanarra a mezőre újra kattintva vált a vízszintes és a függőleges irány között.</li>
-      <li><kbd>Szóköz</kbd> irányváltás · <kbd>Tab</kbd> következő meghatározás · <kbd>Nyilak</kbd> mozgás · <kbd>Backspace</kbd> törlés.</li>
-      <li>Az ékezetek számítanak: a <em>GLÜKÓZ</em> csak ékezetekkel jó. A képernyő-billentyűzeten minden magyar betű megtalálható.</li>
-      <li>A kétjegyű betűk (sz, gy, cs) külön-külön mezőbe kerülnek: SZERIN = S, Z, E, R, I, N.</li>
-      <li>Az <strong>Ellenőrzés</strong> pirossal jelöli a hibás betűket, a <strong>Betű</strong> és a <strong>Szó</strong> felfedi a megoldás egy részét – mindkettő tippnek számít.</li>
-      <li>A sorszám színe a témakört jelöli; a haladásjelző csík is ezt a skálát követi.</li>
-    </ul>
-    <h3>Pontszámítás</h3>
-    <p>Szavanként 100 pont, minden felhasznált tipp 40 pontot von le, és számít a megoldás ideje is. A rekordokat a böngésző menti el, nehézségi szintenként.</p>
-    <div class="parbeszed-gombsor"><button class="gomb elsodleges" id="sugo-bezar">Értem</button></div>
+    <h2 data-sz="sugoCim"></h2>
+    <ul id="sugo-lista"></ul>
+    <h3 data-sz="pontszamitasCim"></h3>
+    <p data-sz="pontszamitas"></p>
+    <div class="parbeszed-gombsor"><button class="gomb elsodleges" id="sugo-bezar" data-sz="ertem"></button></div>
   </div>
 </dialog>
 
@@ -608,146 +771,622 @@ dialog::backdrop { background: color-mix(in srgb, var(--tinta) 55%, transparent)
 "use strict";
 
 /* ==========================================================================
-   1. Szótár
+   1. Felületi szövegek
    ========================================================================== */
-const SZOTAR = [
-  { a: "GLICIN", c: "A legegyszerűbb aminosav, oldallánca egyetlen hidrogénatom", k: "aminosav" },
-  { a: "ALANIN", c: "Metilcsoportos, apoláris aminosav", k: "aminosav" },
-  { a: "VALIN", c: "Ez az aminosav lép a glutamát helyére a sarlósejtes vérszegénységben", k: "aminosav" },
-  { a: "LEUCIN", c: "Elágazó szénláncú (BCAA) aminosav", k: "aminosav" },
-  { a: "PROLIN", c: "Gyűrűs iminosav, a kollagén jellegzetes építőköve", k: "aminosav" },
-  { a: "SZERIN", c: "Hidroxilcsoportos aminosav, foszforilálható", k: "aminosav" },
-  { a: "CISZTEIN", c: "Kéntartalmú aminosav, diszulfidhidat képez", k: "aminosav" },
-  { a: "METIONIN", c: "Kéntartalmú aminosav, vele indul a fehérjeszintézis", k: "aminosav" },
-  { a: "TIROZIN", c: "Fenolos oldalláncú aminosav, a melanin előanyaga", k: "aminosav" },
-  { a: "TRIPTOFÁN", c: "Indolvázas aminosav, a szerotonin előanyaga", k: "aminosav" },
-  { a: "LIZIN", c: "Bázikus aminosav, a hisztonok gyakori építőköve", k: "aminosav" },
-  { a: "ARGININ", c: "Guanidincsoportos bázikus aminosav, a nitrogén-monoxid forrása", k: "aminosav" },
-  { a: "HISZTIDIN", c: "Imidazolgyűrűs aminosav, a hemoglobin hemjét is megköti", k: "aminosav" },
-  { a: "GLUTAMIN", c: "Amidcsoportos aminosav, a vér fő nitrogénszállítója", k: "aminosav" },
-  { a: "PEPTIDKÖTÉS", c: "Két aminosav között kialakuló savamidkötés", k: "aminosav" },
-  { a: "IKERION", c: "Az aminosav egyszerre pozitív és negatív töltésű formája", k: "aminosav" },
-  { a: "POLIPEPTID", c: "Sok aminosavból felépülő lánc", k: "aminosav" },
-
-  { a: "GLÜKÓZ", c: "A vér cukra, aldohexóz", k: "szenhidrat" },
-  { a: "FRUKTÓZ", c: "Gyümölcscukor, ketohexóz", k: "szenhidrat" },
-  { a: "GALAKTÓZ", c: "A tejcukor egyik monoszacharidja", k: "szenhidrat" },
-  { a: "RIBÓZ", c: "Az RNS öt szénatomos cukra", k: "szenhidrat" },
-  { a: "DEZOXIRIBÓZ", c: "A DNS cukorkomponense", k: "szenhidrat" },
-  { a: "SZACHARÓZ", c: "Répacukor: glükóz és fruktóz kapcsolata", k: "szenhidrat" },
-  { a: "LAKTÓZ", c: "Tejcukor glükózból és galaktózból", k: "szenhidrat" },
-  { a: "MALTÓZ", c: "Malátacukor, két glükózegységből", k: "szenhidrat" },
-  { a: "KEMÉNYÍTŐ", c: "A növények tartalék poliszacharidja", k: "szenhidrat" },
-  { a: "GLIKOGÉN", c: "Állati tartalékcukor a májban és az izomban", k: "szenhidrat" },
-  { a: "CELLULÓZ", c: "A növényi sejtfal béta-glükóz polimerje", k: "szenhidrat" },
-  { a: "KITIN", c: "Az ízeltlábúak külső vázának poliszacharidja", k: "szenhidrat" },
-  { a: "ANOMER", c: "A félacetálos szénatomon különböző cukor-térizomer", k: "szenhidrat" },
-  { a: "PENTÓZ", c: "Öt szénatomos egyszerű cukor", k: "szenhidrat" },
-
-  { a: "KOLESZTERIN", c: "Szteránvázas membránlipid, a szteroidhormonok előanyaga", k: "lipid" },
-  { a: "TRIGLICERID", c: "Glicerin és három zsírsav észtere", k: "lipid" },
-  { a: "FOSZFOLIPID", c: "A biológiai membrán amfipatikus fő alkotója", k: "lipid" },
-  { a: "ZSÍRSAV", c: "Hosszú szénláncú karbonsav", k: "lipid" },
-  { a: "MICELLA", c: "Gömb alakú lipidhalmaz vizes közegben", k: "lipid" },
-  { a: "SZTEROID", c: "Négygyűrűs, szteránvázas vegyületcsoport", k: "lipid" },
-  { a: "LIPÁZ", c: "Zsírbontó enzim", k: "lipid" },
-  { a: "LECITIN", c: "A foszfatidil-kolin köznapi neve", k: "lipid" },
-  { a: "KETONTEST", c: "Éhezéskor a májban zsírsavakból képződő üzemanyag", k: "lipid" },
-  { a: "GLICERIN", c: "Háromértékű alkohol a semleges zsírokban", k: "lipid" },
-
-  { a: "ADENIN", c: "Purinbázis, a timin párja a DNS-ben", k: "nukleinsav" },
-  { a: "GUANIN", c: "Purinbázis, három hidrogénkötéssel kapcsolódik a citozinhoz", k: "nukleinsav" },
-  { a: "CITOZIN", c: "Pirimidinbázis, a guanin párja", k: "nukleinsav" },
-  { a: "TIMIN", c: "Csak a DNS-ben előforduló pirimidinbázis", k: "nukleinsav" },
-  { a: "URACIL", c: "Az RNS-ben a timint helyettesítő bázis", k: "nukleinsav" },
-  { a: "NUKLEOTID", c: "Bázisból, cukorból és foszfátból álló egység", k: "nukleinsav" },
-  { a: "KODON", c: "Három bázisból álló genetikai kódszó", k: "nukleinsav" },
-  { a: "ANTIKODON", c: "A tRNS hurokján lévő, kodont felismerő bázishármas", k: "nukleinsav" },
-  { a: "RIBOSZÓMA", c: "A fehérjeszintézis sejtszervecskéje", k: "nukleinsav" },
-  { a: "POLIMERÁZ", c: "A nukleinsavláncot építő enzim", k: "nukleinsav" },
-  { a: "HELIKÁZ", c: "A kettős hélixet széttekerő enzim", k: "nukleinsav" },
-  { a: "LIGÁZ", c: "A DNS-darabokat összekapcsoló enzim", k: "nukleinsav" },
-  { a: "TRANSZKRIPCIÓ", c: "A DNS-ről RNS-másolat készül", k: "nukleinsav" },
-  { a: "TRANSZLÁCIÓ", c: "Az mRNS üzenete fehérjévé fordítódik", k: "nukleinsav" },
-  { a: "HISZTON", c: "Bázikus fehérje, amelyre a DNS feltekeredik", k: "nukleinsav" },
-  { a: "KROMATIN", c: "A DNS és fehérjéinek komplexe a sejtmagban", k: "nukleinsav" },
-  { a: "PLAZMID", c: "Baktériumok kis, gyűrű alakú DNS-e", k: "nukleinsav" },
-  { a: "INTRON", c: "Az elsődleges RNS kivágódó szakasza", k: "nukleinsav" },
-  { a: "EXON", c: "A gén megmaradó, kódoló szakasza", k: "nukleinsav" },
-  { a: "TELOMER", c: "A kromoszóma végét védő ismétlődő szakasz", k: "nukleinsav" },
-  { a: "GENOM", c: "Egy élőlény teljes örökítőanyaga", k: "nukleinsav" },
-  { a: "MUTÁCIÓ", c: "Az örökítőanyag megváltozása", k: "nukleinsav" },
-  { a: "HÉLIX", c: "A DNS kettős csavarvonala", k: "nukleinsav" },
-
-  { a: "ENZIM", c: "Fehérje természetű biokatalizátor", k: "anyagcsere" },
-  { a: "SZUBSZTRÁT", c: "Az enzim által átalakított anyag", k: "anyagcsere" },
-  { a: "KOENZIM", c: "Az enzimhez kapcsolódó szerves segédmolekula", k: "anyagcsere" },
-  { a: "KOFAKTOR", c: "Az enzimműködéshez szükséges nem fehérje alkotórész", k: "anyagcsere" },
-  { a: "INHIBITOR", c: "Az enzim működését gátló anyag", k: "anyagcsere" },
-  { a: "GLIKOLÍZIS", c: "A glükóz lebontása piruváttá a citoplazmában", k: "anyagcsere" },
-  { a: "PIRUVÁT", c: "A glikolízis három szénatomos végterméke", k: "anyagcsere" },
-  { a: "LAKTÁT", c: "Oxigénhiányban a piruvátból képződő tejsav-ion", k: "anyagcsere" },
-  { a: "CITRÁTKÖR", c: "A Szent-Györgyi–Krebs-ciklus másik neve", k: "anyagcsere" },
-  { a: "MITOKONDRIUM", c: "A sejt erőműve, a terminális oxidáció helyszíne", k: "anyagcsere" },
-  { a: "OXIDÁCIÓ", c: "Elektronleadással járó folyamat", k: "anyagcsere" },
-  { a: "REDUKCIÓ", c: "Elektronfelvétellel járó folyamat", k: "anyagcsere" },
-  { a: "FOTOSZINTÉZIS", c: "Fényenergiából szerves anyag a kloroplasztiszban", k: "anyagcsere" },
-  { a: "KLOROFILL", c: "Magnéziumtartalmú zöld növényi színanyag", k: "anyagcsere" },
-  { a: "KATALÁZ", c: "A hidrogén-peroxidot bontó enzim", k: "anyagcsere" },
-  { a: "AMILÁZ", c: "Keményítőbontó enzim a nyálban", k: "anyagcsere" },
-  { a: "PEPSZIN", c: "A gyomor savas közegben működő fehérjebontó enzime", k: "anyagcsere" },
-  { a: "TRIPSZIN", c: "A hasnyál fehérjebontó enzime", k: "anyagcsere" },
-  { a: "DENATURÁCIÓ", c: "A fehérje térszerkezetének megbomlása", k: "anyagcsere" },
-  { a: "KATABOLIZMUS", c: "A lebontó anyagcsere-folyamatok összessége", k: "anyagcsere" },
-  { a: "ANABOLIZMUS", c: "A felépítő anyagcsere-folyamatok összessége", k: "anyagcsere" },
-  { a: "ERJEDÉS", c: "Oxigén nélküli energianyerés, fermentáció", k: "anyagcsere" },
-  { a: "HEMOGLOBIN", c: "Oxigént szállító vérfesték", k: "anyagcsere" },
-  { a: "MIOGLOBIN", c: "Az izom oxigénraktározó fehérjéje", k: "anyagcsere" },
-  { a: "KOLLAGÉN", c: "A kötőszövet leggyakoribb rostfehérjéje", k: "anyagcsere" },
-  { a: "KERATIN", c: "A haj és a köröm fehérjéje", k: "anyagcsere" },
-  { a: "INZULIN", c: "A vércukorszintet csökkentő hasnyálmirigy-hormon", k: "anyagcsere" },
-  { a: "GLUKAGON", c: "Az inzulinnal ellentétes hatású hormon", k: "anyagcsere" },
-  { a: "ADRENALIN", c: "A mellékvesevelő stresszhormonja", k: "anyagcsere" },
-  { a: "ANTITEST", c: "Antigént felismerő immunglobulin", k: "anyagcsere" },
-  { a: "ALFAHÉLIX", c: "Csavarodott másodlagos fehérjeszerkezet", k: "anyagcsere" },
-  { a: "PUFFER", c: "A pH-t közel állandóan tartó oldat", k: "anyagcsere" },
-  { a: "OZMÓZIS", c: "Vízáramlás féligáteresztő hártyán át", k: "anyagcsere" },
-  { a: "DIFFÚZIÓ", c: "Részecskék áramlása a kisebb koncentráció felé", k: "anyagcsere" },
-  { a: "MEMBRÁN", c: "Lipid kettősréteg, a sejt határolója", k: "anyagcsere" },
-  { a: "KARBAMID", c: "A fehérjebontás nitrogéntartalmú végterméke", k: "anyagcsere" },
-  { a: "HIDROLÍZIS", c: "Vízfelvétellel járó bontás", k: "anyagcsere" },
-
-  { a: "BIOTIN", c: "H-vitamin, a karboxilázok koenzime", k: "vitamin" },
-  { a: "TIAMIN", c: "B1-vitamin, hiánya beriberit okoz", k: "vitamin" },
-  { a: "RIBOFLAVIN", c: "B2-vitamin, a FAD alkotórésze", k: "vitamin" },
-  { a: "NIACIN", c: "B3-vitamin, a NAD előanyaga", k: "vitamin" },
-  { a: "FOLSAV", c: "B9-vitamin, várandósság alatt kiemelten fontos", k: "vitamin" },
-  { a: "ASZKORBINSAV", c: "A C-vitamin kémiai neve", k: "vitamin" },
-  { a: "RETINOL", c: "A-vitamin, a látás nélkülözhetetlen molekulája", k: "vitamin" },
-  { a: "KALCIFEROL", c: "D-vitamin, napfény hatására a bőrben is képződik", k: "vitamin" },
-  { a: "TOKOFEROL", c: "E-vitamin, zsíroldékony antioxidáns", k: "vitamin" },
-  { a: "KOBALAMIN", c: "B12-vitamin, kobaltot tartalmaz", k: "vitamin" }
-];
-
-const TEMAKOROK = {
-  aminosav: "Aminosavak",
-  szenhidrat: "Szénhidrátok",
-  lipid: "Lipidek",
-  nukleinsav: "Nukleinsavak",
-  anyagcsere: "Anyagcsere",
-  vitamin: "Vitaminok"
+const SZOVEGEK = {
+  hu: {
+    kod: "hu",
+    szemoldok: "111 fogalom · 6 témakör · minden játék új rács",
+    cim1: "Biokémia", cim2: "keresztrejtvény",
+    ido: "Idő", tipp: "Tipp", rekord: "Rekord", pont: "Pont",
+    betuk: "Betűk", tema: "Téma", sugo: "Súgó",
+    vizszintes: "Vízszintes", fuggoleges: "Függőleges",
+    szoDb: "{n} szó", haladas: "{kesz} / {ossz} szó",
+    betuDb: "{n} betű",
+    ujRejtveny: "Új rejtvény", ellenorzes: "Ellenőrzés",
+    betu: "Betű", szo: "Szó", megoldas: "Megoldás",
+    kezdes: "Válassz egy mezőt vagy egy meghatározást!",
+    mindenTemakor: "Minden témakör",
+    szintek: { konnyu: "Könnyű · 10 szó", halado: "Haladó · 14 szó", profi: "Profi · 18 szó" },
+    temakorok: {
+      aminosav: "Aminosavak", szenhidrat: "Szénhidrátok", lipid: "Lipidek",
+      nukleinsav: "Nukleinsavak", anyagcsere: "Anyagcsere", vitamin: "Vitaminok"
+    },
+    mindHelyes: "Eddig minden betű helyes!",
+    hibasBetuk: "{n} hibás betű pirossal jelölve.",
+    megoldasKerdes: "Biztosan feltárod a teljes megoldást? A játék ezzel véget ér.",
+    gyozelemCim: "Kész a rejtvény!",
+    gyozelemTiszta: "Egyetlen tipp nélkül, tiszta munka!",
+    gyozelemTippel: "Minden szó a helyén – {n} tipp segítségével.",
+    feladtaCim: "Itt a megoldás",
+    feladtaSzoveg: "A teljes megoldás látható a rácson. Nézd át a fogalmakat, aztán jöhet egy új rejtvény!",
+    racsMegtekintese: "Rács megtekintése", ertem: "Értem",
+    sugoCim: "Hogyan játssz?",
+    sugoPontok: [
+      "Kattints egy mezőre, és gépeld be a betűt. Ugyanarra a mezőre újra kattintva vált a vízszintes és a függőleges irány között.",
+      "<kbd>Szóköz</kbd> irányváltás · <kbd>Tab</kbd> következő meghatározás · <kbd>Nyilak</kbd> mozgás · <kbd>Backspace</kbd> törlés.",
+      "Az ékezetek számítanak: a <em>GLÜKÓZ</em> csak ékezetekkel jó. A képernyő-billentyűzeten minden szükséges betű megtalálható.",
+      "A kétjegyű betűk (sz, gy, cs) külön-külön mezőbe kerülnek: SZERIN = S, Z, E, R, I, N.",
+      "A három nyelv külön szótárból dolgozik, ezért a nyelvváltás új rácsot hoz.",
+      "Az <strong>Ellenőrzés</strong> pirossal jelöli a hibás betűket, a <strong>Betű</strong> és a <strong>Szó</strong> felfedi a megoldás egy részét – mindkettő tippnek számít."
+    ],
+    pontszamitasCim: "Pontszámítás",
+    pontszamitas: "Szavanként 100 pont, minden felhasznált tipp 40 pontot von le, és számít a megoldás ideje is. A rekordokat a böngésző menti el, nyelvenként és nehézségi szintenként.",
+    aria: {
+      nyelvValaszto: "Nyelv választása", racsCimke: "Keresztrejtvény rács",
+      meghatarozasok: "Meghatározások", betusor: "Képernyő-billentyűzet",
+      bevitel: "Betűbevitel a kijelölt mezőbe", elozo: "Előző meghatározás",
+      kovetkezo: "Következő meghatározás", nehezseg: "Nehézségi szint",
+      temakor: "Témakör", torles: "Betű törlése", iranyvaltas: "Irányváltás"
+    }
+  },
+  en: {
+    kod: "en",
+    szemoldok: "111 terms · 6 topics · a fresh grid every game",
+    cim1: "Biochemistry", cim2: "crossword",
+    ido: "Time", tipp: "Hints", rekord: "Best", pont: "Score",
+    betuk: "Letters", tema: "Theme", sugo: "Help",
+    vizszintes: "Across", fuggoleges: "Down",
+    szoDb: "{n} words", haladas: "{kesz} / {ossz} words",
+    betuDb: "{n} letters",
+    ujRejtveny: "New puzzle", ellenorzes: "Check",
+    betu: "Letter", szo: "Word", megoldas: "Solution",
+    kezdes: "Pick a square or a clue to start!",
+    mindenTemakor: "All topics",
+    szintek: { konnyu: "Easy · 10 words", halado: "Advanced · 14 words", profi: "Pro · 18 words" },
+    temakorok: {
+      aminosav: "Amino acids", szenhidrat: "Carbohydrates", lipid: "Lipids",
+      nukleinsav: "Nucleic acids", anyagcsere: "Metabolism", vitamin: "Vitamins"
+    },
+    mindHelyes: "Every letter is correct so far!",
+    hibasBetuk: "{n} wrong letters marked in red.",
+    megoldasKerdes: "Reveal the whole solution? This ends the game.",
+    gyozelemCim: "Puzzle solved!",
+    gyozelemTiszta: "Not a single hint – clean work!",
+    gyozelemTippel: "Every word in place – with {n} hints.",
+    feladtaCim: "Here is the solution",
+    feladtaSzoveg: "The full solution is on the grid. Read the terms through, then start a new puzzle!",
+    racsMegtekintese: "View the grid", ertem: "Got it",
+    sugoCim: "How to play",
+    sugoPontok: [
+      "Click a square and type the letter. Clicking the same square again switches between across and down.",
+      "<kbd>Space</kbd> switch direction · <kbd>Tab</kbd> next clue · <kbd>Arrows</kbd> move · <kbd>Backspace</kbd> delete.",
+      "Answers contain letters only – a two-word term such as FATTY ACID is entered as FATTYACID.",
+      "Every needed letter is on the on-screen keyboard, so you can play without a matching keyboard layout.",
+      "The three languages use separate word lists, so switching language starts a new grid.",
+      "<strong>Check</strong> marks wrong letters in red; <strong>Letter</strong> and <strong>Word</strong> reveal part of the solution – both count as hints."
+    ],
+    pontszamitasCim: "Scoring",
+    pontszamitas: "100 points per word, each hint costs 40 points, and solving time counts too. Best results are stored in your browser per language and level.",
+    aria: {
+      nyelvValaszto: "Choose language", racsCimke: "Crossword grid",
+      meghatarozasok: "Clues", betusor: "On-screen keyboard",
+      bevitel: "Type a letter into the selected square", elozo: "Previous clue",
+      kovetkezo: "Next clue", nehezseg: "Difficulty",
+      temakor: "Topic", torles: "Delete letter", iranyvaltas: "Switch direction"
+    }
+  },
+  de: {
+    kod: "de",
+    szemoldok: "111 Begriffe · 6 Themen · jedes Spiel ein neues Gitter",
+    cim1: "Biochemie", cim2: "Kreuzworträtsel",
+    ido: "Zeit", tipp: "Tipps", rekord: "Rekord", pont: "Punkte",
+    betuk: "Buchstaben", tema: "Design", sugo: "Hilfe",
+    vizszintes: "Waagerecht", fuggoleges: "Senkrecht",
+    szoDb: "{n} Wörter", haladas: "{kesz} / {ossz} Wörter",
+    betuDb: "{n} Buchstaben",
+    ujRejtveny: "Neues Rätsel", ellenorzes: "Prüfen",
+    betu: "Buchstabe", szo: "Wort", megoldas: "Lösung",
+    kezdes: "Wähle ein Feld oder eine Frage!",
+    mindenTemakor: "Alle Themen",
+    szintek: { konnyu: "Leicht · 10 Wörter", halado: "Fortgeschritten · 14 Wörter", profi: "Profi · 18 Wörter" },
+    temakorok: {
+      aminosav: "Aminosäuren", szenhidrat: "Kohlenhydrate", lipid: "Lipide",
+      nukleinsav: "Nukleinsäuren", anyagcsere: "Stoffwechsel", vitamin: "Vitamine"
+    },
+    mindHelyes: "Bisher ist jeder Buchstabe richtig!",
+    hibasBetuk: "{n} falsche Buchstaben rot markiert.",
+    megoldasKerdes: "Die ganze Lösung aufdecken? Damit endet das Spiel.",
+    gyozelemCim: "Rätsel gelöst!",
+    gyozelemTiszta: "Ohne einen einzigen Tipp – saubere Arbeit!",
+    gyozelemTippel: "Alle Wörter sitzen – mit {n} Tipps.",
+    feladtaCim: "Hier ist die Lösung",
+    feladtaSzoveg: "Die vollständige Lösung steht im Gitter. Sieh die Begriffe durch, dann kommt ein neues Rätsel!",
+    racsMegtekintese: "Gitter ansehen", ertem: "Verstanden",
+    sugoCim: "So wird gespielt",
+    sugoPontok: [
+      "Klicke ein Feld an und tippe den Buchstaben. Ein erneuter Klick auf dasselbe Feld wechselt zwischen waagerecht und senkrecht.",
+      "<kbd>Leertaste</kbd> Richtung wechseln · <kbd>Tab</kbd> nächste Frage · <kbd>Pfeile</kbd> bewegen · <kbd>Rücktaste</kbd> löschen.",
+      "Umlaute zählen mit: STÄRKE ist nur mit Ä richtig. Alle nötigen Buchstaben liegen auf der Bildschirmtastatur.",
+      "Die Lösungen bestehen nur aus Buchstaben – ohne Leerzeichen und Bindestriche.",
+      "Die drei Sprachen arbeiten mit eigenen Wortlisten, deshalb bringt ein Sprachwechsel ein neues Gitter.",
+      "<strong>Prüfen</strong> markiert falsche Buchstaben rot, <strong>Buchstabe</strong> und <strong>Wort</strong> decken einen Teil der Lösung auf – beides zählt als Tipp."
+    ],
+    pontszamitasCim: "Punkte",
+    pontszamitas: "100 Punkte je Wort, jeder Tipp kostet 40 Punkte, und auch die Zeit zählt. Die Rekorde speichert der Browser je Sprache und Schwierigkeitsgrad.",
+    aria: {
+      nyelvValaszto: "Sprache wählen", racsCimke: "Kreuzworträtsel-Gitter",
+      meghatarozasok: "Fragen", betusor: "Bildschirmtastatur",
+      bevitel: "Buchstabe in das gewählte Feld eingeben", elozo: "Vorherige Frage",
+      kovetkezo: "Nächste Frage", nehezseg: "Schwierigkeitsgrad",
+      temakor: "Thema", torles: "Buchstabe löschen", iranyvaltas: "Richtung wechseln"
+    }
+  }
 };
 
-const SZINTEK = {
-  konnyu: { szo: 10, maxHossz: 8 },
-  halado: { szo: 14, maxHossz: 10 },
-  profi: { szo: 18, maxHossz: 13 }
+/** Nyelvenkénti betűkészlet: ez adja a képernyő-billentyűzetet és a szűrést. */
+const ABC = {
+  hu: "AÁBCDEÉFGHIÍJKLMNOÓÖŐPQRSTUÚÜŰVWXYZ".split(""),
+  en: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),
+  de: "AÄBCDEFGHIJKLMNOÖPQRSTUÜVWXYZ".split("")
 };
 
 /* ==========================================================================
-   2. Rejtvénygenerátor (keresztezésekre épülő elrendezés)
+   2. Szótár – [témakör, [magyar megfejtés, meghatározás],
+                        [angol …], [német …]]
+   ========================================================================== */
+const SZOTAR = [
+  ["aminosav",
+    ["GLICIN", "A legegyszerűbb aminosav, oldallánca egyetlen hidrogénatom"],
+    ["GLYCINE", "The simplest amino acid; its side chain is a single hydrogen atom"],
+    ["GLYCIN", "Die einfachste Aminosäure, ihre Seitenkette ist ein einzelnes Wasserstoffatom"]],
+  ["aminosav",
+    ["ALANIN", "Metilcsoportos, apoláris aminosav"],
+    ["ALANINE", "Nonpolar amino acid with a methyl side chain"],
+    ["ALANIN", "Unpolare Aminosäure mit Methyl-Seitenkette"]],
+  ["aminosav",
+    ["VALIN", "Ez az aminosav lép a glutamát helyére a sarlósejtes vérszegénységben"],
+    ["VALINE", "This amino acid replaces glutamate in sickle cell anaemia"],
+    ["VALIN", "Diese Aminosäure ersetzt Glutamat bei der Sichelzellanämie"]],
+  ["aminosav",
+    ["LEUCIN", "Elágazó szénláncú (BCAA) aminosav"],
+    ["LEUCINE", "Branched-chain amino acid, one of the BCAAs"],
+    ["LEUCIN", "Verzweigtkettige Aminosäure (BCAA)"]],
+  ["aminosav",
+    ["PROLIN", "Gyűrűs iminosav, a kollagén jellegzetes építőköve"],
+    ["PROLINE", "Cyclic imino acid, a hallmark building block of collagen"],
+    ["PROLIN", "Zyklische Iminosäure, typischer Baustein des Kollagens"]],
+  ["aminosav",
+    ["SZERIN", "Hidroxilcsoportos aminosav, foszforilálható"],
+    ["SERINE", "Amino acid with a hydroxyl group; it can be phosphorylated"],
+    ["SERIN", "Aminosäure mit Hydroxylgruppe, phosphorylierbar"]],
+  ["aminosav",
+    ["CISZTEIN", "Kéntartalmú aminosav, diszulfidhidat képez"],
+    ["CYSTEINE", "Sulfur-containing amino acid that forms disulfide bridges"],
+    ["CYSTEIN", "Schwefelhaltige Aminosäure, bildet Disulfidbrücken"]],
+  ["aminosav",
+    ["METIONIN", "Kéntartalmú aminosav, vele indul a fehérjeszintézis"],
+    ["METHIONINE", "Sulfur-containing amino acid that starts protein synthesis"],
+    ["METHIONIN", "Schwefelhaltige Aminosäure, mit ihr beginnt die Proteinsynthese"]],
+  ["aminosav",
+    ["TIROZIN", "Fenolos oldalláncú aminosav, a melanin előanyaga"],
+    ["TYROSINE", "Amino acid with a phenol side chain, precursor of melanin"],
+    ["TYROSIN", "Aminosäure mit Phenol-Seitenkette, Vorstufe des Melanins"]],
+  ["aminosav",
+    ["TRIPTOFÁN", "Indolvázas aminosav, a szerotonin előanyaga"],
+    ["TRYPTOPHAN", "Indole amino acid, precursor of serotonin"],
+    ["TRYPTOPHAN", "Indol-Aminosäure, Vorstufe des Serotonins"]],
+  ["aminosav",
+    ["LIZIN", "Bázikus aminosav, a hisztonok gyakori építőköve"],
+    ["LYSINE", "Basic amino acid, a frequent building block of histones"],
+    ["LYSIN", "Basische Aminosäure, häufiger Baustein der Histone"]],
+  ["aminosav",
+    ["ARGININ", "Guanidincsoportos bázikus aminosav, a nitrogén-monoxid forrása"],
+    ["ARGININE", "Basic amino acid with a guanidino group, source of nitric oxide"],
+    ["ARGININ", "Basische Aminosäure mit Guanidinogruppe, Quelle des Stickstoffmonoxids"]],
+  ["aminosav",
+    ["HISZTIDIN", "Imidazolgyűrűs aminosav, a hemoglobin hemjét is megköti"],
+    ["HISTIDINE", "Imidazole amino acid that also binds the haem of haemoglobin"],
+    ["HISTIDIN", "Imidazol-Aminosäure, bindet auch das Häm des Hämoglobins"]],
+  ["aminosav",
+    ["GLUTAMIN", "Amidcsoportos aminosav, a vér fő nitrogénszállítója"],
+    ["GLUTAMINE", "Amide amino acid, the main nitrogen carrier in blood"],
+    ["GLUTAMIN", "Amid-Aminosäure, wichtigster Stickstofftransporter im Blut"]],
+  ["aminosav",
+    ["PEPTIDKÖTÉS", "Két aminosav között kialakuló savamidkötés"],
+    ["PEPTIDEBOND", "Amide link between two amino acids (two words)"],
+    ["PEPTIDBINDUNG", "Säureamid-Bindung zwischen zwei Aminosäuren"]],
+  ["aminosav",
+    ["IKERION", "Az aminosav egyszerre pozitív és negatív töltésű formája"],
+    ["ZWITTERION", "Form of an amino acid carrying a positive and a negative charge at once"],
+    ["ZWITTERION", "Form der Aminosäure mit positiver und negativer Ladung zugleich"]],
+  ["aminosav",
+    ["POLIPEPTID", "Sok aminosavból felépülő lánc"],
+    ["POLYPEPTIDE", "Chain built from many amino acids"],
+    ["POLYPEPTID", "Kette aus vielen Aminosäuren"]],
+
+  ["szenhidrat",
+    ["GLÜKÓZ", "A vér cukra, aldohexóz"],
+    ["GLUCOSE", "Blood sugar, an aldohexose"],
+    ["GLUCOSE", "Blutzucker, eine Aldohexose"]],
+  ["szenhidrat",
+    ["FRUKTÓZ", "Gyümölcscukor, ketohexóz"],
+    ["FRUCTOSE", "Fruit sugar, a ketohexose"],
+    ["FRUCTOSE", "Fruchtzucker, eine Ketohexose"]],
+  ["szenhidrat",
+    ["GALAKTÓZ", "A tejcukor egyik monoszacharidja"],
+    ["GALACTOSE", "One of the two monosaccharides of milk sugar"],
+    ["GALACTOSE", "Eines der beiden Monosaccharide des Milchzuckers"]],
+  ["szenhidrat",
+    ["RIBÓZ", "Az RNS öt szénatomos cukra"],
+    ["RIBOSE", "The five-carbon sugar of RNA"],
+    ["RIBOSE", "Der Fünfkohlenstoff-Zucker der RNA"]],
+  ["szenhidrat",
+    ["DEZOXIRIBÓZ", "A DNS cukorkomponense"],
+    ["DEOXYRIBOSE", "The sugar component of DNA"],
+    ["DESOXYRIBOSE", "Die Zuckerkomponente der DNA"]],
+  ["szenhidrat",
+    ["SZACHARÓZ", "Répacukor: glükóz és fruktóz kapcsolata"],
+    ["SUCROSE", "Table sugar: glucose joined to fructose"],
+    ["SACCHAROSE", "Rübenzucker: Glucose und Fructose"]],
+  ["szenhidrat",
+    ["LAKTÓZ", "Tejcukor glükózból és galaktózból"],
+    ["LACTOSE", "Milk sugar made of glucose and galactose"],
+    ["LACTOSE", "Milchzucker aus Glucose und Galactose"]],
+  ["szenhidrat",
+    ["MALTÓZ", "Malátacukor, két glükózegységből"],
+    ["MALTOSE", "Malt sugar built from two glucose units"],
+    ["MALTOSE", "Malzzucker aus zwei Glucose-Einheiten"]],
+  ["szenhidrat",
+    ["KEMÉNYÍTŐ", "A növények tartalék poliszacharidja"],
+    ["STARCH", "The storage polysaccharide of plants"],
+    ["STÄRKE", "Das Speicherpolysaccharid der Pflanzen"]],
+  ["szenhidrat",
+    ["GLIKOGÉN", "Állati tartalékcukor a májban és az izomban"],
+    ["GLYCOGEN", "Animal storage sugar in liver and muscle"],
+    ["GLYKOGEN", "Tierischer Speicherzucker in Leber und Muskel"]],
+  ["szenhidrat",
+    ["CELLULÓZ", "A növényi sejtfal béta-glükóz polimerje"],
+    ["CELLULOSE", "Beta-glucose polymer of the plant cell wall"],
+    ["CELLULOSE", "Beta-Glucose-Polymer der pflanzlichen Zellwand"]],
+  ["szenhidrat",
+    ["KITIN", "Az ízeltlábúak külső vázának poliszacharidja"],
+    ["CHITIN", "Polysaccharide of the arthropod exoskeleton"],
+    ["CHITIN", "Polysaccharid im Außenskelett der Gliederfüßer"]],
+  ["szenhidrat",
+    ["ANOMER", "A félacetálos szénatomon különböző cukor-térizomer"],
+    ["ANOMER", "Sugar stereoisomer differing at the hemiacetal carbon"],
+    ["ANOMER", "Zucker-Stereoisomer, das sich am halbacetalischen C-Atom unterscheidet"]],
+  ["szenhidrat",
+    ["PENTÓZ", "Öt szénatomos egyszerű cukor"],
+    ["PENTOSE", "Simple sugar with five carbon atoms"],
+    ["PENTOSE", "Einfachzucker mit fünf Kohlenstoffatomen"]],
+
+  ["lipid",
+    ["KOLESZTERIN", "Szteránvázas membránlipid, a szteroidhormonok előanyaga"],
+    ["CHOLESTEROL", "Sterane-based membrane lipid, precursor of steroid hormones"],
+    ["CHOLESTERIN", "Membranlipid mit Steran-Gerüst, Vorstufe der Steroidhormone"]],
+  ["lipid",
+    ["TRIGLICERID", "Glicerin és három zsírsav észtere"],
+    ["TRIGLYCERIDE", "Ester of glycerol and three fatty acids"],
+    ["TRIGLYCERID", "Ester aus Glycerin und drei Fettsäuren"]],
+  ["lipid",
+    ["FOSZFOLIPID", "A biológiai membrán amfipatikus fő alkotója"],
+    ["PHOSPHOLIPID", "Amphipathic main component of biological membranes"],
+    ["PHOSPHOLIPID", "Amphipathischer Hauptbestandteil biologischer Membranen"]],
+  ["lipid",
+    ["ZSÍRSAV", "Hosszú szénláncú karbonsav"],
+    ["FATTYACID", "Carboxylic acid with a long carbon chain (two words)"],
+    ["FETTSÄURE", "Carbonsäure mit langer Kohlenstoffkette"]],
+  ["lipid",
+    ["MICELLA", "Gömb alakú lipidhalmaz vizes közegben"],
+    ["MICELLE", "Spherical lipid aggregate in water"],
+    ["MIZELLE", "Kugelförmiges Lipidaggregat in wässriger Umgebung"]],
+  ["lipid",
+    ["SZTEROID", "Négygyűrűs, szteránvázas vegyületcsoport"],
+    ["STEROID", "Compound class with a four-ring sterane skeleton"],
+    ["STEROID", "Verbindungsklasse mit viergliedrigem Steran-Gerüst"]],
+  ["lipid",
+    ["LIPÁZ", "Zsírbontó enzim"],
+    ["LIPASE", "Fat-splitting enzyme"],
+    ["LIPASE", "Fettspaltendes Enzym"]],
+  ["lipid",
+    ["LECITIN", "A foszfatidil-kolin köznapi neve"],
+    ["LECITHIN", "Everyday name of phosphatidylcholine"],
+    ["LECITHIN", "Gebräuchlicher Name für Phosphatidylcholin"]],
+  ["lipid",
+    ["KETONTEST", "Éhezéskor a májban zsírsavakból képződő üzemanyag"],
+    ["KETONE", "Fuel made in the liver from fatty acids during fasting"],
+    ["KETONKÖRPER", "Beim Fasten in der Leber aus Fettsäuren gebildeter Brennstoff"]],
+  ["lipid",
+    ["GLICERIN", "Háromértékű alkohol a semleges zsírokban"],
+    ["GLYCEROL", "Trihydric alcohol found in neutral fats"],
+    ["GLYCERIN", "Dreiwertiger Alkohol in den Neutralfetten"]],
+
+  ["nukleinsav",
+    ["ADENIN", "Purinbázis, a timin párja a DNS-ben"],
+    ["ADENINE", "Purine base, partner of thymine in DNA"],
+    ["ADENIN", "Purinbase, Partner des Thymins in der DNA"]],
+  ["nukleinsav",
+    ["GUANIN", "Purinbázis, három hidrogénkötéssel kapcsolódik a citozinhoz"],
+    ["GUANINE", "Purine base joined to cytosine by three hydrogen bonds"],
+    ["GUANIN", "Purinbase, über drei Wasserstoffbrücken mit Cytosin verbunden"]],
+  ["nukleinsav",
+    ["CITOZIN", "Pirimidinbázis, a guanin párja"],
+    ["CYTOSINE", "Pyrimidine base, partner of guanine"],
+    ["CYTOSIN", "Pyrimidinbase, Partner des Guanins"]],
+  ["nukleinsav",
+    ["TIMIN", "Csak a DNS-ben előforduló pirimidinbázis"],
+    ["THYMINE", "Pyrimidine base found only in DNA"],
+    ["THYMIN", "Pyrimidinbase, die nur in der DNA vorkommt"]],
+  ["nukleinsav",
+    ["URACIL", "Az RNS-ben a timint helyettesítő bázis"],
+    ["URACIL", "The base that replaces thymine in RNA"],
+    ["URACIL", "Die Base, die in der RNA das Thymin ersetzt"]],
+  ["nukleinsav",
+    ["NUKLEOTID", "Bázisból, cukorból és foszfátból álló egység"],
+    ["NUCLEOTIDE", "Unit made of a base, a sugar and a phosphate"],
+    ["NUKLEOTID", "Einheit aus Base, Zucker und Phosphat"]],
+  ["nukleinsav",
+    ["KODON", "Három bázisból álló genetikai kódszó"],
+    ["CODON", "Genetic code word of three bases"],
+    ["CODON", "Genetisches Codewort aus drei Basen"]],
+  ["nukleinsav",
+    ["ANTIKODON", "A tRNS hurokján lévő, kodont felismerő bázishármas"],
+    ["ANTICODON", "Base triplet on the tRNA loop that recognises the codon"],
+    ["ANTICODON", "Basentriplett der tRNA-Schleife, das das Codon erkennt"]],
+  ["nukleinsav",
+    ["RIBOSZÓMA", "A fehérjeszintézis sejtszervecskéje"],
+    ["RIBOSOME", "The organelle of protein synthesis"],
+    ["RIBOSOM", "Das Organell der Proteinsynthese"]],
+  ["nukleinsav",
+    ["POLIMERÁZ", "A nukleinsavláncot építő enzim"],
+    ["POLYMERASE", "Enzyme that builds the nucleic acid chain"],
+    ["POLYMERASE", "Enzym, das die Nukleinsäurekette aufbaut"]],
+  ["nukleinsav",
+    ["HELIKÁZ", "A kettős hélixet széttekerő enzim"],
+    ["HELICASE", "Enzyme that unwinds the double helix"],
+    ["HELIKASE", "Enzym, das die Doppelhelix entwindet"]],
+  ["nukleinsav",
+    ["LIGÁZ", "A DNS-darabokat összekapcsoló enzim"],
+    ["LIGASE", "Enzyme that joins DNA fragments"],
+    ["LIGASE", "Enzym, das DNA-Stücke verknüpft"]],
+  ["nukleinsav",
+    ["TRANSZKRIPCIÓ", "A DNS-ről RNS-másolat készül"],
+    ["TRANSCRIPTION", "An RNA copy is made from DNA"],
+    ["TRANSKRIPTION", "Von der DNA wird eine RNA-Kopie erstellt"]],
+  ["nukleinsav",
+    ["TRANSZLÁCIÓ", "Az mRNS üzenete fehérjévé fordítódik"],
+    ["TRANSLATION", "The message of the mRNA is turned into protein"],
+    ["TRANSLATION", "Die Botschaft der mRNA wird in Protein übersetzt"]],
+  ["nukleinsav",
+    ["HISZTON", "Bázikus fehérje, amelyre a DNS feltekeredik"],
+    ["HISTONE", "Basic protein around which DNA is wound"],
+    ["HISTON", "Basisches Protein, um das sich die DNA windet"]],
+  ["nukleinsav",
+    ["KROMATIN", "A DNS és fehérjéinek komplexe a sejtmagban"],
+    ["CHROMATIN", "Complex of DNA and its proteins in the nucleus"],
+    ["CHROMATIN", "Komplex aus DNA und ihren Proteinen im Zellkern"]],
+  ["nukleinsav",
+    ["PLAZMID", "Baktériumok kis, gyűrű alakú DNS-e"],
+    ["PLASMID", "Small circular DNA of bacteria"],
+    ["PLASMID", "Kleine ringförmige DNA der Bakterien"]],
+  ["nukleinsav",
+    ["INTRON", "Az elsődleges RNS kivágódó szakasza"],
+    ["INTRON", "Section spliced out of the primary RNA"],
+    ["INTRON", "Abschnitt, der aus der Prä-RNA herausgeschnitten wird"]],
+  ["nukleinsav",
+    ["EXON", "A gén megmaradó, kódoló szakasza"],
+    ["EXON", "Coding section of the gene that is kept"],
+    ["EXON", "Kodierender Abschnitt des Gens, der erhalten bleibt"]],
+  ["nukleinsav",
+    ["TELOMER", "A kromoszóma végét védő ismétlődő szakasz"],
+    ["TELOMERE", "Repetitive sequence protecting the chromosome end"],
+    ["TELOMER", "Repetitive Sequenz, die das Chromosomenende schützt"]],
+  ["nukleinsav",
+    ["GENOM", "Egy élőlény teljes örökítőanyaga"],
+    ["GENOME", "The complete hereditary material of an organism"],
+    ["GENOM", "Die gesamte Erbinformation eines Organismus"]],
+  ["nukleinsav",
+    ["MUTÁCIÓ", "Az örökítőanyag megváltozása"],
+    ["MUTATION", "A change in the hereditary material"],
+    ["MUTATION", "Veränderung des Erbmaterials"]],
+  ["nukleinsav",
+    ["HÉLIX", "A DNS kettős csavarvonala"],
+    ["HELIX", "The double coil of DNA"],
+    ["HELIX", "Die Doppelspirale der DNA"]],
+
+  ["anyagcsere",
+    ["ENZIM", "Fehérje természetű biokatalizátor"],
+    ["ENZYME", "Biocatalyst of protein nature"],
+    ["ENZYM", "Biokatalysator aus Protein"]],
+  ["anyagcsere",
+    ["SZUBSZTRÁT", "Az enzim által átalakított anyag"],
+    ["SUBSTRATE", "The substance converted by an enzyme"],
+    ["SUBSTRAT", "Der vom Enzym umgesetzte Stoff"]],
+  ["anyagcsere",
+    ["KOENZIM", "Az enzimhez kapcsolódó szerves segédmolekula"],
+    ["COENZYME", "Organic helper molecule bound to the enzyme"],
+    ["COENZYM", "Organisches Hilfsmolekül des Enzyms"]],
+  ["anyagcsere",
+    ["KOFAKTOR", "Az enzimműködéshez szükséges nem fehérje alkotórész"],
+    ["COFACTOR", "Non-protein part needed for enzyme action"],
+    ["COFAKTOR", "Nichtproteinischer Bestandteil, den das Enzym braucht"]],
+  ["anyagcsere",
+    ["INHIBITOR", "Az enzim működését gátló anyag"],
+    ["INHIBITOR", "Substance that blocks enzyme activity"],
+    ["INHIBITOR", "Stoff, der die Enzymtätigkeit hemmt"]],
+  ["anyagcsere",
+    ["GLIKOLÍZIS", "A glükóz lebontása piruváttá a citoplazmában"],
+    ["GLYCOLYSIS", "Breakdown of glucose to pyruvate in the cytoplasm"],
+    ["GLYKOLYSE", "Abbau der Glucose zu Pyruvat im Zytoplasma"]],
+  ["anyagcsere",
+    ["PIRUVÁT", "A glikolízis három szénatomos végterméke"],
+    ["PYRUVATE", "Three-carbon end product of glycolysis"],
+    ["PYRUVAT", "Endprodukt der Glykolyse mit drei C-Atomen"]],
+  ["anyagcsere",
+    ["LAKTÁT", "Oxigénhiányban a piruvátból képződő tejsav-ion"],
+    ["LACTATE", "Ion formed from pyruvate when oxygen is short"],
+    ["LACTAT", "Aus Pyruvat bei Sauerstoffmangel gebildetes Ion"]],
+  ["anyagcsere",
+    ["CITRÁTKÖR", "A Szent-Györgyi–Krebs-ciklus másik neve"],
+    ["CITRATE", "The first intermediate of the Krebs cycle"],
+    ["CITRATZYKLUS", "Anderer Name für den Krebs-Zyklus"]],
+  ["anyagcsere",
+    ["MITOKONDRIUM", "A sejt erőműve, a terminális oxidáció helyszíne"],
+    ["MITOCHONDRION", "Powerhouse of the cell, site of terminal oxidation"],
+    ["MITOCHONDRIUM", "Kraftwerk der Zelle, Ort der Atmungskette"]],
+  ["anyagcsere",
+    ["OXIDÁCIÓ", "Elektronleadással járó folyamat"],
+    ["OXIDATION", "Process that involves the loss of electrons"],
+    ["OXIDATION", "Vorgang mit Abgabe von Elektronen"]],
+  ["anyagcsere",
+    ["REDUKCIÓ", "Elektronfelvétellel járó folyamat"],
+    ["REDUCTION", "Process that involves the gain of electrons"],
+    ["REDUKTION", "Vorgang mit Aufnahme von Elektronen"]],
+  ["anyagcsere",
+    ["FOTOSZINTÉZIS", "Fényenergiából szerves anyag a kloroplasztiszban"],
+    ["PHOTOSYNTHESIS", "Light energy becomes organic matter in the chloroplast"],
+    ["PHOTOSYNTHESE", "Lichtenergie wird im Chloroplasten zu organischer Substanz"]],
+  ["anyagcsere",
+    ["KLOROFILL", "Magnéziumtartalmú zöld növényi színanyag"],
+    ["CHLOROPHYLL", "Green plant pigment containing magnesium"],
+    ["CHLOROPHYLL", "Grüner Pflanzenfarbstoff mit Magnesium"]],
+  ["anyagcsere",
+    ["KATALÁZ", "A hidrogén-peroxidot bontó enzim"],
+    ["CATALASE", "Enzyme that decomposes hydrogen peroxide"],
+    ["KATALASE", "Enzym, das Wasserstoffperoxid zersetzt"]],
+  ["anyagcsere",
+    ["AMILÁZ", "Keményítőbontó enzim a nyálban"],
+    ["AMYLASE", "Starch-splitting enzyme in saliva"],
+    ["AMYLASE", "Stärkespaltendes Enzym im Speichel"]],
+  ["anyagcsere",
+    ["PEPSZIN", "A gyomor savas közegben működő fehérjebontó enzime"],
+    ["PEPSIN", "Protein-splitting enzyme of the acidic stomach"],
+    ["PEPSIN", "Eiweißspaltendes Enzym des sauren Magens"]],
+  ["anyagcsere",
+    ["TRIPSZIN", "A hasnyál fehérjebontó enzime"],
+    ["TRYPSIN", "Protein-splitting enzyme of pancreatic juice"],
+    ["TRYPSIN", "Eiweißspaltendes Enzym des Bauchspeichels"]],
+  ["anyagcsere",
+    ["DENATURÁCIÓ", "A fehérje térszerkezetének megbomlása"],
+    ["DENATURATION", "Loss of the spatial structure of a protein"],
+    ["DENATURIERUNG", "Verlust der Raumstruktur eines Proteins"]],
+  ["anyagcsere",
+    ["KATABOLIZMUS", "A lebontó anyagcsere-folyamatok összessége"],
+    ["CATABOLISM", "All the degrading processes of metabolism"],
+    ["KATABOLISMUS", "Gesamtheit der abbauenden Stoffwechselvorgänge"]],
+  ["anyagcsere",
+    ["ANABOLIZMUS", "A felépítő anyagcsere-folyamatok összessége"],
+    ["ANABOLISM", "All the building processes of metabolism"],
+    ["ANABOLISMUS", "Gesamtheit der aufbauenden Stoffwechselvorgänge"]],
+  ["anyagcsere",
+    ["ERJEDÉS", "Oxigén nélküli energianyerés, fermentáció"],
+    ["FERMENTATION", "Energy production without oxygen"],
+    ["GÄRUNG", "Energiegewinnung ohne Sauerstoff"]],
+  ["anyagcsere",
+    ["HEMOGLOBIN", "Oxigént szállító vérfesték"],
+    ["HEMOGLOBIN", "Oxygen-carrying blood pigment"],
+    ["HÄMOGLOBIN", "Sauerstofftransportierender Blutfarbstoff"]],
+  ["anyagcsere",
+    ["MIOGLOBIN", "Az izom oxigénraktározó fehérjéje"],
+    ["MYOGLOBIN", "Oxygen-storing protein of muscle"],
+    ["MYOGLOBIN", "Sauerstoffspeicherndes Protein des Muskels"]],
+  ["anyagcsere",
+    ["KOLLAGÉN", "A kötőszövet leggyakoribb rostfehérjéje"],
+    ["COLLAGEN", "The most abundant fibrous protein of connective tissue"],
+    ["KOLLAGEN", "Häufigstes Faserprotein des Bindegewebes"]],
+  ["anyagcsere",
+    ["KERATIN", "A haj és a köröm fehérjéje"],
+    ["KERATIN", "The protein of hair and nails"],
+    ["KERATIN", "Das Protein von Haaren und Nägeln"]],
+  ["anyagcsere",
+    ["INZULIN", "A vércukorszintet csökkentő hasnyálmirigy-hormon"],
+    ["INSULIN", "Pancreatic hormone that lowers blood sugar"],
+    ["INSULIN", "Hormon der Bauchspeicheldrüse, senkt den Blutzucker"]],
+  ["anyagcsere",
+    ["GLUKAGON", "Az inzulinnal ellentétes hatású hormon"],
+    ["GLUCAGON", "Hormone with the opposite effect to insulin"],
+    ["GLUKAGON", "Hormon mit gegenteiliger Wirkung zum Insulin"]],
+  ["anyagcsere",
+    ["ADRENALIN", "A mellékvesevelő stresszhormonja"],
+    ["ADRENALINE", "Stress hormone of the adrenal medulla"],
+    ["ADRENALIN", "Stresshormon des Nebennierenmarks"]],
+  ["anyagcsere",
+    ["ANTITEST", "Antigént felismerő immunglobulin"],
+    ["ANTIBODY", "Immunoglobulin that recognises an antigen"],
+    ["ANTIKÖRPER", "Immunglobulin, das ein Antigen erkennt"]],
+  ["anyagcsere",
+    ["ALFAHÉLIX", "Csavarodott másodlagos fehérjeszerkezet"],
+    ["ALPHAHELIX", "Coiled secondary structure of proteins (two words)"],
+    ["ALPHAHELIX", "Schraubige Sekundärstruktur der Proteine"]],
+  ["anyagcsere",
+    ["PUFFER", "A pH-t közel állandóan tartó oldat"],
+    ["BUFFER", "Solution that keeps the pH nearly constant"],
+    ["PUFFER", "Lösung, die den pH-Wert nahezu konstant hält"]],
+  ["anyagcsere",
+    ["OZMÓZIS", "Vízáramlás féligáteresztő hártyán át"],
+    ["OSMOSIS", "Water flow through a semipermeable membrane"],
+    ["OSMOSE", "Wasserstrom durch eine halbdurchlässige Membran"]],
+  ["anyagcsere",
+    ["DIFFÚZIÓ", "Részecskék áramlása a kisebb koncentráció felé"],
+    ["DIFFUSION", "Particles moving toward the lower concentration"],
+    ["DIFFUSION", "Teilchenbewegung zur geringeren Konzentration hin"]],
+  ["anyagcsere",
+    ["MEMBRÁN", "Lipid kettősréteg, a sejt határolója"],
+    ["MEMBRANE", "Lipid bilayer that bounds the cell"],
+    ["MEMBRAN", "Lipiddoppelschicht, Grenze der Zelle"]],
+  ["anyagcsere",
+    ["KARBAMID", "A fehérjebontás nitrogéntartalmú végterméke"],
+    ["UREA", "Nitrogen-containing end product of protein breakdown"],
+    ["HARNSTOFF", "Stickstoffhaltiges Endprodukt des Eiweißabbaus"]],
+  ["anyagcsere",
+    ["HIDROLÍZIS", "Vízfelvétellel járó bontás"],
+    ["HYDROLYSIS", "Cleavage that takes up water"],
+    ["HYDROLYSE", "Spaltung unter Aufnahme von Wasser"]],
+
+  ["vitamin",
+    ["BIOTIN", "H-vitamin, a karboxilázok koenzime"],
+    ["BIOTIN", "Vitamin H, coenzyme of the carboxylases"],
+    ["BIOTIN", "Vitamin H, Coenzym der Carboxylasen"]],
+  ["vitamin",
+    ["TIAMIN", "B1-vitamin, hiánya beriberit okoz"],
+    ["THIAMINE", "Vitamin B1; its lack causes beriberi"],
+    ["THIAMIN", "Vitamin B1, sein Mangel führt zu Beriberi"]],
+  ["vitamin",
+    ["RIBOFLAVIN", "B2-vitamin, a FAD alkotórésze"],
+    ["RIBOFLAVIN", "Vitamin B2, part of FAD"],
+    ["RIBOFLAVIN", "Vitamin B2, Bestandteil des FAD"]],
+  ["vitamin",
+    ["NIACIN", "B3-vitamin, a NAD előanyaga"],
+    ["NIACIN", "Vitamin B3, precursor of NAD"],
+    ["NIACIN", "Vitamin B3, Vorstufe des NAD"]],
+  ["vitamin",
+    ["FOLSAV", "B9-vitamin, várandósság alatt kiemelten fontos"],
+    ["FOLICACID", "Vitamin B9, vital during pregnancy (two words)"],
+    ["FOLSÄURE", "Vitamin B9, in der Schwangerschaft besonders wichtig"]],
+  ["vitamin",
+    ["ASZKORBINSAV", "A C-vitamin kémiai neve"],
+    ["ASCORBICACID", "The chemical name of vitamin C (two words)"],
+    ["ASCORBINSÄURE", "Der chemische Name des Vitamins C"]],
+  ["vitamin",
+    ["RETINOL", "A-vitamin, a látás nélkülözhetetlen molekulája"],
+    ["RETINOL", "Vitamin A, indispensable for vision"],
+    ["RETINOL", "Vitamin A, unentbehrlich für das Sehen"]],
+  ["vitamin",
+    ["KALCIFEROL", "D-vitamin, napfény hatására a bőrben is képződik"],
+    ["CALCIFEROL", "Vitamin D, also formed in the skin by sunlight"],
+    ["CALCIFEROL", "Vitamin D, entsteht durch Sonnenlicht auch in der Haut"]],
+  ["vitamin",
+    ["TOKOFEROL", "E-vitamin, zsíroldékony antioxidáns"],
+    ["TOCOPHEROL", "Vitamin E, a fat-soluble antioxidant"],
+    ["TOCOPHEROL", "Vitamin E, fettlösliches Antioxidans"]],
+  ["vitamin",
+    ["KOBALAMIN", "B12-vitamin, kobaltot tartalmaz"],
+    ["COBALAMIN", "Vitamin B12, it contains cobalt"],
+    ["COBALAMIN", "Vitamin B12, enthält Cobalt"]]
+];
+
+/* ==========================================================================
+   3. Rejtvénygenerátor (keresztezésekre épülő elrendezés)
    ========================================================================== */
 const MERET = 26;
+
+const SZINTEK = {
+  konnyu: { szo: 10, maxHossz: 8 },
+  halado: { szo: 14, maxHossz: 11 },
+  profi: { szo: 18, maxHossz: 14 }
+};
 
 function keverd(tomb) {
   const m = tomb.slice();
@@ -884,12 +1523,42 @@ function keszitsRejtvenyt(tetelek, probak = 70) {
   return { sorok: legjobb.sorok, oszlopok: legjobb.oszlopok, szavak };
 }
 
+/** A szótár átalakítása a kért nyelvre: a = megfejtés, m = meghatározás. */
+function nyelviKeszlet(nyelv) {
+  const oszlop = { hu: 1, en: 2, de: 3 }[nyelv];
+  return SZOTAR.map((sor) => ({ k: sor[0], a: sor[oszlop][0], m: sor[oszlop][1] }));
+}
+
+function valasszTeteleket(nehezseg, temakor, nyelv) {
+  const szint = SZINTEK[nehezseg] || SZINTEK.halado;
+  const kell = szint.szo;
+  const teljes = nyelviKeszlet(nyelv);
+  const rovid = (lista) => lista.filter((w) => w.a.length <= szint.maxHossz);
+
+  if (temakor === "mind") return keverd(rovid(teljes)).slice(0, kell);
+
+  // A választott témakör szavai az elsődlegesek; ha kevés van, előbb a
+  // hosszabbak, majd a többi témakör szavai egészítik ki a készletet.
+  const koron = teljes.filter((w) => w.k === temakor);
+  const keszlet = keverd(rovid(koron));
+  if (keszlet.length < kell) {
+    for (const w of keverd(koron)) if (!keszlet.includes(w)) keszlet.push(w);
+  }
+  if (keszlet.length < kell) {
+    for (const w of keverd(rovid(teljes))) {
+      if (keszlet.length >= kell) break;
+      if (!keszlet.includes(w)) keszlet.push(w);
+    }
+  }
+  return keszlet.slice(0, kell);
+}
+
 /** Addig próbálkozik friss szókészlettel, amíg minden kért szó elfér. */
-function generaljTeljeset(nehezseg, temakor) {
+function generaljTeljeset(nehezseg, temakor, nyelv) {
   const cel = (SZINTEK[nehezseg] || SZINTEK.halado).szo;
   let legjobb = null;
   for (let i = 0; i < 4; i++) {
-    const r = keszitsRejtvenyt(valasszTeteleket(nehezseg, temakor));
+    const r = keszitsRejtvenyt(valasszTeteleket(nehezseg, temakor, nyelv));
     if (!r) continue;
     if (!legjobb || r.szavak.length > legjobb.szavak.length) legjobb = r;
     if (legjobb.szavak.length >= cel) break;
@@ -897,68 +1566,83 @@ function generaljTeljeset(nehezseg, temakor) {
   return legjobb;
 }
 
-function valasszTeteleket(nehezseg, temakor) {
-  const szint = SZINTEK[nehezseg] || SZINTEK.halado;
-  const kell = szint.szo;
-  const rovid = (lista) => lista.filter((w) => w.a.length <= szint.maxHossz);
-
-  if (temakor === "mind") return teteleket(keverd(rovid(SZOTAR)).slice(0, kell));
-
-  // A választott témakör szavai az elsődlegesek; ha kevés van, a hosszabbak,
-  // majd a többi témakör szavai egészítik ki a készletet.
-  const koron = SZOTAR.filter((w) => w.k === temakor);
-  const keszlet = keverd(rovid(koron));
-  if (keszlet.length < kell) {
-    for (const w of keverd(koron)) if (!keszlet.includes(w)) keszlet.push(w);
-  }
-  if (keszlet.length < kell) {
-    for (const w of keverd(rovid(SZOTAR))) {
-      if (keszlet.length >= kell) break;
-      if (!keszlet.includes(w)) keszlet.push(w);
-    }
-  }
-  return teteleket(keszlet.slice(0, kell));
-}
-
-/** A szótári alak átalakítása: a meghatározás `m` mezőbe kerül, mert a
-    rácsra helyezéskor az `r` és a `c` a sor- és oszlopindexet jelenti. */
-function teteleket(lista) {
-  return lista.map((w) => ({ a: w.a, m: w.c, k: w.k }));
-}
-
 /* ==========================================================================
-   3. Játékállapot
+   4. Játékállapot
    ========================================================================== */
 const E = (id) => document.getElementById(id);
 const MENTES_KULCS = "biokem-kr-allas";
 const REKORD_KULCS = "biokem-kr-rekord";
-const BETUK = "AÁBCDEÉFGHIÍJKLMNOÓÖŐPQRSTUÚÜŰVWXYZ".split("");
+const NYELV_KULCS = "biokem-kr-nyelv";
 
+let nyelv = "hu";
+let SZ = SZOVEGEK.hu;
+let BETUK = ABC.hu;
 let allapot = null;
 let cellaElemek = new Map();
 let oraId = null;
 
 const kulcs = (r, c) => r + ":" + c;
 
+/** Szöveg a jelenlegi nyelven, {jelolo} helyettesítéssel. */
+function t(kod, ertekek) {
+  let s = SZ[kod] !== undefined ? SZ[kod] : kod;
+  if (ertekek) {
+    for (const [k, v] of Object.entries(ertekek)) s = s.split("{" + k + "}").join(v);
+  }
+  return s;
+}
+
+/* ---------- Nyelv ---------- */
+function allitsNyelvet(uj, ujJatekot = true) {
+  nyelv = SZOVEGEK[uj] ? uj : "hu";
+  SZ = SZOVEGEK[nyelv];
+  BETUK = ABC[nyelv];
+  document.documentElement.lang = SZ.kod;
+  try { localStorage.setItem(NYELV_KULCS, nyelv); } catch (e) {}
+
+  for (const el of document.querySelectorAll("[data-sz]")) el.textContent = t(el.dataset.sz);
+  for (const el of document.querySelectorAll("[data-sz-aria]")) {
+    el.setAttribute("aria-label", SZ.aria[el.dataset.szAria] || el.dataset.szAria);
+  }
+  for (const g of document.querySelectorAll("#nyelvvalto button")) {
+    g.setAttribute("aria-pressed", String(g.dataset.nyelv === nyelv));
+  }
+
+  const nehezsegElem = E("nehezseg");
+  const elozoSzint = nehezsegElem.value || "halado";
+  nehezsegElem.innerHTML = Object.keys(SZINTEK)
+    .map((k) => '<option value="' + k + '">' + SZ.szintek[k] + "</option>")
+    .join("");
+  nehezsegElem.value = elozoSzint;
+
+  const temakorElem = E("temakor");
+  const elozoKor = temakorElem.value || "mind";
+  temakorElem.innerHTML =
+    '<option value="mind">' + t("mindenTemakor") + "</option>" +
+    Object.entries(SZ.temakorok)
+      .map(([k, nev]) => '<option value="' + k + '">' + nev + "</option>")
+      .join("");
+  temakorElem.value = elozoKor;
+
+  E("sugo-lista").innerHTML = SZ.sugoPontok.map((p) => "<li>" + p + "</li>").join("");
+
+  epitsKlaviat();
+  if (ujJatekot) ujJatek();
+}
+
+/* ---------- Új játék ---------- */
 function ujJatek(mentesbol) {
   if (mentesbol) {
     allapot = mentesbol;
   } else {
     const nehezseg = E("nehezseg").value;
     const temakor = E("temakor").value;
-    const rejtveny = generaljTeljeset(nehezseg, temakor);
+    const rejtveny = generaljTeljeset(nehezseg, temakor, nyelv);
     allapot = {
-      nehezseg,
-      temakor,
-      rejtveny,
-      betuk: {},
-      tippeltek: [],
-      rosszak: [],
-      tippek: 0,
-      eltelt: 0,
-      kesz: false,
-      kijelolt: null,
-      irany: "vv"
+      nyelv, nehezseg, temakor, rejtveny,
+      betuk: {}, tippeltek: [], rosszak: [],
+      tippek: 0, eltelt: 0, kesz: false,
+      kijelolt: null, irany: "vv"
     };
     const elso = rejtveny.szavak.find((sz) => sz.vv) || rejtveny.szavak[0];
     allapot.kijelolt = { r: elso.r, c: elso.c };
@@ -968,9 +1652,10 @@ function ujJatek(mentesbol) {
   epitsMeghatarozasokat();
   frissitsMindent();
   inditsOrat();
+  fokuszalVissza();
 }
 
-/* ---------- Rács felépítése ---------- */
+/* ---------- Rács ---------- */
 function epitsRacsot() {
   const racs = E("racs");
   const { sorok, oszlopok, szavak } = allapot.rejtveny;
@@ -999,6 +1684,7 @@ function epitsRacsot() {
         cella.dataset.r = r;
         cella.dataset.c = c;
         cella.setAttribute("role", "gridcell");
+        cella.style.animationDelay = (r + c) * 12 + "ms";
         const szam = sorszamok.get(k);
         if (szam) {
           const s = document.createElement("span");
@@ -1017,6 +1703,9 @@ function epitsRacsot() {
       racs.appendChild(cella);
     }
   }
+
+  racs.classList.add("indul");
+  setTimeout(() => racs.classList.remove("indul"), 900);
 }
 
 function szavakAtCellan(r, c) {
@@ -1052,15 +1741,15 @@ function epitsMeghatarozasokat() {
   const ff = allapot.rejtveny.szavak.filter((sz) => !sz.vv);
   toltsListat(E("vv-lista"), vv);
   toltsListat(E("ff-lista"), ff);
-  E("vv-db").textContent = vv.length + " szó";
-  E("ff-db").textContent = ff.length + " szó";
+  E("vv-db").textContent = t("szoDb", { n: vv.length });
+  E("ff-db").textContent = t("szoDb", { n: ff.length });
 
   const hasznalt = [...new Set(allapot.rejtveny.szavak.map((sz) => sz.k))];
   E("jelmagy").innerHTML = hasznalt
     .map(
       (k) =>
         '<span class="jel" style="--kat: var(--kat-' + k + ')"><span class="pont"></span>' +
-        TEMAKOROK[k] + "</span>"
+        SZ.temakorok[k] + "</span>"
     )
     .join("");
 }
@@ -1072,11 +1761,12 @@ function toltsListat(lista, szavak) {
     const g = document.createElement("button");
     g.className = "megh-gomb";
     g.style.setProperty("--kat", "var(--kat-" + sz.k + ")");
+    g.style.setProperty("--kat-tinta", "var(--kat-" + sz.k + "-tinta)");
     g.dataset.id = sz.id;
     g.innerHTML =
-      '<span class="sorszam">' + sz.szam + '</span>' +
+      '<span class="sorszam"><span>' + sz.szam + "</span></span>" +
       '<span class="megh-szoveg"></span>' +
-      '<span class="hossz">' + sz.a.length + '</span>';
+      '<span class="hossz">' + sz.a.length + "</span>";
     g.querySelector(".megh-szoveg").textContent = sz.m;
     g.addEventListener("click", () => {
       allapot.kijelolt = { r: sz.r, c: sz.c };
@@ -1091,11 +1781,12 @@ function toltsListat(lista, szavak) {
   }
 }
 
-/* ---------- Megjelenítés frissítése ---------- */
+/* ---------- Megjelenítés ---------- */
 function frissitsMindent() {
   const akt = aktivSzo();
   const racs = E("racs");
-  racs.style.setProperty("--akt", akt ? "var(--kat-" + akt.k + ")" : "var(--kiemeles)");
+  racs.style.setProperty("--akt", akt ? "var(--kat-" + akt.k + ")" : "var(--narancs)");
+  racs.style.setProperty("--akt-tinta", akt ? "var(--kat-" + akt.k + "-tinta)" : "var(--kiemeles-tinta)");
 
   const aktivCellak = new Set(akt ? szoCellai(akt).map((p) => kulcs(p.r, p.c)) : []);
   const kijeloltKulcs = allapot.kijelolt ? kulcs(allapot.kijelolt.r, allapot.kijelolt.c) : null;
@@ -1112,7 +1803,6 @@ function frissitsMindent() {
     cella.classList.toggle("rossz", rosszak.has(k));
   }
 
-  // Meghatározás-lista állapota
   for (const sz of allapot.rejtveny.szavak) {
     const g = document.querySelector('.megh-gomb[data-id="' + sz.id + '"]');
     if (!g) continue;
@@ -1120,22 +1810,23 @@ function frissitsMindent() {
     g.setAttribute("aria-current", akt && akt.id === sz.id ? "true" : "false");
   }
 
-  // Aktív sáv
   if (akt) {
     E("aktiv-sav").style.setProperty("--akt", "var(--kat-" + akt.k + ")");
     E("aktiv-fej").textContent =
-      (akt.vv ? "Vízszintes " : "Függőleges ") + akt.szam + " · " + akt.a.length +
-      " betű · " + TEMAKOROK[akt.k];
+      (akt.vv ? t("vizszintes") : t("fuggoleges")) + " " + akt.szam + " · " +
+      t("betuDb", { n: akt.a.length }) + " · " + SZ.temakorok[akt.k];
     E("aktiv-meg").textContent = akt.m;
+  } else {
+    E("aktiv-fej").textContent = "";
+    E("aktiv-meg").textContent = t("kezdes");
   }
 
-  // Haladás
   const kesz = allapot.rejtveny.szavak.filter(szoKesz).length;
   const ossz = allapot.rejtveny.szavak.length;
   const szazalek = Math.round((kesz / ossz) * 100);
   E("toltes").style.width = szazalek + "%";
   E("csik").setAttribute("aria-valuenow", szazalek);
-  E("csik-cimke").textContent = kesz + " / " + ossz + " szó";
+  E("csik-cimke").textContent = t("haladas", { kesz, ossz });
   E("tipp-szam").textContent = allapot.tippek;
   E("rekord").textContent = rekordSzoveg(allapot.nehezseg);
 
@@ -1143,12 +1834,11 @@ function frissitsMindent() {
   if (kesz === ossz && !allapot.kesz) gyoztunk();
 }
 
-/* ---------- Beírás ---------- */
+/* ---------- Mozgás és beírás ---------- */
 function lepj(dr, dc) {
   if (!allapot.kijelolt) return;
   const { sorok, oszlopok } = allapot.rejtveny;
   let { r, c } = allapot.kijelolt;
-  // A rács hézagait átugorva keressük a következő betűmezőt.
   while (true) {
     r += dr;
     c += dc;
@@ -1172,8 +1862,7 @@ function kovetkezoCella(elore = true) {
 
 function beirBetut(ch) {
   if (!allapot.kijelolt || allapot.kesz) return;
-  // A felfedett betűk zároltak: a kurzor átugorja őket, a leütés a következő
-  // szabad mezőbe kerül.
+  // A felfedett betűk zároltak: a kurzor átugorja őket.
   let k = kulcs(allapot.kijelolt.r, allapot.kijelolt.c);
   while (allapot.tippeltek.includes(k)) {
     const elozo = allapot.kijelolt;
@@ -1190,18 +1879,22 @@ function beirBetut(ch) {
   const akt = aktivSzo();
   kovetkezoCella(true);
   frissitsMindent();
-
   if (akt && szoKesz(akt)) villantsd(akt);
 }
 
 function villantsd(sz) {
-  for (const p of szoCellai(sz)) {
+  szoCellai(sz).forEach((p, i) => {
     const cella = cellaElemek.get(kulcs(p.r, p.c));
-    if (!cella) continue;
+    if (!cella) return;
     cella.classList.remove("kesz");
     void cella.offsetWidth;
+    cella.style.animationDelay = i * 45 + "ms";
     cella.classList.add("kesz");
-  }
+    setTimeout(() => {
+      cella.classList.remove("kesz");
+      cella.style.animationDelay = "";
+    }, 700 + i * 45);
+  });
 }
 
 function torolBetut() {
@@ -1241,8 +1934,8 @@ function ugorjSzora(delta) {
   const idx = akt ? szavak.findIndex((sz) => sz.id === akt.id) : -1;
   const uj = szavak[(idx + delta + szavak.length) % szavak.length];
   allapot.irany = uj.vv ? "vv" : "ff";
-  const uresek = szoCellai(uj).find((p) => !allapot.betuk[kulcs(p.r, p.c)]);
-  allapot.kijelolt = uresek || { r: uj.r, c: uj.c };
+  const ures = szoCellai(uj).find((p) => !allapot.betuk[kulcs(p.r, p.c)]);
+  allapot.kijelolt = ures || { r: uj.r, c: uj.c };
   frissitsMindent();
 }
 
@@ -1254,8 +1947,7 @@ function ellenoriz() {
   }
   allapot.rosszak = rosszak;
   frissitsMindent();
-  if (rosszak.length === 0) jelezz("Eddig minden betű helyes.");
-  else jelezz(rosszak.length + " hibás betű pirossal jelölve.");
+  jelezz(rosszak.length === 0 ? t("mindHelyes") : t("hibasBetuk", { n: rosszak.length }));
 }
 
 function felfedBetu() {
@@ -1295,7 +1987,7 @@ function felfedSzo() {
 }
 
 function felfedMind() {
-  if (!confirm("Biztosan feltárod a teljes megoldást? A játék ezzel véget ér.")) return;
+  if (!confirm(t("megoldasKerdes"))) return;
   for (const [k, betu] of allapot.megoldas) {
     if (allapot.betuk[k] !== betu) {
       allapot.betuk[k] = betu;
@@ -1322,14 +2014,13 @@ function inditsOrat() {
     if (allapot.kesz) return;
     allapot.eltelt++;
     E("ora").textContent = idoSzoveg(allapot.eltelt);
-    if (allapot.eltelt % 10 === 0) mentsd();
+    if (allapot.eltelt % 5 === 0) mentsd();
   }, 1000);
 }
 
 function pontszam() {
   const szavak = allapot.rejtveny.szavak.length;
-  const idoBuntetes = Math.floor(allapot.eltelt / 10);
-  return Math.max(0, szavak * 100 - allapot.tippek * 40 - idoBuntetes);
+  return Math.max(0, szavak * 100 - allapot.tippek * 40 - Math.floor(allapot.eltelt / 10));
 }
 
 function rekordok() {
@@ -1341,7 +2032,7 @@ function rekordok() {
 }
 
 function rekordSzoveg(nehezseg) {
-  const r = rekordok()[nehezseg];
+  const r = rekordok()[nyelv + ":" + nehezseg];
   return r ? idoSzoveg(r.ido) : "–";
 }
 
@@ -1352,25 +2043,27 @@ function gyoztunk() {
   const feladta = allapot.feladta === true;
   if (!feladta) {
     const r = rekordok();
-    const elozo = r[allapot.nehezseg];
+    const kulcsSzo = nyelv + ":" + allapot.nehezseg;
+    const elozo = r[kulcsSzo];
     if (!elozo || allapot.eltelt < elozo.ido) {
-      r[allapot.nehezseg] = { ido: allapot.eltelt, pont: pontszam(), datum: Date.now() };
+      r[kulcsSzo] = { ido: allapot.eltelt, pont: pontszam(), datum: Date.now() };
       try { localStorage.setItem(REKORD_KULCS, JSON.stringify(r)); } catch (e) {}
     }
   }
   E("rekord").textContent = rekordSzoveg(allapot.nehezseg);
 
-  E("gyozelem-cim").textContent = feladta ? "Itt a megoldás" : "Kész a rejtvény!";
+  E("gyozelem-cim").textContent = feladta ? t("feladtaCim") : t("gyozelemCim");
   E("gyozelem-szoveg").textContent = feladta
-    ? "A teljes megoldás látható a rácson. Nézd át a fogalmakat, aztán jöhet egy új rejtvény."
+    ? t("feladtaSzoveg")
     : allapot.tippek === 0
-      ? "Egyetlen tipp nélkül, tiszta munka."
-      : "Minden szó a helyén – " + allapot.tippek + " tipp segítségével.";
+      ? t("gyozelemTiszta")
+      : t("gyozelemTippel", { n: allapot.tippek });
   E("ered-ido").textContent = idoSzoveg(allapot.eltelt);
   E("ered-tipp").textContent = allapot.tippek;
   E("ered-pont").textContent = feladta ? 0 : pontszam();
   try { localStorage.removeItem(MENTES_KULCS); } catch (e) {}
   E("gyozelem").showModal();
+  if (!feladta) konfetti();
 }
 
 function jelezz(szoveg) {
@@ -1378,7 +2071,53 @@ function jelezz(szoveg) {
   setTimeout(() => {
     const akt = aktivSzo();
     if (akt) E("aktiv-meg").textContent = akt.m;
-  }, 2200);
+  }, 2400);
+}
+
+/* ---------- Konfetti ---------- */
+function konfetti() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const vaszon = E("konfetti");
+  const ctx = vaszon.getContext("2d");
+  const arany = window.devicePixelRatio || 1;
+  vaszon.width = window.innerWidth * arany;
+  vaszon.height = window.innerHeight * arany;
+  ctx.scale(arany, arany);
+
+  const szinek = ["#E23757", "#FF9F1C", "#FFD23F", "#14B8A6", "#2D6BE0", "#7C3FD1", "#FF7A18"];
+  const reszek = Array.from({ length: 140 }, () => ({
+    x: window.innerWidth / 2 + (Math.random() - .5) * 220,
+    y: window.innerHeight / 2 + (Math.random() - .5) * 80,
+    vx: (Math.random() - .5) * 13,
+    vy: Math.random() * -13 - 4,
+    meret: 5 + Math.random() * 7,
+    forog: Math.random() * Math.PI,
+    porget: (Math.random() - .5) * .3,
+    szin: szinek[Math.floor(Math.random() * szinek.length)]
+  }));
+
+  let kepkocka = 0;
+  (function rajzol() {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    let latszik = false;
+    for (const p of reszek) {
+      p.vy += .32;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= .995;
+      p.forog += p.porget;
+      if (p.y < window.innerHeight + 40) latszik = true;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.forog);
+      ctx.fillStyle = p.szin;
+      ctx.fillRect(-p.meret / 2, -p.meret / 2, p.meret, p.meret * .6);
+      ctx.restore();
+    }
+    kepkocka++;
+    if (latszik && kepkocka < 260) requestAnimationFrame(rajzol);
+    else ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  })();
 }
 
 /* ---------- Mentés ---------- */
@@ -1396,6 +2135,7 @@ function toltsdBe() {
     if (!nyers) return null;
     const a = JSON.parse(nyers);
     if (!a || !a.rejtveny || !Array.isArray(a.rejtveny.szavak) || !a.rejtveny.szavak.length) return null;
+    if (a.nyelv !== nyelv) return null; // a megfejtések nyelvenként mások
     a.kesz = false;
     return a;
   } catch (e) {
@@ -1404,11 +2144,17 @@ function toltsdBe() {
 }
 
 /* ==========================================================================
-   4. Képernyő-billentyűzet
+   5. Képernyő-billentyűzet
    ========================================================================== */
 function epitsKlaviat() {
   const doboz = E("klavia");
-  const sorok = [BETUK.slice(0, 12), BETUK.slice(12, 24), BETUK.slice(24)];
+  const db = BETUK.length;
+  const soronkent = Math.ceil(db / 3);
+  const sorok = [
+    BETUK.slice(0, soronkent),
+    BETUK.slice(soronkent, soronkent * 2),
+    BETUK.slice(soronkent * 2)
+  ];
   doboz.innerHTML = "";
   sorok.forEach((sor, i) => {
     const div = document.createElement("div");
@@ -1422,34 +2168,43 @@ function epitsKlaviat() {
       div.appendChild(g);
     });
     if (i === sorok.length - 1) {
-      const t = document.createElement("button");
-      t.type = "button";
-      t.className = "szeles";
-      t.textContent = "⌫";
-      t.setAttribute("aria-label", "Betű törlése");
-      t.addEventListener("click", torolBetut);
-      div.appendChild(t);
-      const v = document.createElement("button");
-      v.type = "button";
-      v.className = "szeles";
-      v.textContent = "⇄";
-      v.title = "Irányváltás";
-      v.setAttribute("aria-label", "Irányváltás");
-      v.addEventListener("click", valtsIranyt);
-      div.appendChild(v);
+      const torol = document.createElement("button");
+      torol.type = "button";
+      torol.className = "szeles";
+      torol.textContent = "⌫";
+      torol.setAttribute("aria-label", SZ.aria.torles);
+      torol.addEventListener("mousedown", (ev) => ev.preventDefault());
+      torol.addEventListener("click", () => { torolBetut(); fokuszal(); });
+      div.appendChild(torol);
+
+      const valt = document.createElement("button");
+      valt.type = "button";
+      valt.className = "szeles";
+      valt.textContent = "⇄";
+      valt.setAttribute("aria-label", SZ.aria.iranyvaltas);
+      valt.addEventListener("mousedown", (ev) => ev.preventDefault());
+      valt.addEventListener("click", () => { valtsIranyt(); fokuszal(); });
+      div.appendChild(valt);
     }
     doboz.appendChild(div);
   });
 }
 
 /* ==========================================================================
-   5. Bevitel: rejtett mező (mobil, IME, ékezetes betűk) és billentyűzet
+   6. Bevitel és események
    ========================================================================== */
 const rejtett = E("rejtett");
 
 function fokuszal() {
   rejtett.value = " ";
   if (document.activeElement !== rejtett) rejtett.focus({ preventScroll: true });
+}
+
+/** Fókusz visszaadása a rácsnak gombhasználat után. Érintőképernyőn nem
+    kérjük vissza, hogy ne ugorjon fel a rendszerbillentyűzet magától. */
+function fokuszalVissza() {
+  if (window.matchMedia("(pointer: coarse)").matches) return;
+  fokuszal();
 }
 
 // Az ékezetes betűket több beviteli mód (mobil billentyűzet, IME, halott
@@ -1520,25 +2275,28 @@ document.addEventListener("keydown", (ev) => {
   }
 });
 
-E("uj-gomb").addEventListener("click", () => {
-  E("gyozelem").close();
-  ujJatek();
-});
-E("ellenoriz-gomb").addEventListener("click", ellenoriz);
-E("betu-gomb").addEventListener("click", felfedBetu);
-E("szo-gomb").addEventListener("click", felfedSzo);
-E("megold-gomb").addEventListener("click", felfedMind);
-E("elozo-gomb").addEventListener("click", () => ugorjSzora(-1));
-E("kovetkezo-gomb").addEventListener("click", () => ugorjSzora(1));
+for (const g of document.querySelectorAll("#nyelvvalto button")) {
+  g.addEventListener("click", () => {
+    if (g.dataset.nyelv === nyelv) return;
+    allitsNyelvet(g.dataset.nyelv);
+  });
+}
+
+E("uj-gomb").addEventListener("click", () => { E("gyozelem").close(); ujJatek(); });
+E("ellenoriz-gomb").addEventListener("click", () => { ellenoriz(); fokuszalVissza(); });
+E("betu-gomb").addEventListener("click", () => { felfedBetu(); fokuszalVissza(); });
+E("szo-gomb").addEventListener("click", () => { felfedSzo(); fokuszalVissza(); });
+E("megold-gomb").addEventListener("click", () => { felfedMind(); fokuszalVissza(); });
+E("elozo-gomb").addEventListener("click", () => { ugorjSzora(-1); fokuszalVissza(); });
+E("kovetkezo-gomb").addEventListener("click", () => { ugorjSzora(1); fokuszalVissza(); });
+E("gyozelem").addEventListener("close", fokuszalVissza);
+E("sugo").addEventListener("close", fokuszalVissza);
 E("nehezseg").addEventListener("change", () => ujJatek());
 E("temakor").addEventListener("change", () => ujJatek());
 E("sugo-gomb").addEventListener("click", () => E("sugo").showModal());
 E("sugo-bezar").addEventListener("click", () => E("sugo").close());
 E("gyozelem-bezar").addEventListener("click", () => E("gyozelem").close());
-E("gyozelem-uj").addEventListener("click", () => {
-  E("gyozelem").close();
-  ujJatek();
-});
+E("gyozelem-uj").addEventListener("click", () => { E("gyozelem").close(); ujJatek(); });
 
 E("klavia-gomb").addEventListener("click", () => {
   const doboz = E("klavia");
@@ -1561,24 +2319,33 @@ E("tema-gomb").addEventListener("click", () => {
 });
 
 /* ==========================================================================
-   6. Indulás
+   7. Indulás
    ========================================================================== */
 (function indul() {
   try {
-    const t = localStorage.getItem("biokem-kr-tema");
-    if (t) document.documentElement.dataset.tema = t;
+    const tema = localStorage.getItem("biokem-kr-tema");
+    if (tema) document.documentElement.dataset.tema = tema;
   } catch (e) {}
 
-  epitsKlaviat();
+  let kezdoNyelv = "hu";
+  try {
+    const mentettNyelv = localStorage.getItem(NYELV_KULCS);
+    if (mentettNyelv && SZOVEGEK[mentettNyelv]) kezdoNyelv = mentettNyelv;
+    else {
+      const bongeszo = (navigator.language || "hu").slice(0, 2).toLowerCase();
+      if (SZOVEGEK[bongeszo]) kezdoNyelv = bongeszo;
+    }
+  } catch (e) {}
 
   let klaviaNyitva = !window.matchMedia("(pointer: coarse)").matches;
   try {
     const mentettKlavia = localStorage.getItem("biokem-kr-klavia");
     if (mentettKlavia !== null) klaviaNyitva = mentettKlavia === "1";
   } catch (e) {}
+
+  allitsNyelvet(kezdoNyelv, false);
   E("klavia").hidden = !klaviaNyitva;
   E("klavia-gomb").setAttribute("aria-expanded", String(klaviaNyitva));
-
   fokuszal();
 
   const mentett = toltsdBe();
