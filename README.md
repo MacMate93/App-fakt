@@ -17,10 +17,9 @@ olvasható marad az oldal).
   generál.
   Induláskor a böngésző nyelve, illetve a legutóbbi választás dönt.
 - **Három nehézségi szint** – Könnyű (10 szó), Haladó (14 szó), Profi (18 szó).
-- **Hat témakör az előadás felépítése szerint** – membránlipidek,
-  szfingolipidek, koleszterin, membránfehérjék, membráncukrok, valamint
-  szerkezet és dinamika. A választott témakör szavai kerülnek előtérbe, a rács
-  feltöltéséhez szükséges maradékot a többi kör adja.
+- **Egyetlen témakör: a membrán** – mind a 72 fogalom ebbe tartozik, ezért a
+  témakörválasztó és a jelmagyarázat rejtve marad. Saját szólista betöltésekor
+  mindkettő előjön, hogy a beépített és a saját szavak elkülönüljenek.
 - **Teljes billentyűzetes kezelés** – gépelés, `Szóköz` irányváltás, `Tab`
   következő meghatározás, nyilak, `Backspace`.
 - **Ékezetes és umlautos bevitel mindenhol** – a mobil billentyűzetek és a
@@ -88,7 +87,7 @@ Minta: **`szavak-minta.csv`** (nyisd meg Excelben vagy szövegszerkesztőben).
 
 ```
 temakor;megfejtes_hu;meghatarozas_hu;megfejtes_en;meghatarozas_en;megfejtes_de;meghatarozas_de
-feherje;AKVAPORIN;Vízcsatorna-fehérje a membránban;AQUAPORIN;Water channel protein;AQUAPORIN;Wasserkanalprotein
+membran;AKVAPORIN;Vízcsatorna-fehérje a membránban;AQUAPORIN;Water channel protein;AQUAPORIN;Wasserkanalprotein
 ```
 
 - **Elválasztó**: pontosvessző, vessző vagy tabulátor – a játék felismeri. A
@@ -97,9 +96,8 @@ feherje;AKVAPORIN;Vízcsatorna-fehérje a membránban;AQUAPORIN;Water channel pr
   jelenik meg, ahol ki van töltve. Rövid alak is jó: `megfejtés;meghatározás`
   vagy `témakör;megfejtés;meghatározás` – ilyenkor az éppen beállított nyelvre
   kerül a sor.
-- **Témakör**: `lipid`, `szfingo`, `szterin`, `feherje`, `szenhidrat`,
-  `dinamika` (a magyar, angol vagy német nevük is elfogadott). Bármi más a
-  „Saját szavak" körbe kerül.
+- **Témakör**: `membran` (a magyar, angol vagy német neve is elfogadott).
+  Bármi más – vagy üresen hagyott témakör – a „Saját szavak" körbe kerül.
 - **Megfejtés**: 3–20 betű, csak az adott nyelv ábécéjéből. A szóköz, a kötőjel
   és a pont automatikusan kiesik (FATTY ACID → FATTYACID), a számjegy viszont
   hibának számít – az ilyen sor kimarad, és a játék meg is mondja, miért.

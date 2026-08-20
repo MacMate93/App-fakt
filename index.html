@@ -35,13 +35,8 @@
   --hiba: #E63946;
   --siker: #1F9D63;
 
-  --kat-szfingo: #E23757;   --kat-szfingo-tinta: #FFFFFF;
-  --kat-lipid: #FF9F1C; --kat-lipid-tinta: #3A2500;
-  --kat-szterin: #FFD23F;      --kat-szterin-tinta: #493400;
-  --kat-szenhidrat: #14B8A6; --kat-szenhidrat-tinta: #04302B;
-  --kat-feherje: #2D6BE0; --kat-feherje-tinta: #FFFFFF;
-  --kat-dinamika: #7C3FD1;    --kat-dinamika-tinta: #FFFFFF;
-  --kat-sajat: #12968A;      --kat-sajat-tinta: #FFFFFF;
+  --kat-membran: #14B8A6;    --kat-membran-tinta: #04302B;
+  --kat-sajat: #7C3FD1;      --kat-sajat-tinta: #FFFFFF;
 
   --bokeh: rgba(255, 255, 255, .40);
   --sugar: 14px;
@@ -70,13 +65,8 @@
     --tipp: #FFC46B;
     --hiba: #FF7078;
     --siker: #3FD69B;
-    --kat-szfingo: #FF6B87;   --kat-szfingo-tinta: #3A0010;
-    --kat-lipid: #FFB454; --kat-lipid-tinta: #3A2500;
-    --kat-szterin: #FFDE6B;      --kat-szterin-tinta: #493400;
-    --kat-szenhidrat: #3FD9C6; --kat-szenhidrat-tinta: #04302B;
-    --kat-feherje: #6BA2FF; --kat-feherje-tinta: #05204D;
-    --kat-dinamika: #B48AF5;    --kat-dinamika-tinta: #22004F;
-    --kat-sajat: #59DBCB;      --kat-sajat-tinta: #04302B;
+    --kat-membran: #3FD9C6;    --kat-membran-tinta: #04302B;
+    --kat-sajat: #B48AF5;      --kat-sajat-tinta: #22004F;
   }
 }
 
@@ -100,13 +90,8 @@
   --tipp: #FFC46B;
   --hiba: #FF7078;
   --siker: #3FD69B;
-  --kat-szfingo: #FF6B87;   --kat-szfingo-tinta: #3A0010;
-  --kat-lipid: #FFB454; --kat-lipid-tinta: #3A2500;
-  --kat-szterin: #FFDE6B;      --kat-szterin-tinta: #493400;
-  --kat-szenhidrat: #3FD9C6; --kat-szenhidrat-tinta: #04302B;
-  --kat-feherje: #6BA2FF; --kat-feherje-tinta: #05204D;
-  --kat-dinamika: #B48AF5;    --kat-dinamika-tinta: #22004F;
-  --kat-sajat: #59DBCB;      --kat-sajat-tinta: #04302B;
+  --kat-membran: #3FD9C6;    --kat-membran-tinta: #04302B;
+  --kat-sajat: #B48AF5;      --kat-sajat-tinta: #22004F;
 }
 
 * { box-sizing: border-box; }
@@ -274,10 +259,7 @@ h1 em {
   inset: 2px;
   width: 0%;
   border-radius: 999px;
-  background: linear-gradient(90deg,
-    var(--kat-szfingo), var(--kat-lipid), var(--kat-szterin),
-    var(--kat-szenhidrat), var(--kat-feherje), var(--kat-dinamika));
-  background-size: 640px 100%;
+  background: linear-gradient(90deg, var(--kat-membran), var(--narancs));
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, .55);
   transition: width .5s cubic-bezier(.34, 1.56, .64, 1);
 }
@@ -897,7 +879,7 @@ const SZOVEGEK = {
   hu: {
     kod: "hu",
     intezmeny: "Állatorvostudományi Egyetem, Budapest · Biokémiai Osztály",
-    szemoldok: "{n} fogalom · {k} témakör · minden játék új rács",
+    szemoldok: "{n} fogalom a sejtmembrán anyagából · minden játék új rács",
     cim1: "Sejtmembrán", cim2: "keresztrejtvény",
     ido: "Idő", tipp: "Tipp", rekord: "Rekord", pont: "Pont",
     betuk: "Betűk", tema: "Téma", sugo: "Súgó",
@@ -909,10 +891,7 @@ const SZOVEGEK = {
     kezdes: "Válasszon egy mezőt vagy egy meghatározást!",
     mindenTemakor: "Minden témakör",
     szintek: { konnyu: "Könnyű · 10 szó", halado: "Haladó · 14 szó", profi: "Profi · 18 szó" },
-    temakorok: {
-      lipid: "Membránlipidek", szfingo: "Szfingolipidek", szterin: "Koleszterin",
-      feherje: "Membránfehérjék", szenhidrat: "Membráncukrok", dinamika: "Szerkezet és dinamika"
-    },
+    temakorok: { membran: "Membrán" },
     sajatGomb: "Saját szavak",
     sajatCim: "Saját szavak feltöltése",
     sajatLeiras: "Töltsön fel egy táblázatot (CSV), vagy másolja be a sorait. Soronként egy fogalom. Az elválasztó lehet pontosvessző, vessző vagy tabulátor – Excelből kimásolt sorok is jók.",
@@ -971,7 +950,7 @@ const SZOVEGEK = {
   en: {
     kod: "en",
     intezmeny: "University of Veterinary Medicine Budapest · Division of Biochemistry",
-    szemoldok: "{n} terms · {k} topics · a fresh grid every game",
+    szemoldok: "{n} terms from the cell membrane lecture · a fresh grid every game",
     cim1: "Cell membrane", cim2: "crossword",
     ido: "Time", tipp: "Hints", rekord: "Best", pont: "Score",
     betuk: "Letters", tema: "Theme", sugo: "Help",
@@ -983,10 +962,7 @@ const SZOVEGEK = {
     kezdes: "Pick a square or a clue to start!",
     mindenTemakor: "All topics",
     szintek: { konnyu: "Easy · 10 words", halado: "Advanced · 14 words", profi: "Pro · 18 words" },
-    temakorok: {
-      lipid: "Membrane lipids", szfingo: "Sphingolipids", szterin: "Cholesterol",
-      feherje: "Membrane proteins", szenhidrat: "Membrane sugars", dinamika: "Structure and dynamics"
-    },
+    temakorok: { membran: "Membrane" },
     sajatGomb: "Your words",
     sajatCim: "Upload your own words",
     sajatLeiras: "Upload a spreadsheet (CSV) or paste its rows. One term per row. The separator can be a semicolon, a comma or a tab – rows copied straight out of Excel work too.",
@@ -1045,7 +1021,7 @@ const SZOVEGEK = {
   de: {
     kod: "de",
     intezmeny: "Veterinärmedizinische Universität Budapest · Abteilung für Biochemie",
-    szemoldok: "{n} Begriffe · {k} Themen · jedes Spiel ein neues Gitter",
+    szemoldok: "{n} Begriffe aus der Zellmembran-Vorlesung · jedes Spiel ein neues Gitter",
     cim1: "Zellmembran", cim2: "Kreuzworträtsel",
     ido: "Zeit", tipp: "Tipps", rekord: "Rekord", pont: "Punkte",
     betuk: "Buchstaben", tema: "Design", sugo: "Hilfe",
@@ -1057,10 +1033,7 @@ const SZOVEGEK = {
     kezdes: "Wählen Sie ein Feld oder eine Frage!",
     mindenTemakor: "Alle Themen",
     szintek: { konnyu: "Leicht · 10 Wörter", halado: "Fortgeschritten · 14 Wörter", profi: "Profi · 18 Wörter" },
-    temakorok: {
-      lipid: "Membranlipide", szfingo: "Sphingolipide", szterin: "Cholesterin",
-      feherje: "Membranproteine", szenhidrat: "Membranzucker", dinamika: "Struktur und Dynamik"
-    },
+    temakorok: { membran: "Membran" },
     sajatGomb: "Eigene Wörter",
     sajatCim: "Eigene Wörter hochladen",
     sajatLeiras: "Laden Sie eine Tabelle (CSV) hoch oder fügen Sie ihre Zeilen ein. Ein Begriff pro Zeile. Als Trennzeichen dienen Semikolon, Komma oder Tabulator – direkt aus Excel kopierte Zeilen funktionieren ebenfalls.",
@@ -1131,88 +1104,88 @@ const ABC = {
    ========================================================================== */
 const SZOTAR = [
   // ---- Szerkezet és dinamika ----
-  ["dinamika", ["PROKARIÓTA", "Sejtmag nélküli sejt: ide tartoznak a baktériumok"], ["PROKARYOTE", "Cell without a nucleus, such as bacteria"], ["PROKARYOT", "Zelle ohne Zellkern, etwa Bakterien"]],
-  ["dinamika", ["EUKARIÓTA", "Sejtmaggal rendelkező sejt: állat, növény, gomba"], ["EUKARYOTE", "Cell with a nucleus: animal, plant or fungus"], ["EUKARYOT", "Zelle mit Zellkern: Tier, Pflanze oder Pilz"]],
-  ["dinamika", ["PLAZMAMEMBRÁN", "A sejtet a környezetétől elválasztó határoló hártya"], ["PLASMAMEMBRANE", "Barrier between the cell and its environment (2 words)"], ["PLASMAMEMBRAN", "Grenze zwischen Zelle und Umgebung"]],
-  ["dinamika", ["KETTŐSRÉTEG", "A membrán alapszerkezetét adó lipidképződmény"], ["BILAYER", "The lipid arrangement that forms the basic structure of the membrane"], ["DOPPELSCHICHT", "Lipidanordnung, die das Grundgerüst der Membran bildet"]],
-  ["dinamika", ["NANOMÉTER", "A membrán vastagsága 6–10 ilyen egység"], ["NANOMETRE", "The membrane is 6–10 of these units thick"], ["NANOMETER", "Die Membran ist 6–10 dieser Einheiten dick"]],
-  ["dinamika", ["SINGER", "A folyékony mozaik modell egyik névadója (1972)"], ["SINGER", "Co-author of the fluid mosaic model (1972)"], ["SINGER", "Mitautor des Flüssig-Mosaik-Modells (1972)"]],
-  ["dinamika", ["FLUIDITÁS", "A membrán folyékonysága; a hőmérséklet emelésével nő"], ["FLUIDITY", "How fluid the membrane is; it rises with temperature"], ["FLUIDITÄT", "Fließfähigkeit der Membran; sie steigt mit der Temperatur"]],
-  ["dinamika", ["RIGIDITÁS", "Merevség: a koleszterin ezt növeli a membránban"], ["RIGIDITY", "Stiffness: cholesterol increases it in the membrane"], ["RIGIDITÄT", "Steifigkeit: Cholesterin erhöht sie in der Membran"]],
-  ["dinamika", ["ASZIMMETRIA", "A két lipidréteg eltérő összetétele és fehérjeirányultsága"], ["ASYMMETRY", "The two leaflets differ in lipid composition and protein orientation"], ["ASYMMETRIE", "Die beiden Schichten unterscheiden sich in Lipiden und Proteinausrichtung"]],
-  ["dinamika", ["LATERÁLIS", "Ilyen diffúzióval vándorol oldalirányban a lipid"], ["LATERAL", "Sideways diffusion of a lipid within its own leaflet"], ["LATERAL", "Seitwärtsdiffusion eines Lipids in seiner Schicht"]],
-  ["dinamika", ["FLIPFLOP", "A lipid átfordulása az egyik rétegből a másikba"], ["FLIPFLOP", "A lipid turning over from one leaflet to the other"], ["FLIPFLOP", "Umklappen eines Lipids von einer Schicht in die andere"]],
-  ["dinamika", ["FLIPPÁZ", "ATP-t fogyasztó enzim, a belső réteg felé fordítja a lipidet"], ["FLIPPASE", "ATP-driven enzyme moving lipids toward the inner leaflet"], ["FLIPPASE", "ATP-abhängiges Enzym, das Lipide nach innen wendet"]],
-  ["dinamika", ["FLOPPÁZ", "ATP-igényes fehérje, a külső réteg felé mozgatja a lipidet"], ["FLOPPASE", "ATP-dependent protein moving lipids toward the outer leaflet"], ["FLOPPASE", "ATP-abhängiges Protein, das Lipide nach außen bewegt"]],
-  ["dinamika", ["SZKRAMBLÁZ", "ATP nélkül kevergeti a két réteg lipidjeit"], ["SCRAMBLASE", "Mixes the lipids of the two leaflets without ATP"], ["SCRAMBLASE", "Mischt die Lipide beider Schichten ohne ATP"]],
-  ["dinamika", ["ROTÁCIÓ", "A lipidmolekula forgása a saját tengelye körül"], ["ROTATION", "Spinning of a lipid molecule around its own axis"], ["ROTATION", "Drehung eines Lipidmoleküls um die eigene Achse"]],
-  ["dinamika", ["LIPIDTUTAJ", "Szfingolipidben és koleszterinben gazdag, rendezett folt"], ["LIPIDRAFT", "Ordered patch rich in sphingolipids and cholesterol (2 words)"], ["LIPIDFLOSS", "Geordneter Bereich reich an Sphingolipiden und Cholesterin"]],
-  ["dinamika", ["MIKRODOMÉN", "A membrán rendezettebb, stabilabb kis területe"], ["MICRODOMAIN", "A smaller, more ordered and stable area of the membrane"], ["MIKRODOMÄNE", "Kleinerer, geordneter und stabiler Bereich der Membran"]],
-  ["dinamika", ["KOMPARTMENT", "Membránnal elhatárolt sejttér, saját anyagcserével"], ["COMPARTMENT", "Membrane-bounded cellular space with its own metabolism"], ["KOMPARTIMENT", "Membranbegrenzter Zellraum mit eigenem Stoffwechsel"]],
-  ["dinamika", ["SZELEKTÍV", "Ilyen gát a membrán: válogat az átjutó anyagok között"], ["SELECTIVE", "The membrane is this kind of barrier: it chooses what passes"], ["SELEKTIV", "Solche Barriere ist die Membran: sie wählt aus, was passiert"]],
-  ["dinamika", ["TRANSZPORT", "A membrán szabályozott anyagátjuttató működése"], ["TRANSPORT", "The regulated passage of substances across the membrane"], ["TRANSPORT", "Geregelter Durchtritt von Stoffen durch die Membran"]],
-  ["dinamika", ["INFARKTUS", "Szívizomelhalás, amelynek első lépése a membrán károsodása"], ["INFARCTION", "Heart muscle death that begins with membrane damage"], ["INFARKT", "Herzmuskeltod, der mit einer Membranschädigung beginnt"]],
+  ["membran", ["PROKARIÓTA", "Sejtmag nélküli sejt: ide tartoznak a baktériumok"], ["PROKARYOTE", "Cell without a nucleus, such as bacteria"], ["PROKARYOT", "Zelle ohne Zellkern, etwa Bakterien"]],
+  ["membran", ["EUKARIÓTA", "Sejtmaggal rendelkező sejt: állat, növény, gomba"], ["EUKARYOTE", "Cell with a nucleus: animal, plant or fungus"], ["EUKARYOT", "Zelle mit Zellkern: Tier, Pflanze oder Pilz"]],
+  ["membran", ["PLAZMAMEMBRÁN", "A sejtet a környezetétől elválasztó határoló hártya"], ["PLASMAMEMBRANE", "Barrier between the cell and its environment (2 words)"], ["PLASMAMEMBRAN", "Grenze zwischen Zelle und Umgebung"]],
+  ["membran", ["KETTŐSRÉTEG", "A membrán alapszerkezetét adó lipidképződmény"], ["BILAYER", "The lipid arrangement that forms the basic structure of the membrane"], ["DOPPELSCHICHT", "Lipidanordnung, die das Grundgerüst der Membran bildet"]],
+  ["membran", ["NANOMÉTER", "A membrán vastagsága 6–10 ilyen egység"], ["NANOMETRE", "The membrane is 6–10 of these units thick"], ["NANOMETER", "Die Membran ist 6–10 dieser Einheiten dick"]],
+  ["membran", ["SINGER", "A folyékony mozaik modell egyik névadója (1972)"], ["SINGER", "Co-author of the fluid mosaic model (1972)"], ["SINGER", "Mitautor des Flüssig-Mosaik-Modells (1972)"]],
+  ["membran", ["FLUIDITÁS", "A membrán folyékonysága; a hőmérséklet emelésével nő"], ["FLUIDITY", "How fluid the membrane is; it rises with temperature"], ["FLUIDITÄT", "Fließfähigkeit der Membran; sie steigt mit der Temperatur"]],
+  ["membran", ["RIGIDITÁS", "Merevség: a koleszterin ezt növeli a membránban"], ["RIGIDITY", "Stiffness: cholesterol increases it in the membrane"], ["RIGIDITÄT", "Steifigkeit: Cholesterin erhöht sie in der Membran"]],
+  ["membran", ["ASZIMMETRIA", "A két lipidréteg eltérő összetétele és fehérjeirányultsága"], ["ASYMMETRY", "The two leaflets differ in lipid composition and protein orientation"], ["ASYMMETRIE", "Die beiden Schichten unterscheiden sich in Lipiden und Proteinausrichtung"]],
+  ["membran", ["LATERÁLIS", "Ilyen diffúzióval vándorol oldalirányban a lipid"], ["LATERAL", "Sideways diffusion of a lipid within its own leaflet"], ["LATERAL", "Seitwärtsdiffusion eines Lipids in seiner Schicht"]],
+  ["membran", ["FLIPFLOP", "A lipid átfordulása az egyik rétegből a másikba"], ["FLIPFLOP", "A lipid turning over from one leaflet to the other"], ["FLIPFLOP", "Umklappen eines Lipids von einer Schicht in die andere"]],
+  ["membran", ["FLIPPÁZ", "ATP-t fogyasztó enzim, a belső réteg felé fordítja a lipidet"], ["FLIPPASE", "ATP-driven enzyme moving lipids toward the inner leaflet"], ["FLIPPASE", "ATP-abhängiges Enzym, das Lipide nach innen wendet"]],
+  ["membran", ["FLOPPÁZ", "ATP-igényes fehérje, a külső réteg felé mozgatja a lipidet"], ["FLOPPASE", "ATP-dependent protein moving lipids toward the outer leaflet"], ["FLOPPASE", "ATP-abhängiges Protein, das Lipide nach außen bewegt"]],
+  ["membran", ["SZKRAMBLÁZ", "ATP nélkül kevergeti a két réteg lipidjeit"], ["SCRAMBLASE", "Mixes the lipids of the two leaflets without ATP"], ["SCRAMBLASE", "Mischt die Lipide beider Schichten ohne ATP"]],
+  ["membran", ["ROTÁCIÓ", "A lipidmolekula forgása a saját tengelye körül"], ["ROTATION", "Spinning of a lipid molecule around its own axis"], ["ROTATION", "Drehung eines Lipidmoleküls um die eigene Achse"]],
+  ["membran", ["LIPIDTUTAJ", "Szfingolipidben és koleszterinben gazdag, rendezett folt"], ["LIPIDRAFT", "Ordered patch rich in sphingolipids and cholesterol (2 words)"], ["LIPIDFLOSS", "Geordneter Bereich reich an Sphingolipiden und Cholesterin"]],
+  ["membran", ["MIKRODOMÉN", "A membrán rendezettebb, stabilabb kis területe"], ["MICRODOMAIN", "A smaller, more ordered and stable area of the membrane"], ["MIKRODOMÄNE", "Kleinerer, geordneter und stabiler Bereich der Membran"]],
+  ["membran", ["KOMPARTMENT", "Membránnal elhatárolt sejttér, saját anyagcserével"], ["COMPARTMENT", "Membrane-bounded cellular space with its own metabolism"], ["KOMPARTIMENT", "Membranbegrenzter Zellraum mit eigenem Stoffwechsel"]],
+  ["membran", ["SZELEKTÍV", "Ilyen gát a membrán: válogat az átjutó anyagok között"], ["SELECTIVE", "The membrane is this kind of barrier: it chooses what passes"], ["SELEKTIV", "Solche Barriere ist die Membran: sie wählt aus, was passiert"]],
+  ["membran", ["TRANSZPORT", "A membrán szabályozott anyagátjuttató működése"], ["TRANSPORT", "The regulated passage of substances across the membrane"], ["TRANSPORT", "Geregelter Durchtritt von Stoffen durch die Membran"]],
+  ["membran", ["INFARKTUS", "Szívizomelhalás, amelynek első lépése a membrán károsodása"], ["INFARCTION", "Heart muscle death that begins with membrane damage"], ["INFARKT", "Herzmuskeltod, der mit einer Membranschädigung beginnt"]],
 
   // ---- Membránlipidek ----
-  ["lipid", ["FOSZFOLIPID", "A membrán legfontosabb lipidalkotója"], ["PHOSPHOLIPID", "The major lipid component of the membrane"], ["PHOSPHOLIPID", "Wichtigster Lipidbestandteil der Membran"]],
-  ["lipid", ["GLICERIN", "A glicerofoszfatidok háromszénatomos gerince"], ["GLYCEROL", "The three-carbon backbone of glycerophosphatides"], ["GLYCERIN", "Dreikohlenstoff-Gerüst der Glycerophosphatide"]],
-  ["lipid", ["LECITIN", "Glicerin + 2 zsírsav + foszfát + kolin"], ["LECITHIN", "Glycerol + 2 fatty acids + phosphate + choline"], ["LECITHIN", "Glycerin + 2 Fettsäuren + Phosphat + Cholin"]],
-  ["lipid", ["KEFALIN", "Glicerin + 2 zsírsav + foszfát + kolamin"], ["CEPHALIN", "Glycerol + 2 fatty acids + phosphate + cholamine"], ["KEPHALIN", "Glycerin + 2 Fettsäuren + Phosphat + Cholamin"]],
-  ["lipid", ["FOSZFATIDSAV", "A váz kolin és kolamin nélkül: glicerin + 2 zsírsav + foszfát"], ["PHOSPHATIDATE", "The backbone with neither choline nor cholamine"], ["PHOSPHATIDAT", "Das Grundgerüst ohne Cholin und ohne Cholamin"]],
-  ["lipid", ["KOLIN", "Trimetil-etanolamin: a lecitin poláris feje"], ["CHOLINE", "Trimethyl-ethanolamine: the polar head of lecithin"], ["CHOLIN", "Trimethyl-Ethanolamin: der polare Kopf des Lecithins"]],
-  ["lipid", ["KOLAMIN", "Etanolamin: a kefalin poláris csoportja"], ["CHOLAMINE", "Ethanolamine: the polar group of cephalin"], ["CHOLAMIN", "Ethanolamin: die polare Gruppe des Kephalins"]],
-  ["lipid", ["INOZITOL", "Ciklikus, hatértékű alkohol a foszfatidil-származékban"], ["INOSITOL", "Cyclic six-hydroxyl alcohol in the phosphatidyl derivative"], ["INOSIT", "Zyklischer sechswertiger Alkohol im Phosphatidyl-Derivat"]],
-  ["lipid", ["FOSZFÁT", "Negatív töltésű csoport a glicerin harmadik hidroxilján"], ["PHOSPHATE", "Negatively charged group on the third hydroxyl of glycerol"], ["PHOSPHAT", "Negativ geladene Gruppe an der dritten Hydroxylgruppe"]],
-  ["lipid", ["ZSÍRSAV", "A lipidek apoláris, hosszú szénláncú farka"], ["FATTYACID", "The nonpolar, long-chain tail of lipids (2 words)"], ["FETTSÄURE", "Der unpolare, langkettige Schwanz der Lipide"]],
-  ["lipid", ["TELÍTETT", "Kettős kötést nem tartalmazó zsírsav"], ["SATURATED", "Fatty acid without any double bond"], ["GESÄTTIGT", "Fettsäure ohne Doppelbindung"]],
-  ["lipid", ["TELÍTETLEN", "Egy-három kettős kötést tartalmazó zsírsav"], ["UNSATURATED", "Fatty acid with one to three double bonds"], ["UNGESÄTTIGT", "Fettsäure mit ein bis drei Doppelbindungen"]],
-  ["lipid", ["CISZ", "Ilyen állású kettős kötés töri meg a zsírsavláncot"], ["CIS", "Double bond of this configuration kinks the fatty acid chain"], ["CIS", "Doppelbindung dieser Stellung knickt die Fettsäurekette"]],
-  ["lipid", ["KETTŐSKÖTÉS", "A telítetlen zsírsavak jellegzetessége"], ["DOUBLEBOND", "The hallmark of unsaturated fatty acids (2 words)"], ["DOPPELBINDUNG", "Kennzeichen der ungesättigten Fettsäuren"]],
-  ["lipid", ["OLVADÁSPONT", "A cisz kettős kötés lazább pakolással ezt csökkenti"], ["MELTINGPOINT", "Looser packing from a cis double bond lowers it (2 words)"], ["SCHMELZPUNKT", "Lockere Packung durch eine cis-Doppelbindung senkt ihn"]],
-  ["lipid", ["HIDROFÓB", "Víztaszító: a lipid apoláris farka"], ["HYDROPHOBIC", "Water-repelling: the nonpolar tail of the lipid"], ["HYDROPHOB", "Wasserabweisend: der unpolare Schwanz des Lipids"]],
-  ["lipid", ["HIDROFIL", "Vízkedvelő: a lipid poláris feje"], ["HYDROPHILIC", "Water-loving: the polar head of the lipid"], ["HYDROPHIL", "Wasserliebend: der polare Kopf des Lipids"]],
-  ["lipid", ["AMFIPATIKUS", "Egyszerre poláris és apoláris részt hordozó molekula"], ["AMPHIPATHIC", "Molecule carrying both a polar and a nonpolar part"], ["AMPHIPHIL", "Molekül mit polarem und unpolarem Teil zugleich"]],
+  ["membran", ["FOSZFOLIPID", "A membrán legfontosabb lipidalkotója"], ["PHOSPHOLIPID", "The major lipid component of the membrane"], ["PHOSPHOLIPID", "Wichtigster Lipidbestandteil der Membran"]],
+  ["membran", ["GLICERIN", "A glicerofoszfatidok háromszénatomos gerince"], ["GLYCEROL", "The three-carbon backbone of glycerophosphatides"], ["GLYCERIN", "Dreikohlenstoff-Gerüst der Glycerophosphatide"]],
+  ["membran", ["LECITIN", "Glicerin + 2 zsírsav + foszfát + kolin"], ["LECITHIN", "Glycerol + 2 fatty acids + phosphate + choline"], ["LECITHIN", "Glycerin + 2 Fettsäuren + Phosphat + Cholin"]],
+  ["membran", ["KEFALIN", "Glicerin + 2 zsírsav + foszfát + kolamin"], ["CEPHALIN", "Glycerol + 2 fatty acids + phosphate + cholamine"], ["KEPHALIN", "Glycerin + 2 Fettsäuren + Phosphat + Cholamin"]],
+  ["membran", ["FOSZFATIDSAV", "A váz kolin és kolamin nélkül: glicerin + 2 zsírsav + foszfát"], ["PHOSPHATIDATE", "The backbone with neither choline nor cholamine"], ["PHOSPHATIDAT", "Das Grundgerüst ohne Cholin und ohne Cholamin"]],
+  ["membran", ["KOLIN", "Trimetil-etanolamin: a lecitin poláris feje"], ["CHOLINE", "Trimethyl-ethanolamine: the polar head of lecithin"], ["CHOLIN", "Trimethyl-Ethanolamin: der polare Kopf des Lecithins"]],
+  ["membran", ["KOLAMIN", "Etanolamin: a kefalin poláris csoportja"], ["CHOLAMINE", "Ethanolamine: the polar group of cephalin"], ["CHOLAMIN", "Ethanolamin: die polare Gruppe des Kephalins"]],
+  ["membran", ["INOZITOL", "Ciklikus, hatértékű alkohol a foszfatidil-származékban"], ["INOSITOL", "Cyclic six-hydroxyl alcohol in the phosphatidyl derivative"], ["INOSIT", "Zyklischer sechswertiger Alkohol im Phosphatidyl-Derivat"]],
+  ["membran", ["FOSZFÁT", "Negatív töltésű csoport a glicerin harmadik hidroxilján"], ["PHOSPHATE", "Negatively charged group on the third hydroxyl of glycerol"], ["PHOSPHAT", "Negativ geladene Gruppe an der dritten Hydroxylgruppe"]],
+  ["membran", ["ZSÍRSAV", "A lipidek apoláris, hosszú szénláncú farka"], ["FATTYACID", "The nonpolar, long-chain tail of lipids (2 words)"], ["FETTSÄURE", "Der unpolare, langkettige Schwanz der Lipide"]],
+  ["membran", ["TELÍTETT", "Kettős kötést nem tartalmazó zsírsav"], ["SATURATED", "Fatty acid without any double bond"], ["GESÄTTIGT", "Fettsäure ohne Doppelbindung"]],
+  ["membran", ["TELÍTETLEN", "Egy-három kettős kötést tartalmazó zsírsav"], ["UNSATURATED", "Fatty acid with one to three double bonds"], ["UNGESÄTTIGT", "Fettsäure mit ein bis drei Doppelbindungen"]],
+  ["membran", ["CISZ", "Ilyen állású kettős kötés töri meg a zsírsavláncot"], ["CIS", "Double bond of this configuration kinks the fatty acid chain"], ["CIS", "Doppelbindung dieser Stellung knickt die Fettsäurekette"]],
+  ["membran", ["KETTŐSKÖTÉS", "A telítetlen zsírsavak jellegzetessége"], ["DOUBLEBOND", "The hallmark of unsaturated fatty acids (2 words)"], ["DOPPELBINDUNG", "Kennzeichen der ungesättigten Fettsäuren"]],
+  ["membran", ["OLVADÁSPONT", "A cisz kettős kötés lazább pakolással ezt csökkenti"], ["MELTINGPOINT", "Looser packing from a cis double bond lowers it (2 words)"], ["SCHMELZPUNKT", "Lockere Packung durch eine cis-Doppelbindung senkt ihn"]],
+  ["membran", ["HIDROFÓB", "Víztaszító: a lipid apoláris farka"], ["HYDROPHOBIC", "Water-repelling: the nonpolar tail of the lipid"], ["HYDROPHOB", "Wasserabweisend: der unpolare Schwanz des Lipids"]],
+  ["membran", ["HIDROFIL", "Vízkedvelő: a lipid poláris feje"], ["HYDROPHILIC", "Water-loving: the polar head of the lipid"], ["HYDROPHIL", "Wasserliebend: der polare Kopf des Lipids"]],
+  ["membran", ["AMFIPATIKUS", "Egyszerre poláris és apoláris részt hordozó molekula"], ["AMPHIPATHIC", "Molecule carrying both a polar and a nonpolar part"], ["AMPHIPHIL", "Molekül mit polarem und unpolarem Teil zugleich"]],
 
   // ---- Szfingolipidek ----
-  ["szfingo", ["SZFINGOZIN", "18 szénatomos aminoalkohol telítetlen szénhidrogénlánccal"], ["SPHINGOSINE", "18-carbon amino alcohol with an unsaturated chain"], ["SPHINGOSIN", "18-Kohlenstoff-Aminoalkohol mit ungesättigter Kette"]],
-  ["szfingo", ["CERAMID", "Szfingozin és zsírsav amidkötéssel, más csoport nélkül"], ["CERAMIDE", "Sphingosine plus a fatty acid, with no further group"], ["CERAMID", "Sphingosin und Fettsäure, ohne weitere Gruppe"]],
-  ["szfingo", ["SZFINGOMIELIN", "Ceramid + foszfát + kolin"], ["SPHINGOMYELIN", "Ceramide + phosphate + choline"], ["SPHINGOMYELIN", "Ceramid + Phosphat + Cholin"]],
-  ["szfingo", ["CEREBROZID", "Ceramid egyetlen cukoregységgel"], ["CEREBROSIDE", "Ceramide carrying a single sugar unit"], ["CEREBROSID", "Ceramid mit einer einzigen Zuckereinheit"]],
-  ["szfingo", ["GANGLIOZID", "Ceramid oligoszachariddal"], ["GANGLIOSIDE", "Ceramide carrying an oligosaccharide"], ["GANGLIOSID", "Ceramid mit einem Oligosaccharid"]],
-  ["szfingo", ["AMIDKÖTÉS", "Ezzel kapcsolódik a zsírsav a szfingozinhoz"], ["AMIDEBOND", "It links the fatty acid to sphingosine (2 words)"], ["AMIDBINDUNG", "Sie verknüpft die Fettsäure mit dem Sphingosin"]],
-  ["szfingo", ["ÉSZTERKÖTÉS", "Ezzel kapcsolódik a kolin a ceramid foszfátjához"], ["ESTERBOND", "It links choline to the phosphate of ceramide (2 words)"], ["ESTERBINDUNG", "Sie verknüpft Cholin mit dem Phosphat des Ceramids"]],
+  ["membran", ["SZFINGOZIN", "18 szénatomos aminoalkohol telítetlen szénhidrogénlánccal"], ["SPHINGOSINE", "18-carbon amino alcohol with an unsaturated chain"], ["SPHINGOSIN", "18-Kohlenstoff-Aminoalkohol mit ungesättigter Kette"]],
+  ["membran", ["CERAMID", "Szfingozin és zsírsav amidkötéssel, más csoport nélkül"], ["CERAMIDE", "Sphingosine plus a fatty acid, with no further group"], ["CERAMID", "Sphingosin und Fettsäure, ohne weitere Gruppe"]],
+  ["membran", ["SZFINGOMIELIN", "Ceramid + foszfát + kolin"], ["SPHINGOMYELIN", "Ceramide + phosphate + choline"], ["SPHINGOMYELIN", "Ceramid + Phosphat + Cholin"]],
+  ["membran", ["CEREBROZID", "Ceramid egyetlen cukoregységgel"], ["CEREBROSIDE", "Ceramide carrying a single sugar unit"], ["CEREBROSID", "Ceramid mit einer einzigen Zuckereinheit"]],
+  ["membran", ["GANGLIOZID", "Ceramid oligoszachariddal"], ["GANGLIOSIDE", "Ceramide carrying an oligosaccharide"], ["GANGLIOSID", "Ceramid mit einem Oligosaccharid"]],
+  ["membran", ["AMIDKÖTÉS", "Ezzel kapcsolódik a zsírsav a szfingozinhoz"], ["AMIDEBOND", "It links the fatty acid to sphingosine (2 words)"], ["AMIDBINDUNG", "Sie verknüpft die Fettsäure mit dem Sphingosin"]],
+  ["membran", ["ÉSZTERKÖTÉS", "Ezzel kapcsolódik a kolin a ceramid foszfátjához"], ["ESTERBOND", "It links choline to the phosphate of ceramide (2 words)"], ["ESTERBINDUNG", "Sie verknüpft Cholin mit dem Phosphat des Ceramids"]],
 
   // ---- Koleszterin ----
-  ["szterin", ["KOLESZTERIN", "Szteránvázas membránlipid; prokariótákban nem fordul elő"], ["CHOLESTEROL", "Sterane-based membrane lipid, absent from prokaryotes"], ["CHOLESTERIN", "Membranlipid mit Steran-Gerüst, fehlt bei Prokaryoten"]],
-  ["szterin", ["SZTEROID", "Négy összeolvadt gyűrűből álló vegyületcsoport"], ["STEROID", "Compound class with four fused rings"], ["STEROID", "Verbindungsklasse mit vier verschmolzenen Ringen"]],
-  ["szterin", ["SZTERÁN", "A koleszterin négygyűrűs alapváza"], ["STERANE", "The four-ring skeleton of cholesterol"], ["STERAN", "Das Viererringgerüst des Cholesterins"]],
-  ["szterin", ["PLAKK", "Koleszterinlerakódás, amely szűkíti az eret"], ["PLAQUE", "Cholesterol deposit that narrows an artery"], ["PLAQUE", "Cholesterinablagerung, die eine Arterie verengt"]],
-  ["szterin", ["LDL", "Ez a lipoprotein viszi a koleszterint az érfalba (rövidítés)"], ["LDL", "The lipoprotein carrying cholesterol into the vessel wall (abbreviation)"], ["LDL", "Lipoprotein, das Cholesterin in die Gefäßwand bringt (Abkürzung)"]],
-  ["szterin", ["STABILITÁS", "A koleszterin ezt adja az állati sejtmembránnak"], ["STABILITY", "What cholesterol provides to the animal cell membrane"], ["STABILITÄT", "Das gibt Cholesterin der tierischen Zellmembran"]],
+  ["membran", ["KOLESZTERIN", "Szteránvázas membránlipid; prokariótákban nem fordul elő"], ["CHOLESTEROL", "Sterane-based membrane lipid, absent from prokaryotes"], ["CHOLESTERIN", "Membranlipid mit Steran-Gerüst, fehlt bei Prokaryoten"]],
+  ["membran", ["SZTEROID", "Négy összeolvadt gyűrűből álló vegyületcsoport"], ["STEROID", "Compound class with four fused rings"], ["STEROID", "Verbindungsklasse mit vier verschmolzenen Ringen"]],
+  ["membran", ["SZTERÁN", "A koleszterin négygyűrűs alapváza"], ["STERANE", "The four-ring skeleton of cholesterol"], ["STERAN", "Das Viererringgerüst des Cholesterins"]],
+  ["membran", ["PLAKK", "Koleszterinlerakódás, amely szűkíti az eret"], ["PLAQUE", "Cholesterol deposit that narrows an artery"], ["PLAQUE", "Cholesterinablagerung, die eine Arterie verengt"]],
+  ["membran", ["LDL", "Ez a lipoprotein viszi a koleszterint az érfalba (rövidítés)"], ["LDL", "The lipoprotein carrying cholesterol into the vessel wall (abbreviation)"], ["LDL", "Lipoprotein, das Cholesterin in die Gefäßwand bringt (Abkürzung)"]],
+  ["membran", ["STABILITÁS", "A koleszterin ezt adja az állati sejtmembránnak"], ["STABILITY", "What cholesterol provides to the animal cell membrane"], ["STABILITÄT", "Das gibt Cholesterin der tierischen Zellmembran"]],
 
   // ---- Membránfehérjék ----
-  ["feherje", ["INTEGRÁLIS", "A lipid kettősrétegbe ágyazott membránfehérje"], ["INTEGRAL", "Membrane protein embedded in the lipid bilayer"], ["INTEGRAL", "In die Lipiddoppelschicht eingebettetes Membranprotein"]],
-  ["feherje", ["PERIFÉRIÁS", "A membrán felszínéhez lazán kötődő fehérje"], ["PERIPHERAL", "Protein bound loosely to the membrane surface"], ["PERIPHER", "Locker an die Membranoberfläche gebundenes Protein"]],
-  ["feherje", ["TRANSZMEMBRÁN", "A membránt teljes vastagságában átérő fehérje"], ["TRANSMEMBRANE", "Protein spanning the whole thickness of the membrane"], ["TRANSMEMBRAN", "Protein, das die ganze Membran durchspannt"]],
-  ["feherje", ["IONCSATORNA", "Ionokat átengedő integrális fehérje"], ["IONCHANNEL", "Integral protein letting ions through (2 words)"], ["IONENKANAL", "Integrales Protein, das Ionen durchlässt"]],
-  ["feherje", ["RECEPTOR", "Jelmolekulát megkötő membránfehérje"], ["RECEPTOR", "Membrane protein binding a signalling molecule"], ["REZEPTOR", "Membranprotein, das ein Signalmolekül bindet"]],
-  ["feherje", ["TRANSZPORTER", "Anyagokat átjuttató membránfehérje"], ["TRANSPORTER", "Membrane protein carrying substances across"], ["TRANSPORTER", "Membranprotein, das Stoffe hinüberbringt"]],
-  ["feherje", ["CITOSZKELETON", "Ehhez rögzülve sok membránfehérje mozdulatlan marad"], ["CYTOSKELETON", "Many membrane proteins are held immobile by it"], ["ZYTOSKELETT", "Daran verankert bleiben viele Membranproteine unbeweglich"]],
-  ["feherje", ["AMINOSAV", "A fehérjék húszféle építőköve"], ["AMINOACID", "The twenty building blocks of proteins (2 words)"], ["AMINOSÄURE", "Die zwanzig Bausteine der Proteine"]],
-  ["feherje", ["ENZIM", "Katalizáló feladatot ellátó membránfehérje is lehet"], ["ENZYME", "A membrane protein may also work as one, catalysing"], ["ENZYM", "Auch ein Membranprotein kann als solches katalysieren"]],
+  ["membran", ["INTEGRÁLIS", "A lipid kettősrétegbe ágyazott membránfehérje"], ["INTEGRAL", "Membrane protein embedded in the lipid bilayer"], ["INTEGRAL", "In die Lipiddoppelschicht eingebettetes Membranprotein"]],
+  ["membran", ["PERIFÉRIÁS", "A membrán felszínéhez lazán kötődő fehérje"], ["PERIPHERAL", "Protein bound loosely to the membrane surface"], ["PERIPHER", "Locker an die Membranoberfläche gebundenes Protein"]],
+  ["membran", ["TRANSZMEMBRÁN", "A membránt teljes vastagságában átérő fehérje"], ["TRANSMEMBRANE", "Protein spanning the whole thickness of the membrane"], ["TRANSMEMBRAN", "Protein, das die ganze Membran durchspannt"]],
+  ["membran", ["IONCSATORNA", "Ionokat átengedő integrális fehérje"], ["IONCHANNEL", "Integral protein letting ions through (2 words)"], ["IONENKANAL", "Integrales Protein, das Ionen durchlässt"]],
+  ["membran", ["RECEPTOR", "Jelmolekulát megkötő membránfehérje"], ["RECEPTOR", "Membrane protein binding a signalling molecule"], ["REZEPTOR", "Membranprotein, das ein Signalmolekül bindet"]],
+  ["membran", ["TRANSZPORTER", "Anyagokat átjuttató membránfehérje"], ["TRANSPORTER", "Membrane protein carrying substances across"], ["TRANSPORTER", "Membranprotein, das Stoffe hinüberbringt"]],
+  ["membran", ["CITOSZKELETON", "Ehhez rögzülve sok membránfehérje mozdulatlan marad"], ["CYTOSKELETON", "Many membrane proteins are held immobile by it"], ["ZYTOSKELETT", "Daran verankert bleiben viele Membranproteine unbeweglich"]],
+  ["membran", ["AMINOSAV", "A fehérjék húszféle építőköve"], ["AMINOACID", "The twenty building blocks of proteins (2 words)"], ["AMINOSÄURE", "Die zwanzig Bausteine der Proteine"]],
+  ["membran", ["ENZIM", "Katalizáló feladatot ellátó membránfehérje is lehet"], ["ENZYME", "A membrane protein may also work as one, catalysing"], ["ENZYM", "Auch ein Membranprotein kann als solches katalysieren"]],
 
   // ---- Membráncukrok ----
-  ["szenhidrat", ["GLIKOPROTEIN", "Cukorláncot hordozó membránfehérje"], ["GLYCOPROTEIN", "Membrane protein carrying a sugar chain"], ["GLYKOPROTEIN", "Membranprotein mit Zuckerkette"]],
-  ["szenhidrat", ["GLIKOLIPID", "Cukorláncot hordozó membránlipid"], ["GLYCOLIPID", "Membrane lipid carrying a sugar chain"], ["GLYKOLIPID", "Membranlipid mit Zuckerkette"]],
-  ["szenhidrat", ["SZÉNHIDRÁT", "A membrán 1%-nál kisebb arányú alkotócsoportja"], ["CARBOHYDRATE", "Membrane component group making up less than 1%"], ["KOHLENHYDRAT", "Bestandteilgruppe der Membran mit weniger als 1%"]],
-  ["szenhidrat", ["GLÜKÓZ", "A membrán cukorláncainak leggyakoribb monoszacharidja"], ["GLUCOSE", "The most common monosaccharide of membrane sugar chains"], ["GLUCOSE", "Häufigstes Monosaccharid der Zuckerketten"]],
-  ["szenhidrat", ["MANNÓZ", "A glükóz C2-epimerje a membrán cukrai között"], ["MANNOSE", "The C2 epimer of glucose among membrane sugars"], ["MANNOSE", "C2-Epimer der Glucose unter den Membranzuckern"]],
-  ["szenhidrat", ["GALAKTÓZ", "A glükóz C4-epimerje; ebből lesz a fukóz"], ["GALACTOSE", "The C4 epimer of glucose; fucose derives from it"], ["GALACTOSE", "C4-Epimer der Glucose; daraus entsteht Fucose"]],
-  ["szenhidrat", ["FUKÓZ", "6-dezoxi-galaktóz"], ["FUCOSE", "6-deoxy-galactose"], ["FUCOSE", "6-Desoxy-Galactose"]],
-  ["szenhidrat", ["NEURAMINSAV", "Mannózamin és piruvát kilenc szénatomos terméke"], ["SIALICACID", "Nine-carbon acid from mannosamine and pyruvate (2 words)"], ["NEURAMINSÄURE", "Neun-Kohlenstoff-Säure aus Mannosamin und Pyruvat"]],
-  ["szenhidrat", ["LEKTIN", "Cukorkötő növényi fehérje, amely a felszíni cukrokhoz kapcsolódik"], ["LECTIN", "Plant protein that binds the surface sugars"], ["LEKTIN", "Pflanzliches Protein, das die Oberflächenzucker bindet"]],
-  ["szenhidrat", ["IMMUNRENDSZER", "A felszíni cukrok alapján ismeri fel az idegen sejtet"], ["IMMUNESYSTEM", "It recognises foreign cells by their surface sugars (2 words)"], ["IMMUNSYSTEM", "Es erkennt fremde Zellen an ihren Oberflächenzuckern"]],
-  ["szenhidrat", ["METASZTÁZIS", "Daganatáttét, amelyben a sejtfelszíni cukrok is szerepet játszanak"], ["METASTASIS", "Tumour spread in which surface sugars play a part"], ["METASTASE", "Tumorausbreitung, an der Oberflächenzucker beteiligt sind"]]
+  ["membran", ["GLIKOPROTEIN", "Cukorláncot hordozó membránfehérje"], ["GLYCOPROTEIN", "Membrane protein carrying a sugar chain"], ["GLYKOPROTEIN", "Membranprotein mit Zuckerkette"]],
+  ["membran", ["GLIKOLIPID", "Cukorláncot hordozó membránlipid"], ["GLYCOLIPID", "Membrane lipid carrying a sugar chain"], ["GLYKOLIPID", "Membranlipid mit Zuckerkette"]],
+  ["membran", ["SZÉNHIDRÁT", "A membrán 1%-nál kisebb arányú alkotócsoportja"], ["CARBOHYDRATE", "Membrane component group making up less than 1%"], ["KOHLENHYDRAT", "Bestandteilgruppe der Membran mit weniger als 1%"]],
+  ["membran", ["GLÜKÓZ", "A membrán cukorláncainak leggyakoribb monoszacharidja"], ["GLUCOSE", "The most common monosaccharide of membrane sugar chains"], ["GLUCOSE", "Häufigstes Monosaccharid der Zuckerketten"]],
+  ["membran", ["MANNÓZ", "A glükóz C2-epimerje a membrán cukrai között"], ["MANNOSE", "The C2 epimer of glucose among membrane sugars"], ["MANNOSE", "C2-Epimer der Glucose unter den Membranzuckern"]],
+  ["membran", ["GALAKTÓZ", "A glükóz C4-epimerje; ebből lesz a fukóz"], ["GALACTOSE", "The C4 epimer of glucose; fucose derives from it"], ["GALACTOSE", "C4-Epimer der Glucose; daraus entsteht Fucose"]],
+  ["membran", ["FUKÓZ", "6-dezoxi-galaktóz"], ["FUCOSE", "6-deoxy-galactose"], ["FUCOSE", "6-Desoxy-Galactose"]],
+  ["membran", ["NEURAMINSAV", "Mannózamin és piruvát kilenc szénatomos terméke"], ["SIALICACID", "Nine-carbon acid from mannosamine and pyruvate (2 words)"], ["NEURAMINSÄURE", "Neun-Kohlenstoff-Säure aus Mannosamin und Pyruvat"]],
+  ["membran", ["LEKTIN", "Cukorkötő növényi fehérje, amely a felszíni cukrokhoz kapcsolódik"], ["LECTIN", "Plant protein that binds the surface sugars"], ["LEKTIN", "Pflanzliches Protein, das die Oberflächenzucker bindet"]],
+  ["membran", ["IMMUNRENDSZER", "A felszíni cukrok alapján ismeri fel az idegen sejtet"], ["IMMUNESYSTEM", "It recognises foreign cells by their surface sugars (2 words)"], ["IMMUNSYSTEM", "Es erkennt fremde Zellen an ihren Oberflächenzuckern"]],
+  ["membran", ["METASZTÁZIS", "Daganatáttét, amelyben a sejtfelszíni cukrok is szerepet játszanak"], ["METASTASIS", "Tumour spread in which surface sugars play a part"], ["METASTASE", "Tumorausbreitung, an der Oberflächenzucker beteiligt sind"]]
 ];
 
 /* ==========================================================================
@@ -1364,7 +1337,7 @@ function keszitsRejtvenyt(tetelek, probak = 70) {
 /* ---------- Saját szólista ---------- */
 const SAJAT_KULCS = "biokem-kr-sajat";
 const FORRAS_KULCS = "biokem-kr-forras";
-const TEMAKOR_KULCSOK = ["lipid", "szfingo", "szterin", "feherje", "szenhidrat", "dinamika"];
+const TEMAKOR_KULCSOK = ["membran"];
 const FEJLEC_SZAVAK = [
   "temakor", "témakör", "topic", "thema", "kategoria", "kategória",
   "megfejtes", "megfejtés", "answer", "solution", "losung", "lösung", "wort",
@@ -1415,6 +1388,10 @@ function temakorKulcs(nyers) {
     }
   }
   return "sajat";
+}
+
+function tobbTemakor() {
+  return new Set(allapot.rejtveny.szavak.map((sz) => sz.k)).size > 1;
 }
 
 function temakorNeve(k) {
@@ -1586,10 +1563,7 @@ function allitsNyelvet(uj, ujJatekot = true) {
 
   // A fogalom- és témakörszám mindig a betöltött szótárból jön.
   const keszlet = nyelviKeszlet(nyelv);
-  const adatSzoveg = t("szemoldok", {
-    n: keszlet.length,
-    k: new Set(keszlet.map((x) => x.k)).size
-  });
+  const adatSzoveg = t("szemoldok", { n: keszlet.length });
   for (const el of document.querySelectorAll('[data-sz="szemoldok"]')) el.textContent = adatSzoveg;
   for (const el of document.querySelectorAll("[data-sz-aria]")) {
     el.setAttribute("aria-label", SZ.aria[el.dataset.szAria] || el.dataset.szAria);
@@ -1615,6 +1589,8 @@ function allitsNyelvet(uj, ujJatekot = true) {
       .join("") +
     (sajatVan ? '<option value="sajat">' + t("temakorSajat") + "</option>" : "");
   temakorElem.value = [...temakorElem.options].some((o) => o.value === elozoKor) ? elozoKor : "mind";
+  // Egyetlen témakörnél nincs mit választani; saját lista mellett újra előjön.
+  temakorElem.hidden = temakorElem.options.length <= 2;
 
   E("sugo-lista").innerHTML = SZ.sugoPontok.map((p) => "<li>" + p + "</li>").join("");
 
@@ -1743,6 +1719,7 @@ function epitsMeghatarozasokat() {
   E("ff-db").textContent = t("szoDb", { n: ff.length });
 
   const hasznalt = [...new Set(allapot.rejtveny.szavak.map((sz) => sz.k))];
+  E("jelmagy").hidden = hasznalt.length < 2;   // egy témakörhöz nem kell jelmagyarázat
   E("jelmagy").innerHTML = hasznalt
     .map(
       (k) =>
@@ -1812,7 +1789,9 @@ function frissitsMindent() {
     E("aktiv-sav").style.setProperty("--akt", "var(--kat-" + akt.k + ")");
     E("aktiv-fej").textContent =
       (akt.vv ? t("vizszintes") : t("fuggoleges")) + " " + akt.szam + " · " +
-      t("betuDb", { n: akt.a.length }) + " · " + temakorNeve(akt.k);
+      t("betuDb", { n: akt.a.length }) +
+      // A témakör nevét csak akkor írjuk ki, ha a rácsban több is szerepel.
+      (tobbTemakor() ? " · " + temakorNeve(akt.k) : "");
     E("aktiv-meg").textContent = akt.m;
   } else {
     E("aktiv-fej").textContent = "";
