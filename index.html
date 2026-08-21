@@ -137,7 +137,7 @@ button, select, label.gomb { touch-action: manipulation; }
 .burok {
   max-width: 1340px;
   margin: 0 auto;
-  padding: 16px 16px 96px;
+  padding: 16px 16px calc(var(--eszkozsav-magassag, 96px) + 18px);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -296,7 +296,11 @@ h1 em {
 @media (max-width: 600px) {
   .burok { padding-left: 8px; padding-right: 8px; }
   .racs-lap { padding: 10px; }
-  .eszkozsav { padding-left: 8px; padding-right: 8px; }
+  .eszkozsav { padding: 8px calc(8px + env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)); }
+  .eszkozsav-belso { gap: 6px; }
+  .eszkoz-csoport { gap: 6px; flex: 1 1 auto; justify-content: center; }
+  .eszkozsav .gomb { padding: 9px 12px; font-size: 14.5px; }
+  .eszkozsav select.gomb { padding-right: 26px; }
 }
 @media (max-width: 900px) {
   .jatekter {
@@ -720,7 +724,7 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
 }
 
 @media (max-width: 620px) {
-  .burok { padding: 14px 12px 104px; gap: 14px; }
+  .burok { padding: 14px 10px calc(var(--eszkozsav-magassag, 104px) + 18px); gap: 14px; }
   .fejlec-eszkozok { gap: 6px; }
   .mero { padding: 5px 11px; gap: 5px; }
   .mero .ertek { font-size: 15px; }
@@ -904,6 +908,7 @@ const SZOVEGEK = {
     betu: "Betű", szo: "Szó", megoldas: "Megoldás",
     kezdes: "Válasszon egy mezőt vagy egy meghatározást!",
     mindenTemakor: "Minden témakör",
+    szintekRovid: { konnyu: "Könnyű", halado: "Haladó", profi: "Profi" },
     szintek: { konnyu: "Könnyű · 10 szó", halado: "Haladó · 14 szó", profi: "Profi · 18 szó" },
     temakorok: { membran: "Membrán" },
     sajatGomb: "Saját szavak",
@@ -975,6 +980,7 @@ const SZOVEGEK = {
     betu: "Letter", szo: "Word", megoldas: "Solution",
     kezdes: "Pick a square or a clue to start!",
     mindenTemakor: "All topics",
+    szintekRovid: { konnyu: "Easy", halado: "Advanced", profi: "Pro" },
     szintek: { konnyu: "Easy · 10 words", halado: "Advanced · 14 words", profi: "Pro · 18 words" },
     temakorok: { membran: "Membrane" },
     sajatGomb: "Your words",
@@ -1046,6 +1052,7 @@ const SZOVEGEK = {
     betu: "Buchstabe", szo: "Wort", megoldas: "Lösung",
     kezdes: "Wählen Sie ein Feld oder eine Frage!",
     mindenTemakor: "Alle Themen",
+    szintekRovid: { konnyu: "Leicht", halado: "Mittel", profi: "Profi" },
     szintek: { konnyu: "Leicht · 10 Wörter", halado: "Fortgeschritten · 14 Wörter", profi: "Profi · 18 Wörter" },
     temakorok: { membran: "Membran" },
     sajatGomb: "Eigene Wörter",
@@ -1408,6 +1415,20 @@ function tobbTemakor() {
   return new Set(allapot.rejtveny.szavak.map((sz) => sz.k)).size > 1;
 }
 
+/** Keskeny kijelzőn rövid szintnév fér ki az eszközsorba. */
+// Telefonon a könnyű szint indul alapból: kisebb rács, olvashatóbb betűk.
+const ALAP_SZINT = window.innerWidth < 520 ? "konnyu" : "halado";
+
+function frissitsSzintFeliratokat() {
+  const elem = E("nehezseg");
+  const elozo = elem.value || ALAP_SZINT;
+  const rovid = window.innerWidth < 600;
+  elem.innerHTML = Object.keys(SZINTEK)
+    .map((k) => '<option value="' + k + '">' + (rovid ? SZ.szintekRovid[k] : SZ.szintek[k]) + "</option>")
+    .join("");
+  elem.value = elozo;
+}
+
 function temakorNeve(k) {
   return k === "sajat" ? t("temakorSajat") : SZ.temakorok[k] || k;
 }
@@ -1544,6 +1565,9 @@ function generaljTeljeset(nehezseg, temakor, nyelv) {
    ========================================================================== */
 const E = (id) => document.getElementById(id);
 const MENTES_KULCS = "biokem-kr-allas";
+// A szótár cseréjekor emelendő: a régi félbehagyott játékok így nem élednek
+// újra egy másik szókészlettel.
+const SZOTAR_VERZIO = "membran-1";
 const REKORD_KULCS = "biokem-kr-rekord";
 const NYELV_KULCS = "biokem-kr-nyelv";
 
@@ -1586,12 +1610,7 @@ function allitsNyelvet(uj, ujJatekot = true) {
     g.setAttribute("aria-pressed", String(g.dataset.nyelv === nyelv));
   }
 
-  const nehezsegElem = E("nehezseg");
-  const elozoSzint = nehezsegElem.value || "halado";
-  nehezsegElem.innerHTML = Object.keys(SZINTEK)
-    .map((k) => '<option value="' + k + '">' + SZ.szintek[k] + "</option>")
-    .join("");
-  nehezsegElem.value = elozoSzint;
+  frissitsSzintFeliratokat();
 
   const temakorElem = E("temakor");
   const elozoKor = temakorElem.value || "mind";
@@ -1609,6 +1628,7 @@ function allitsNyelvet(uj, ujJatekot = true) {
   E("sugo-lista").innerHTML = SZ.sugoPontok.map((p) => "<li>" + p + "</li>").join("");
 
   E("cimer").alt = SZ.aria.cimer;
+  requestAnimationFrame(frissitsEszkozsavMagassagot);
   E("lablec-szerk").textContent = t("lablecSzerkeszto");
   E("lablec-hiba").innerHTML = t("lablecHiba", {
     email: '<a href="mailto:mackei.mate@univet.hu">mackei.mate@univet.hu</a>'
@@ -1623,7 +1643,7 @@ function ujJatek(mentesbol) {
   if (mentesbol) {
     allapot = mentesbol;
   } else {
-    const nehezseg = E("nehezseg").value;
+    const nehezseg = E("nehezseg").value || ALAP_SZINT;
     const temakor = E("temakor").value;
     const rejtveny = generaljTeljeset(nehezseg, temakor, nyelv);
     allapot = {
@@ -1720,10 +1740,27 @@ function meretezdRacsot() {
   racs.style.setProperty("--rés", res + "px");
 }
 
+/** A tartalom alatt pontosan annyi hely maradjon, amennyit az eszközsor
+    elfoglal – kis kijelzőn ez két-három sor is lehet. */
+function frissitsEszkozsavMagassagot() {
+  const sav = document.querySelector(".eszkozsav");
+  if (!sav) return;
+  const magassag = Math.ceil(sav.getBoundingClientRect().height);
+  const jelenlegi = document.documentElement.style.getPropertyValue("--eszkozsav-magassag");
+  if (jelenlegi !== magassag + "px") {
+    document.documentElement.style.setProperty("--eszkozsav-magassag", magassag + "px");
+    meretezdRacsot();
+  }
+}
+
 let meretezoIdozito = null;
 window.addEventListener("resize", () => {
   clearTimeout(meretezoIdozito);
-  meretezoIdozito = setTimeout(meretezdRacsot, 120);
+  meretezoIdozito = setTimeout(() => {
+    frissitsSzintFeliratokat();
+    frissitsEszkozsavMagassagot();
+    meretezdRacsot();
+  }, 120);
 });
 
 // A rács dobozának minden méretváltozására újraszámolunk: így a betűtípusok
@@ -1731,9 +1768,13 @@ window.addEventListener("resize", () => {
 // helyet.
 if (window.ResizeObserver) {
   new ResizeObserver(() => meretezdRacsot()).observe(E("racs").parentElement);
+
+  // Az alsó eszközsor kis kijelzőn több sorba tördelődik; a tartalom alatt
+  // pontosan annyi helyet hagyunk, amennyit elfoglal.
+  new ResizeObserver(() => frissitsEszkozsavMagassagot()).observe(document.querySelector(".eszkozsav"));
 }
 if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(() => meretezdRacsot());
+  document.fonts.ready.then(() => { frissitsEszkozsavMagassagot(); meretezdRacsot(); });
 }
 
 function szavakAtCellan(r, c) {
@@ -2156,6 +2197,7 @@ function mentsd() {
   if (!allapot || allapot.kesz) return;
   try {
     const { megoldas, ...menteni } = allapot;
+    menteni.verzio = SZOTAR_VERZIO;
     localStorage.setItem(MENTES_KULCS, JSON.stringify(menteni));
   } catch (e) { /* privát mód: mentés nélkül is játszható */ }
 }
@@ -2166,6 +2208,10 @@ function toltsdBe() {
     if (!nyers) return null;
     const a = JSON.parse(nyers);
     if (!a || !a.rejtveny || !Array.isArray(a.rejtveny.szavak) || !a.rejtveny.szavak.length) return null;
+    if (a.verzio !== SZOTAR_VERZIO) {                 // korábbi szótárból való
+      localStorage.removeItem(MENTES_KULCS);
+      return null;
+    }
     if (a.nyelv !== nyelv) return null; // a megfejtések nyelvenként mások
     a.kesz = false;
     return a;
