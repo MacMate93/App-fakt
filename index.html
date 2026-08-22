@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sejtmembrán Keresztrejtvény</title>
 <meta name="description" content="Háromnyelvű sejtmembrán-keresztrejtvény a Sejtmembrán előadás anyagából, magyarul, angolul és németül, minden játékban új rácsot generálva.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FF7A18">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Membrán">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="ikon-192.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
@@ -758,6 +766,7 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
       <div class="mero"><span class="cimke" data-sz="ido"></span><span class="ertek" id="ora">00:00</span></div>
       <div class="mero"><span class="cimke" data-sz="tipp"></span><span class="ertek" id="tipp-szam">0</span></div>
       <div class="mero masodlagos"><span class="cimke" data-sz="rekord"></span><span class="ertek" id="rekord">–</span></div>
+      <button class="gomb elsodleges" id="telepites-gomb" data-sz="telepites" hidden></button>
       <button class="gomb" id="klavia-gomb" aria-expanded="true" aria-controls="klavia" data-sz="betuk"></button>
       <button class="gomb" id="tema-gomb" data-sz="tema"></button>
       <button class="gomb" id="sugo-gomb" data-sz="sugo"></button>
@@ -877,6 +886,15 @@ dialog::backdrop { background: color-mix(in srgb, #1B1206 62%, transparent); }
   </div>
 </dialog>
 
+<dialog id="telepites">
+  <div class="parbeszed-test">
+    <h2 data-sz="telepitesCim"></h2>
+    <p data-sz="telepitesLeiras"></p>
+    <ul id="telepites-lista"></ul>
+    <div class="parbeszed-gombsor"><button class="gomb elsodleges" id="telepites-bezar" data-sz="ertem"></button></div>
+  </div>
+</dialog>
+
 <dialog id="sugo">
   <div class="parbeszed-test">
     <h2 data-sz="sugoCim"></h2>
@@ -901,6 +919,15 @@ const SZOVEGEK = {
     cim1: "Sejtmembrán", cim2: "keresztrejtvény",
     ido: "Idő", tipp: "Tipp", rekord: "Rekord", pont: "Pont",
     betuk: "Betűk", tema: "Téma", sugo: "Súgó",
+    telepites: "Telepítés",
+    telepitesCim: "Telepítés a készülékre",
+    telepitesLeiras: "A játék alkalmazásként is használható: a kezdőképernyőről indul, teljes képernyőn fut, és netkapcsolat nélkül is működik.",
+    telepitesPontok: [
+      "<strong>iPhone és iPad (Safari):</strong> a lap alján a Megosztás ikon, majd <em>Főképernyőhöz adás</em>.",
+      "<strong>Android (Chrome):</strong> a jobb felső sarokban a három pont, majd <em>Alkalmazás telepítése</em> vagy <em>Hozzáadás a kezdőképernyőhöz</em>.",
+      "<strong>Számítógép (Chrome, Edge):</strong> a címsor jobb szélén a telepítés ikon.",
+      "Telepítés után a rejtvények offline is működnek; a frissítések maguktól érkeznek, amikor van internet."
+    ],
     vizszintes: "Vízszintes", fuggoleges: "Függőleges",
     szoDb: "{n} szó", haladas: "{kesz} / {ossz} szó",
     betuDb: "{n} betű",
@@ -973,6 +1000,15 @@ const SZOVEGEK = {
     cim1: "Cell membrane", cim2: "crossword",
     ido: "Time", tipp: "Hints", rekord: "Best", pont: "Score",
     betuk: "Letters", tema: "Theme", sugo: "Help",
+    telepites: "Install",
+    telepitesCim: "Install on your device",
+    telepitesLeiras: "The game also runs as an app: it starts from the home screen, fills the screen, and works without a network connection.",
+    telepitesPontok: [
+      "<strong>iPhone and iPad (Safari):</strong> tap the Share icon, then <em>Add to Home Screen</em>.",
+      "<strong>Android (Chrome):</strong> tap the three dots in the top right, then <em>Install app</em> or <em>Add to Home screen</em>.",
+      "<strong>Desktop (Chrome, Edge):</strong> use the install icon at the right end of the address bar.",
+      "Once installed, the puzzles work offline; updates arrive on their own whenever you are online."
+    ],
     vizszintes: "Across", fuggoleges: "Down",
     szoDb: "{n} words", haladas: "{kesz} / {ossz} words",
     betuDb: "{n} letters",
@@ -1045,6 +1081,15 @@ const SZOVEGEK = {
     cim1: "Zellmembran", cim2: "Kreuzworträtsel",
     ido: "Zeit", tipp: "Tipps", rekord: "Rekord", pont: "Punkte",
     betuk: "Buchstaben", tema: "Design", sugo: "Hilfe",
+    telepites: "Installieren",
+    telepitesCim: "Auf dem Gerät installieren",
+    telepitesLeiras: "Das Spiel läuft auch als App: Es startet vom Startbildschirm, füllt den Bildschirm und funktioniert ohne Netzverbindung.",
+    telepitesPontok: [
+      "<strong>iPhone und iPad (Safari):</strong> auf das Teilen-Symbol tippen, dann <em>Zum Home-Bildschirm</em>.",
+      "<strong>Android (Chrome):</strong> oben rechts die drei Punkte, dann <em>App installieren</em> oder <em>Zum Startbildschirm hinzufügen</em>.",
+      "<strong>Computer (Chrome, Edge):</strong> das Installationssymbol rechts in der Adressleiste.",
+      "Nach der Installation funktionieren die Rätsel offline; Aktualisierungen kommen von selbst, sobald Internet verfügbar ist."
+    ],
     vizszintes: "Waagerecht", fuggoleges: "Senkrecht",
     szoDb: "{n} Wörter", haladas: "{kesz} / {ossz} Wörter",
     betuDb: "{n} Buchstaben",
@@ -1626,6 +1671,7 @@ function allitsNyelvet(uj, ujJatekot = true) {
   temakorElem.hidden = temakorElem.options.length <= 2;
 
   E("sugo-lista").innerHTML = SZ.sugoPontok.map((p) => "<li>" + p + "</li>").join("");
+  E("telepites-lista").innerHTML = SZ.telepitesPontok.map((p) => "<li>" + p + "</li>").join("");
 
   E("cimer").alt = SZ.aria.cimer;
   requestAnimationFrame(frissitsEszkozsavMagassagot);
@@ -2562,7 +2608,62 @@ function toltsdCimert() {
 }
 
 /* ==========================================================================
-   9. Indulás
+   9. Telepítés alkalmazásként, offline működés
+   ========================================================================== */
+let telepitesiKeres = null;
+
+function alkalmazaskentFut() {
+  return window.matchMedia("(display-mode: standalone)").matches ||
+         window.navigator.standalone === true;
+}
+
+function almasKeszulek() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+         (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+window.addEventListener("beforeinstallprompt", (ev) => {
+  ev.preventDefault();                 // saját gombot használunk helyette
+  telepitesiKeres = ev;
+  E("telepites-gomb").hidden = false;
+  frissitsEszkozsavMagassagot();
+});
+
+window.addEventListener("appinstalled", () => {
+  telepitesiKeres = null;
+  E("telepites-gomb").hidden = true;
+});
+
+koppintasra(E("telepites-gomb"), async () => {
+  if (telepitesiKeres) {
+    telepitesiKeres.prompt();
+    const valasz = await telepitesiKeres.userChoice;
+    telepitesiKeres = null;
+    if (valasz && valasz.outcome === "accepted") E("telepites-gomb").hidden = true;
+    return;
+  }
+  E("telepites").showModal();          // iOS: kézi lépések
+});
+
+E("telepites-bezar").addEventListener("click", () => E("telepites").close());
+E("telepites").addEventListener("close", fokuszalVissza);
+
+function keszitsdElőTelepitest() {
+  // iOS-en nincs telepítési esemény, ezért ott magunktól kínáljuk fel.
+  if (almasKeszulek() && !alkalmazaskentFut()) E("telepites-gomb").hidden = false;
+
+  // A szolgáltatásszál csak biztonságos kapcsolaton és önálló lapon indul
+  // (beágyazott előnézetben nem).
+  const biztonsagos = location.protocol === "https:" || location.hostname === "localhost" ||
+                      location.hostname === "127.0.0.1";
+  if (!("serviceWorker" in navigator) || !biztonsagos || window.top !== window.self) return;
+  try {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  } catch (e) { /* offline mód nélkül is teljesen játszható */ }
+}
+
+/* ==========================================================================
+   10. Indulás
    ========================================================================== */
 (function indul() {
   try {
@@ -2603,6 +2704,7 @@ function toltsdCimert() {
   }
 
   toltsdSzerverListat();
+  keszitsdElőTelepitest();
 })();
 </script>
 </body>

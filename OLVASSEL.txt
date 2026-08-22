@@ -1,0 +1,32 @@
+SEJTMEMBRÁN KERESZTREJTVÉNY
+Állatorvostudományi Egyetem, Budapest · Biokémiai Osztály
+Felelős szerkesztő és készítő: Dr. Mackei Máté (mackei.mate@univet.hu)
+
+HASZNÁLAT NETKAPCSOLAT NÉLKÜL
+  Csomagolja ki a mappát, és nyissa meg az index.html fájlt bármelyik
+  böngészővel (kettős kattintás). Telepíteni nem kell semmit.
+
+TELEPÍTÉS ALKALMAZÁSKÉNT (kezdőképernyőre, teljes képernyőn)
+  Ehhez a játéknak webcímen kell lennie (pl. GitHub Pages, iskolai tárhely,
+  Moodle). Onnan megnyitva:
+    iPhone, iPad (Safari): Megosztás ikon > Főképernyőhöz adás
+    Android (Chrome):      három pont > Alkalmazás telepítése
+    Számítógép (Chrome, Edge): telepítés ikon a címsor jobb szélén
+  A telepített alkalmazás ezután internet nélkül is elindul.
+
+SAJÁT KÉRDÉSEK
+  A játékban az alsó sor "Saját szavak" gombjával tölthető be saját lista
+  (CSV vagy beillesztett sorok). Kitölthető minta: szavak-minta.csv
+  Webszerverre téve elég a mappába egy szavak.csv nevű fájl: a játék
+  induláskor magától beolvassa, és mindenki azzal játszik.
+
+EGYETEMI CÍMER
+  Tegyen a mappába egy cimer.png (vagy cimer.svg) fájlt, és megjelenik
+  a fejlécben.
+
+A CSOMAG TARTALMA
+  index.html ............ maga a játék (a teljes szótárral és logikával)
+  manifest.webmanifest .. alkalmazásadatok a telepítéshez
+  sw.js ................. offline működés webcímről megnyitva
+  ikon-*.png ............ alkalmazásikonok
+  szavak-minta.csv ...... sablon a saját kérdésekhez

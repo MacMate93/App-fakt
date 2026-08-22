@@ -1,0 +1,20 @@
+{
+  "name": "Sejtmembrán keresztrejtvény",
+  "short_name": "Membrán",
+  "description": "Háromnyelvű keresztrejtvény a sejtmembrán anyagából – Állatorvostudományi Egyetem, Biokémiai Osztály.",
+  "lang": "hu",
+  "dir": "ltr",
+  "start_url": ".",
+  "scope": ".",
+  "id": "sejtmembran-keresztrejtveny",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFF1E0",
+  "theme_color": "#FF7A18",
+  "categories": ["education", "games"],
+  "icons": [
+    { "src": "ikon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "ikon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "ikon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

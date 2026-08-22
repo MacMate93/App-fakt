@@ -47,6 +47,30 @@ Ha egyik sincs meg, a fejléc egyszerűen címer nélkül jelenik meg – a ját
 működését ez nem érinti. Sötét témán a címer fehér, kör alakú alapra kerül,
 hogy a bordó rajz jól látszódjon.
 
+## Telepíthető alkalmazás (PWA)
+
+A játék telepíthető alkalmazásként is: a kezdőképernyőről indul, teljes
+képernyőn fut, és netkapcsolat nélkül is működik. Ehhez a `manifest.webmanifest`,
+az `sw.js` és az ikonok tartoznak a csomaghoz.
+
+- **Telepítés**: webcímről megnyitva (GitHub Pages, iskolai tárhely, Moodle)
+  a fejlécben megjelenik a **Telepítés** gomb (Androidon és számítógépen);
+  iPhone-on és iPaden a Safari *Megosztás → Főképernyőhöz adás* menüpontja
+  végzi el, a gomb ilyenkor a lépéseket mutatja meg.
+- **Offline**: a szolgáltatásszál (`sw.js`) elmenti a játékot, így internet
+  nélkül is elindul. A frissítések elsőbbséget élveznek: ha van hálózat,
+  mindig a friss `index.html` és `szavak.csv` töltődik be, a mentett példány
+  csak tartalék.
+- **Feltétel**: a szolgáltatásszál csak `https://` címen (vagy `localhost`-on)
+  indul el, fájlból megnyitva nem – a játék viszont ott is teljesen működik.
+
+## Letölthető csomag
+
+A `sejtmembran-keresztrejtveny.zip` a teljes játékot tartalmazza (játék,
+alkalmazásadatok, ikonok, minta CSV, `OLVASSEL.txt`). Kicsomagolás után az
+`index.html` megnyitásával azonnal játszható, telepítés és internet nélkül –
+így e-mailben vagy Moodle-fájlként is továbbadható.
+
 ## Saját kérdések feltöltése
 
 A beépített 72 fogalom mellé (vagy helyette) bármikor betölthető saját
